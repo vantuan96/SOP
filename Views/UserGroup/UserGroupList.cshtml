@@ -1,0 +1,121 @@
+﻿
+@{
+    var X = Html.X();
+    Layout = "~/Views/_LayoutLogin.cshtml";
+}
+<script>
+    var onSuccess = function (grid, data) {
+        grid.show();
+        grid.getStore().loadData(data);
+    };
+
+</script>
+@(X.FormPanel()
+    .MinWidth(500)
+    .Items(
+                         X.FormPanel()
+                            .ID("FormUser")
+                            .BodyPadding(5)
+                            .FieldDefaults(fd => fd.LabelWidth = 120)
+                            .DefaultAnchor("100%")
+                            .Items(
+                                X.NumberField().ID("UserGroup_GroupId").Value(ViewBag.Group_Id).Hidden(true),
+                                X.ComboBox()
+                                        .ID("ComboUser")
+                                        .FieldLabel("Chọn người dùng :")
+                                        .AnchorHorizontal("100%")
+                                        .DisplayField("User_Email")
+                                        .ValueField("User_Id")
+                                        .QueryMode(DataLoadMode.Local)
+                                        .Items(ViewBag.UserList)
+                                )
+                        .Buttons(
+                            X.Button()
+                                .ID("SaveButton")
+                                .Text("Thêm")
+                                .DirectEvents(de =>
+                                {
+                                    de.Click.Url = Url.Action("InsertUserGroup");
+                                    de.Click.EventMask.ShowMask = true;
+                                    de.Click.ExtraParams.Add(new Parameter("UserGroup_GroupId", "App.UserGroup_GroupId.getValue()", ParameterMode.Raw));
+                                    de.Click.ExtraParams.Add(new Parameter("UserGroup_UserId", "App.ComboUser.getValue()", ParameterMode.Raw));
+                                    de.Click.Success = "onSuccess(App.GridPanel_User, result.data);";
+                                    de.Click.Failure = "alert('Chưa chọn người dùng');";
+                                })
+                            ,
+                        X.Button()
+                            .Text("Hủy")
+                            .OnClientClick("#{FormUser}.getForm().reset();")
+                    )
+                    ,
+        //--------------------------
+         X.GridPanel()
+                    .ID("GridPanel_User")
+                    .Title("Danh sách Người dùng")
+                    .Store(Html.X().Store().ID("Store_UserGroup")
+                    .Model(Html.X().Model()
+                    .Fields(
+                                    new ModelField("User_Id", ModelFieldType.Int),
+                                    new ModelField("User_Email", ModelFieldType.String),
+                                    new ModelField("User_FullName", ModelFieldType.String),
+                                    new ModelField("User_Birthday", ModelFieldType.Date)
+
+                            )
+                    ).PageSize(5)
+                     .DataSource(ViewBag.GetListUserGroup)
+                    )
+         .ColumnModel(
+            Html.X().Column()
+                .Text("Mã")
+                .DataIndex("User_Id")
+                .Hidden(true)
+                .Width(75)
+                ,
+                Html.X().Column()
+                    .Text("Email")
+                    .DataIndex("User_Email")
+                    .Flex(1)
+                    ,
+                Html.X().Column()
+                        .Text("Họ tên")
+                        .DataIndex("User_FullName")
+                        .Flex(1)
+                        ,
+                Html.X().DateColumn()
+                        .Text("Ngày sinh")
+                        .DataIndex("User_Birthday")
+                        .Format("dd/M/yyyy")
+                        ,
+            Html.X().CommandColumn()
+                .Width(70)
+                .Commands(
+                    Html.X().GridCommand()
+                        .CommandName("DeleteUserGroup")
+                        .Icon(Icon.Delete)
+                        .Text("Xóa")
+                )
+                .DirectEvents(de =>
+                            {
+                                de.Command.Confirmation.ConfirmRequest = true;
+                                de.Command.Url = Url.Action("DeleteUserGroup");
+                                de.Command.ExtraParams.Add(new Parameter("User_Id", "record.data.User_Id", ParameterMode.Raw));
+                                de.Command.ExtraParams.Add(new Parameter("UserGroup_GroupId", "App.UserGroup_GroupId.getValue()", ParameterMode.Raw));
+                                de.Command.Success = "onSuccess(App.GridPanel_User, result.data);";
+                            }),
+            Html.X().CommandColumn()
+                    .Width(90)
+                    .Commands(
+                        Html.X().GridCommand()
+                            .CommandName("UserFieldOperation")
+                            .Icon(Icon.Tick)
+                            .Text("Lĩnh vực")
+                    )
+                    .DirectEvents(de =>
+                                {
+                                    de.Command.Url = Url.Action("UserFieldOperationList");
+                                    de.Command.ExtraParams.Add(new Parameter("User_Id", "record.data.User_Id", ParameterMode.Raw));
+                                })
+                )
+               
+)
+)

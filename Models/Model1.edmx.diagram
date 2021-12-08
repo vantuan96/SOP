@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="465cb04bb7c04853bb0fb1cce2f7beb9" Name="Diagram1">
+        <EntityTypeShape EntityType="SOPModel.AccessHistory" Width="1.5" PointX="9.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOPModel.Department" Width="1.5" PointX="5.25" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOPModel.DepartmentFieldOperation" Width="1.5" PointX="7.5" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOPModel.District" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOPModel.Ethnic" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOPModel.FieldOperation" Width="1.5" PointX="10.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOPModel.Group" Width="1.5" PointX="10.5" PointY="19.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOPModel.HistoricalWork" Width="1.5" PointX="10.5" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOPModel.Opinion" Width="1.5" PointX="9.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOPModel.Organization" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOPModel.OrganizationType" Width="1.5" PointX="0.75" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOPModel.Province" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOPModel.Rating" Width="1.5" PointX="10.5" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOPModel.RatingResult" Width="1.5" PointX="12.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOPModel.sysdiagram" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOPModel.Title" Width="1.5" PointX="8.25" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOPModel.User" Width="1.5" PointX="7.5" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOPModel.UserFieldOperation" Width="1.5" PointX="12.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOPModel.UserGroup" Width="1.5" PointX="12.75" PointY="8.5" IsExpanded="true" />
+        <AssociationConnector Association="SOPModel.FK_AccessHistory_User" ManuallyRouted="false" />
+        <AssociationConnector Association="SOPModel.FK_Department_Organization" ManuallyRouted="false" />
+        <AssociationConnector Association="SOPModel.FK_DepartmentFieldOperation_Department" ManuallyRouted="false" />
+        <AssociationConnector Association="SOPModel.FK_HistoricalWork_Department" ManuallyRouted="false" />
+        <AssociationConnector Association="SOPModel.FK_User_Department" ManuallyRouted="false" />
+        <AssociationConnector Association="SOPModel.FK_DepartmentFieldOperation_FieldOperation" ManuallyRouted="false" />
+        <AssociationConnector Association="SOPModel.FK_District_Province" ManuallyRouted="false" />
+        <AssociationConnector Association="SOPModel.FK_User_Ethnic" ManuallyRouted="false" />
+        <AssociationConnector Association="SOPModel.FK_UserFieldOperation_FieldOperation" ManuallyRouted="false" />
+        <AssociationConnector Association="SOPModel.FK_UserGroup_Group" ManuallyRouted="false" />
+        <AssociationConnector Association="SOPModel.FK_HistoricalWork_Title" ManuallyRouted="false" />
+        <AssociationConnector Association="SOPModel.FK_HistoricalWork_User" ManuallyRouted="false" />
+        <AssociationConnector Association="SOPModel.FK_Opinion_User" ManuallyRouted="false" />
+        <AssociationConnector Association="SOPModel.FK_Opinion_User1" ManuallyRouted="false" />
+        <AssociationConnector Association="SOPModel.FK_Organization_OrganizationType" ManuallyRouted="false" />
+        <AssociationConnector Association="SOPModel.FK_RatingResult_Rating" ManuallyRouted="false" />
+        <AssociationConnector Association="SOPModel.FK_RatingResult_User" ManuallyRouted="false" />
+        <AssociationConnector Association="SOPModel.FK_UserFieldOperation_User" ManuallyRouted="false" />
+        <AssociationConnector Association="SOPModel.FK_UserGroup_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

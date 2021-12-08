@@ -1,0 +1,49 @@
+﻿@model SOP.Models.FieldOperation
+@{
+    ViewBag.Title = "Create";
+    var X = Html.X();
+}
+<script type="text/javascript">
+    function CheckValid() {
+        var status = document.getElementById("cboStatus").val;
+        if (status == null) {
+            alert("Trạng thái không được để trống");
+        }
+    }
+</script>
+@(X.Window()
+    .Width(300)
+    .Height(170)
+    .Flex(1)
+    .Icon(Icon.Add)
+    .Title("Thêm lĩnh vực")
+    .Padding(5)
+    .CloseAction(CloseAction.Destroy)
+            .Items(
+                        X.FormPanel()
+                            .ID("FormPanel1")
+                            .Frame(true)
+                            .DefaultAnchor("100%")
+                            .BodyPadding(5)
+                            .Items(
+                                X.TextFieldFor(m => m.FieldOperation_Name).FieldLabel("Tên lĩnh vực").AllowBlank(false),
+                                X.CheckboxFor(m => m.FieldOperation_Active)
+                                    .FieldLabel("Trạng Thái")
+                                    .BoxLabel("Kích hoạt")         
+                                )
+                            )
+    .Buttons(
+         X.Button()
+         .Text("Lưu")
+         .Icon(Icon.Accept)
+                 .DirectEvents(de =>
+                 {
+                     de.Click.Url = Url.Action("/Save");
+                     de.Click.EventMask.ShowMask = true;
+                     de.Click.FormID = "FormPanel1";
+
+                 }
+            )
+        .OnClientClick("CheckValid")
+    )
+)

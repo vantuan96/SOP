@@ -1,0 +1,61 @@
+﻿@model SOP.Models.Department
+@{
+    var X = Html.X();
+}
+<script>
+    var onSuccess = function (grid, data) {
+        grid.show();
+        grid.getStore().loadData(data);
+        App.EditDepartmentWindow.close();
+    };
+</script>
+@(X.Window()
+    .ID("EditDepartmentWindow")
+    .Width(430)
+        //.Height(140)
+    .Flex(1)
+    .Icon(Icon.Add)
+    .Title("Thêm Phòng ban")
+    .Padding(5)
+    .CloseAction(CloseAction.Destroy)
+            .Items(
+                        X.FormPanel()
+                            .ID("EditDepartmentFormPanel")
+                            .DefaultAnchor("100%")
+                            .BodyPadding(5)
+                            .Items(
+                                X.TextFieldFor(m => m.Department_Id).FieldLabel("Mã").LabelWidth(150).Hidden(true),
+                                X.TextFieldFor(m => m.Department_Name).FieldLabel("Tên Phòng ban").LabelWidth(150),
+                                //X.TextFieldFor(m => m.Department_OrganizationId).FieldLabel("Cơ quan trực thuộc").LabelWidth(150),
+                                X.ComboBoxFor(m => m.Department_OrganizationId)
+                                       .FieldLabel("Cơ quan trực thuộc:")
+                                       .Editable(false)
+                                       .AnchorHorizontal("100%")
+                                       .EmptyText("Cơ quan trực thuộc")
+                                       .DisplayField("Organization_Name")
+                                       .ValueField("Organization_Id")
+                                       .QueryMode(DataLoadMode.Local)
+                                       .Items(ViewBag.Department_OrganizationId)
+                                       .LabelWidth(150), 
+                                X.TextAreaFor(m => m.Department_Information).FieldLabel("Giới thiệu").LabelWidth(150),
+                                X.TextFieldFor(m => m.Department_PhoneNumber).FieldLabel("Số điện thoại ").LabelWidth(150),
+                                X.TextFieldFor(m => m.Department_Fax).FieldLabel("Số Fax").LabelWidth(150),
+                                X.TextFieldFor(m => m.Department_Email).FieldLabel("Email").LabelWidth(150),
+                                X.DateFieldFor(m => m.Department_CreatedOn).FieldLabel("Ngày Thành lập").LabelWidth(150),
+                                X.CheckboxFor(m => m.Department_Active).FieldLabel("Trạng Thái").LabelWidth(150)
+                            )
+                    )
+    .Buttons(
+         X.Button()
+         .Text("Lưu")
+         .Icon(Icon.Accept)
+                 .DirectEvents(de =>
+                 {
+                     de.Click.Url = Url.Action("/EditSave");
+                     de.Click.EventMask.ShowMask = true;
+                     de.Click.FormID = "EditDepartmentFormPanel";
+                     de.Click.Success = "onSuccess(App.DepartmentGridPanel, result.data);";
+                 }
+            )
+    )
+)

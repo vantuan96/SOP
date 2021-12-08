@@ -1,0 +1,145 @@
+﻿@{
+
+    Layout = "~/Views/_LayoutLogin.cshtml";
+    var X = Html.X();
+
+}
+<script>
+    var saveChart = function (btn) {
+        Ext.MessageBox.confirm('Tải biểu đồ', 'Bạn có muốn lưu biểu đồ về máy?', function (choice) {
+            if (choice == 'yes') {
+                btn.up('panel').down('chart').save({
+                    type: 'image/png'
+                });
+            }
+        });
+    }
+</script>
+
+@(X.FormPanel()
+       .Layout(LayoutType.Fit)
+       .MinWidth(800)
+       .Height(500)
+       .TopBar(X.Toolbar()
+            .Items(
+                X.Button()
+                    .Text("Tải biểu đồ")
+                    .Icon(Icon.Disk)
+                    .Handler("saveChart"),
+                X.ComboBox()
+                            .ID("ComboY")
+                            .EmptyText("Chọn năm")
+                            .SelectedItems(ViewBag.Time)
+                            .Items(
+                                new ListItem(2015),
+                                new ListItem(2016),
+                                new ListItem(2017),
+                                new ListItem(2018),
+                                new ListItem(2019),
+                                new ListItem(2020),
+                                new ListItem(2021),
+                                new ListItem(2022),
+                                new ListItem(2023),
+                                new ListItem(2024),
+                                new ListItem(2025)
+                            ),
+                     X.Button()
+                            .Text("Xem kết quả")
+                            .Icon(Icon.TableRefresh)
+                            .DirectEvents(de =>
+                                                        {
+                                                            de.Click.Url = Url.Action("YPersonalRatingdirect");
+                                                            de.Click.ExtraParams.Add(new Parameter("Year", "App.ComboY.getValue()", ParameterMode.Raw));
+                                                            de.Click.ExtraParams.Add(new Parameter("UserId", ViewBag.UserId, ParameterMode.Raw));
+                                                            de.Click.Failure = "alert('Chưa chọn thời gian để lọc dữ liệu');";
+                                                        }),
+                    X.Hidden().ID("UserId").Text(ViewBag.UserId),                                    
+                    X.Button()
+                        .Text("In báo cáo")
+                        .Icon(Icon.Printer)
+                        .OnClientClick("window.open('YPersonalPrint'+'/?Year='+App.ComboY.getValue()+'&UserId='+App.UserId.getValue())")
+            )
+        )
+        .Items(
+            X.Chart()
+                .ID("MCompareRatingChart")
+                .StyleSpec("background:#fff;")
+                .Shadow(true)
+                .StandardTheme(StandardChartTheme.Category1)
+                .Animate(true)
+                .LegendConfig(X.ChartLegend().Position(LegendPosition.Bottom))
+                .Store(X.Store()
+                    .Data(Model)
+                    .Model(X.Model()
+                        .Fields(
+                            X.ModelField().Name("MonthC"),
+                            X.ModelField().Name("VERYHAPPY"),
+                            X.ModelField().Name("HAPPY"),
+                            X.ModelField().Name("WAITLONG"),
+                            X.ModelField().Name("LOWPROFESSIONAL"),
+                            X.ModelField().Name("BADBEHAVIOR")
+                        )
+                    )
+                )
+                .Axes(
+                    X.NumericAxis()
+                        .Fields(new[] { "VERYHAPPY", "HAPPY", "WAITLONG", "LOWPROFESSIONAL", "BADBEHAVIOR" })
+                        .Title("Tổng số lượt đánh giá")
+                        .MinorTickSteps(1)
+                        .Minimum(0)
+                        .GridConfig(X.AxisGrid()
+                            .Odd(new SpriteAttributes { Opacity = 1, Fill = "#ddd", Stroke = "#bbb", StrokeWidth = 0.5 })
+                        ),
+                    X.CategoryAxis()
+                        .Position(Position.Bottom)
+                        .Fields("MonthC")
+                            .Title("Năm " + ViewBag.Time)
+                )
+                .Series(
+                    X.LineSeries()
+                        .Axis(Position.Left)
+                        .Title("Rất hài lòng")
+                        .XField("MonthC")
+                        .YField("VERYHAPPY")
+                        .HighlightConfig(new SpriteAttributes { Size = 7, Radius = 7 })
+                            .MarkerConfig(new SpriteAttributes { Type = SpriteType.Circle, Size = 4, Radius = 4, StrokeWidth = 0 }),
+
+                    X.LineSeries()
+                        .Axis(Position.Left)
+                        .Smooth(3)
+                        .Title("Hài lòng")
+                        .XField("MonthC")
+                        .YField("HAPPY")
+                        .HighlightConfig(new SpriteAttributes { Size = 7, Radius = 7 })
+                            .MarkerConfig(new SpriteAttributes { Type = SpriteType.Circle, Size = 4, Radius = 4, StrokeWidth = 0 }),
+
+                    X.LineSeries()
+                        .Axis(Position.Left)
+                        .Smooth(3)
+                        .Title("Chờ lâu")
+                        .XField("MonthC")
+                        .YField("WAITLONG")
+                        .HighlightConfig(new SpriteAttributes { Size = 7, Radius = 7 })
+                        .MarkerConfig(new SpriteAttributes { Type = SpriteType.Circle, Size = 4, Radius = 4, StrokeWidth = 0 }),
+                  X.LineSeries()
+                         .Axis(Position.Left)
+                         .Smooth(3)
+                         .XField("MonthC")
+                         .Title("Nghiệp vụ kém")
+                         .YField("LOWPROFESSIONAL")
+                         .HighlightConfig(new SpriteAttributes { Size = 7, Radius = 7 })
+                         .MarkerConfig(new SpriteAttributes { Type = SpriteType.Circle, Size = 4, Radius = 4, StrokeWidth = 0 }),
+                  X.LineSeries()
+                         .Axis(Position.Left)
+                         .Smooth(3)
+                         .XField("MonthC")
+                         .Title("Thái độ kém")
+                         .YField("BADBEHAVIOR")
+                         .HighlightConfig(new SpriteAttributes { Size = 7, Radius = 7 })
+                             .MarkerConfig(new SpriteAttributes { Type = SpriteType.Circle, Size = 4, Radius = 4, StrokeWidth = 0 })
+                )
+        )
+)
+
+
+

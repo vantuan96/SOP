@@ -1,0 +1,173 @@
+﻿
+@{
+    var X = Html.X();
+    Layout = "~/Views/_LayoutLogin.cshtml";
+}
+<script>
+    var tipRenderer = function (storeItem, item) {
+        //calculate percentage.
+        var total = 0;
+
+        App.Chart1.getStore().each(function (rec) {
+        total += rec.get('Rating_Total');
+        });
+
+        this.setTitle(storeItem.get('Rating_Name') + ': ' + Math.round(storeItem.get('Rating_Total') / total * 100) + '%' + '-' + storeItem.get('Rating_Total') + '/' + total);
+    }
+
+    var saveChart = function (btn) {
+        Ext.MessageBox.confirm('Tải bản đồ', 'Bạn có muốn tải biểu đồ về máy', function (choice) {
+            if (choice == 'yes') {
+                btn.up('panel').down('chart').save({
+                    type: 'image/png'
+                });
+            }
+        });
+    }
+</script>
+
+@(X.FormPanel()
+        .LayoutConfig(new HBoxLayoutConfig() { Align = HBoxAlign.Stretch })
+        .MinWidth(800)
+        .Height(480)
+        .TopBar(X.Toolbar()
+            .Items(
+                 X.Button()
+                    .Text("Đổi kiểu")
+                    .Icon(Icon.ArrowRefresh)
+                    .EnableToggle(true)
+                    .Listeners(l => l.Toggle.Handler = "#{Chart1}.series.first().donut = pressed ? 25 : false;#{Chart1}.refresh();"),
+                X.Button()
+                    .Text("Tải biểu đồ")
+                    .Icon(Icon.Disk)
+                    .Handler("saveChart"),
+                X.Button()
+                    .Text("In báo cáo")
+                    .Icon(Icon.Printer)
+                    .OnClientClick("window.open('GetDataPrint'+'/?Month='+App.ComboM.getValue() +'&Year='+App.ComboY.getValue())")  
+            )
+        )
+        .Items(
+            X.Chart()
+                .Flex(1)
+                .MinWidth(600)
+                .ID("Chart1")
+                .Animate(true)
+                .Shadow(true)
+                .InsetPadding(20)
+                .Theme("Base:gradients")
+                .LegendConfig(X.ChartLegend().Position(LegendPosition.Bottom))
+                .StyleSpec("background:#fff;")
+                .Store(X.Store()
+                    .ID("StoreChart")
+                    .Data(Model)
+                    .Model(X.Model()
+                        .Fields(
+                                X.ModelField().Name("Rating_Name"),
+                                X.ModelField().Name("Rating_Total")
+                        )
+                    )
+                    .Proxy(X.AjaxProxy()
+                        .Url(Url.Action("GetData"))
+                        .Reader(X.JsonReader().Root("data"))
+                    
+                    )
+  
+                )
+                .Series(X.PieSeries()
+                    .AngleField("Rating_Total")
+                    .ShowInLegend(true)
+                    .Donut(0)
+                    .Highlight(true)
+                    .HighlightSegmentMargin(20)
+                    .Label(X.SeriesLabel()
+                        .Display(SeriesLabelDisplay.Rotate)
+                        .Field(new[] { "Rating_Name"})
+                        .Contrast(true)
+                        .Font("14px Arial")
+                        .Orientation(Orientation.Horizontal)                       
+                    )
+                    .Tips(X.ChartTip()
+                        .TrackMouse(true)
+                        .Width(170)
+                        .Height(28)
+                        .Renderer(r => r.Fn = "tipRenderer")
+                    )
+                )
+                ,
+          X.GridPanel()
+            .ID("Grid1")
+            .Flex(2)
+            .Title("Kết quả đánh giá: ")
+            .MinHeight(200)
+            .MinHeight(350)
+            .Store(Html.X().Store()
+                .Model(Html.X().Model()
+                    .Fields(
+                      new ModelField("Rating_Name", ModelFieldType.String),
+                      new ModelField("Rating_Total", ModelFieldType.Int)
+                    )
+                )
+                .DataSource(Model)         
+            )
+            .ColumnModel(
+                    Html.X().Column().Text("Mức đánh giá").DataIndex("Rating_Name").Flex(1),
+                    Html.X().Column().Text("Điểm").DataIndex("Rating_Total")
+            )
+                
+                        
+                .TopBar(X.Toolbar()
+                .Items(
+                    X.ComboBox()
+                    .ID("ComboM")
+                    .EmptyText("Chọn tháng")
+                    .SelectedItems(ViewBag.Month)
+                    .Items(
+                        new ListItem("Tất cả",0),
+                        new ListItem("Tháng 1",1),
+                        new ListItem("Tháng 2", 2),
+                        new ListItem("Tháng 3", 3),
+                        new ListItem("Tháng 4", 4),
+                        new ListItem("Tháng 5", 5),
+                        new ListItem("Tháng 6", 6),
+                        new ListItem("Tháng 7", 7),
+                        new ListItem("Tháng 8", 8),
+                        new ListItem("Tháng 9", 9),
+                        new ListItem("Tháng 10", 10),
+                        new ListItem("Tháng 11", 11),
+                        new ListItem("Tháng 12", 12)
+                    ),
+                        X.ComboBox()
+                        .ID("ComboY")
+                        .EmptyText("Chọn năm")
+                        .SelectedItems(ViewBag.Year)
+                        .Items(
+                            new ListItem("Tất cả",0),
+                            new ListItem(2015),
+                            new ListItem(2016),
+                            new ListItem(2017),
+                            new ListItem(2018),
+                            new ListItem(2019),
+                            new ListItem(2020),
+                            new ListItem(2021),
+                            new ListItem(2022),
+                            new ListItem(2023),
+                            new ListItem(2024),
+                            new ListItem(2025)
+                        ),
+                    X.Button()
+                        .Text("Tải kết quả")
+                        .Icon(Icon.TableRefresh)
+                        .DirectEvents(de =>
+                                                    {
+
+                                                        de.Click.Url = Url.Action("GetDataredirect");
+                                                        de.Click.ExtraParams.Add(new Parameter("Month", "App.ComboM.getValue()", ParameterMode.Raw));
+                                                        de.Click.ExtraParams.Add(new Parameter("Year", "App.ComboY.getValue()", ParameterMode.Raw));
+                                                        de.Click.Failure = "alert('Chưa chọn thời gian để lọc dữ liệu');";
+                                                    })
+                )
+            )
+        )
+)
+

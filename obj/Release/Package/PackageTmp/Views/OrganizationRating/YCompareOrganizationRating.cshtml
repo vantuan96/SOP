@@ -1,0 +1,117 @@
+﻿@{
+    Layout = "~/Views/_LayoutLogin.cshtml";
+    var X = Html.X();
+
+}
+<script>
+    var saveChart = function (btn) {
+        Ext.MessageBox.confirm('Tải biểu đồ', 'Bạn có muốn lưu biểu đồ về máy?', function (choice) {
+            if (choice == 'yes') {
+                btn.up('panel').down('chart').save({
+                    type: 'image/png'
+                });
+            }
+        });
+    }
+</script>
+
+@(X.FormPanel()
+       .Layout(LayoutType.Fit)
+       .MinWidth(800)
+       .Height(500)
+       .TopBar(X.Toolbar()
+            .Items(
+                X.Button()
+                    .Text("Tải biểu đồ")
+                    .Icon(Icon.Disk)
+                    .Handler("saveChart"),
+                       X.Hidden().ID("OrganizationId").Text(ViewBag.OrganizationId),    
+               X.Button()
+                            .Text("In báo cáo")
+                            .Icon(Icon.Printer)
+                            .OnClientClick("window.open('/OrganizationRating/YCompareOrganizationPrint'+'/?OrganizationId='+ App.OrganizationId.getValue())")
+            )
+        )
+        .Items(
+            X.Chart()
+                .ID("MCompareRatingChart")
+                .StyleSpec("background:#fff;")
+                .Shadow(true)
+                .StandardTheme(StandardChartTheme.Category1)
+                .Animate(true)
+                .LegendConfig(X.ChartLegend().Position(LegendPosition.Bottom))
+                .Store(X.Store()
+                    .Data(Model)
+                    .Model(X.Model()
+                        .Fields(
+                            X.ModelField().Name("YearC"),
+                            X.ModelField().Name("VERYHAPPY"),
+                            X.ModelField().Name("HAPPY"),
+                            X.ModelField().Name("WAITLONG"),
+                            X.ModelField().Name("LOWPROFESSIONAL"),
+                            X.ModelField().Name("BADBEHAVIOR")
+                        )
+                    )
+                )
+                .Axes(
+                    X.NumericAxis()
+                        .Fields(new[] { "VERYHAPPY", "HAPPY", "WAITLONG", "LOWPROFESSIONAL", "BADBEHAVIOR" })
+                        .Title("Tổng số lượt đánh giá")
+                        .MinorTickSteps(1)
+                        .Minimum(0)
+                        .GridConfig(X.AxisGrid()
+                            .Odd(new SpriteAttributes { Opacity = 1, Fill = "#ddd", Stroke = "#bbb", StrokeWidth = 0.5 })
+                        ),
+                    X.CategoryAxis()
+                        .Position(Position.Bottom)
+                            .Fields("YearC")
+                            .Title("So sánh kết quả giữa các năm")
+                )
+                .Series(
+                    X.LineSeries()
+                        .Axis(Position.Left)
+                        .Title("Rất hài lòng")
+                            .XField("YearC")
+                        .YField("VERYHAPPY")
+                        .HighlightConfig(new SpriteAttributes { Size = 7, Radius = 7 })
+                            .MarkerConfig(new SpriteAttributes { Type = SpriteType.Circle, Size = 4, Radius = 4, StrokeWidth = 0 }),
+
+                    X.LineSeries()
+                        .Axis(Position.Left)
+                        .Smooth(3)
+                        .Title("Hài lòng")
+                            .XField("YearC")
+                        .YField("HAPPY")
+                        .HighlightConfig(new SpriteAttributes { Size = 7, Radius = 7 })
+                            .MarkerConfig(new SpriteAttributes { Type = SpriteType.Circle, Size = 4, Radius = 4, StrokeWidth = 0 }),
+
+                    X.LineSeries()
+                        .Axis(Position.Left)
+                        .Smooth(3)
+                        .Title("Chờ lâu")
+                            .XField("YearC")
+                        .YField("WAITLONG")
+                        .HighlightConfig(new SpriteAttributes { Size = 7, Radius = 7 })
+                        .MarkerConfig(new SpriteAttributes { Type = SpriteType.Circle, Size = 4, Radius = 4, StrokeWidth = 0 }),
+                  X.LineSeries()
+                         .Axis(Position.Left)
+                         .Smooth(3)
+                             .XField("YearC")
+                         .Title("Nghiệp vụ kém")
+                         .YField("LOWPROFESSIONAL")
+                         .HighlightConfig(new SpriteAttributes { Size = 7, Radius = 7 })
+                         .MarkerConfig(new SpriteAttributes { Type = SpriteType.Circle, Size = 4, Radius = 4, StrokeWidth = 0 }),
+                  X.LineSeries()
+                         .Axis(Position.Left)
+                         .Smooth(3)
+                             .XField("YearC")
+                         .Title("Thái độ kém")
+                         .YField("BADBEHAVIOR")
+                         .HighlightConfig(new SpriteAttributes { Size = 7, Radius = 7 })
+                             .MarkerConfig(new SpriteAttributes { Type = SpriteType.Circle, Size = 4, Radius = 4, StrokeWidth = 0 })
+                )
+        )
+)
+
+
+

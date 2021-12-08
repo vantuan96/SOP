@@ -1,0 +1,41 @@
+﻿
+@{
+    var X = Html.X();
+    Layout = "~/Views/_LayoutLogin.cshtml";
+}
+
+
+@(X.FormPanel()
+             .ID("OpinionForm")
+             .Layout(LayoutType.Form)
+             .Padding(20)
+             .Items(
+             X.TextField().ID("Email").FieldLabel("Email").AllowBlank(false).EmptyText("Không cần thêm đuôi @laocai.gov.vn")
+             .Control(c =>
+                                            {
+                                            c.IsRemoteValidation = true;
+                                            c.RemoteValidation.Url = Url.Action("CheckUser");
+                                            c.RemoteValidation.ExtraParams.Add(new Parameter("UserName", "#(return this.getRawValue(); )", ParameterMode.Raw));
+                                            c.RemoteValidation.Method = Ext.Net.HttpMethod.POST;
+                                            c.RemoteValidation.Delay = 2000;
+                                            c.RemoteValidation.EventOwner = ValidationEventOwner.Field;
+                                            c.MsgTarget = MessageTarget.Under;
+                                            }),
+             X.TextField().ID("Opinion_Title").FieldLabel("Tiêu đề").AllowBlank(false),
+             X.TextArea().ID("Opinion_Content").FieldLabel("Nội dung").AllowBlank(false).Height(200)
+             )
+             .Buttons(
+                    X.Button()
+                    .Text("Gửi")
+                    .Icon(Icon.EmailGo)
+                    .DirectEvents(de =>
+                     {
+                         de.Click.Url = Url.Action("Opinion_Send");
+                         de.Click.EventMask.ShowMask = true;
+                         de.Click.FormID = "OpinionForm";
+                     }
+                
+                )
+
+             )
+             )

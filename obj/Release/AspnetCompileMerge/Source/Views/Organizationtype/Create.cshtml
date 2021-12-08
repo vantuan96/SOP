@@ -1,0 +1,51 @@
+﻿@model SOP.Models.OrganizationType
+
+@{
+
+    var X = Html.X();
+}
+
+
+<script>
+    var onSuccess = function (grid, data) {
+        grid.show();
+        grid.getStore().loadData(data);
+        App.AddOrganizationTypeWindow.close();
+    };
+</script>
+
+
+@(X.Window()
+    .ID("AddOrganizationTypeWindow")
+    .Width(400)
+    //.Height(140)
+    .Flex(1)
+    .Icon(Icon.Add)
+    .Title("Thêm Loại tổ chức")
+    .Padding(5)
+    .CloseAction(CloseAction.Destroy)
+            .Items(
+                        X.FormPanel()
+                            .ID("AddOrganizationTypeFormPanel")
+                            .Frame(true)
+                            .DefaultAnchor("100%")
+                            .BodyPadding(5)
+                            .Items(
+                                X.TextFieldFor(m => m.OrganizationType_Name).FieldLabel("Tên Loại tổ chức").LabelWidth(150),
+                                X.CheckboxFor(m => m.OrganizationType_Active).FieldLabel("Trạng Thái").LabelWidth(150).BoxLabel("Kích hoạt").Checked(true)
+                            )
+                    )
+    .Buttons(
+         X.Button()
+         .Text("Lưu")
+         .Icon(Icon.Accept)
+                 .DirectEvents(de =>
+                 {
+                     de.Click.Url = Url.Action("/Save");
+                     de.Click.EventMask.ShowMask = true;
+                     de.Click.FormID = "AddOrganizationTypeFormPanel";
+                     de.Click.Success = "onSuccess(App.OrganizationTypeGridPanel, result.data);";
+                 }
+            )
+    )
+)

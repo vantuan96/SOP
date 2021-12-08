@@ -1,0 +1,57 @@
+﻿@{
+
+    Layout = "~/Views/_LayoutLogin.cshtml";
+    var X = Html.X();
+}
+<style>
+    table {
+        border-collapse: collapse;
+    }
+
+    table, td, th {
+        border: 1px solid black;
+    }
+
+    th {
+        background-color: gray;
+        color: white;
+    }
+</style>
+<div style="width:650px; margin:auto; background-color:white; font-family:'Times New Roman';">
+    <div style="background-color: white; font-size: 15px; text-align: center; padding-bottom: 15px;">
+        CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM <br>
+        Độc lập - Tự do - Hạnh Phúc<br>
+        ----------------
+
+        <h3>
+            BÁO CÁO KẾT QUẢ (@ViewBag.FromTime đến @ViewBag.ToTime)  <br>
+            ĐÁNH GIÁ SỰ HÀI LÒNG CỦA CÔNG DÂN TẠI BỘ PHẬN MỘT CỬA
+        </h3>
+    </div>
+    KẾT QUẢ TẤT CẢ CÁC LĨNH VỰC    <br><br>
+
+    <table style="width:100%">
+        <tr>
+            <th>Lĩnh vực</th>
+            <th>Rất hài lòng</th>
+            <th>Hài lòng</th>
+            <th>Chờ lâu</th>
+            <th>Nghiệp vụ kém</th>
+            <th>Thái độ kém</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.FieldOperation_Name</td>
+                <td>@item.VERYHAPPY</td>
+                <td>@item.HAPPY</td>
+                <td>@item.WAITLONG</td>
+                <td>@item.LOWPROFESSIONAL</td>
+                <td>@item.BADBEHAVIOR</td>
+            </tr>
+        }
+    </table>
+</div>
+
+
+

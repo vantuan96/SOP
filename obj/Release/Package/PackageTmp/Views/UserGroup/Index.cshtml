@@ -1,0 +1,86 @@
+﻿
+@{
+    var X = Html.X();
+    Layout = "~/Views/_LayoutLogin.cshtml";
+}
+@(X.XScript().ScriptBlock(@"
+<script>
+    var addTab = function (tabPanel, id, url, menuItem, title) {
+        tabPanel = window.parent.App.TabPanel1;
+        var tab = tabPanel.getComponent(id);
+        if (!tab) {
+            tab = tabPanel.add({
+                id: id,
+                title: title,
+                closable: true,
+                menuItem: menuItem,
+                loader: {
+                    url: url,
+                    renderer: 'frame',
+                    loadMask: {
+                        showMask: true,
+                        msg: 'Xin chờ, đang tải...'
+                    }
+                }
+            });
+            tab.on('activate', function (tab) {
+                //#{MenuPanel1}.setSelection(tab.menuItem);
+            });
+        }
+        tabPanel.setActiveTab(tab);
+    }
+
+</script>"
+     ))
+
+
+<div style="padding:10px">
+    @(X.GridPanel()
+        .Title("Danh sách nhóm ")
+        .Store(Html.X().Store().ID("StoreGroup")
+            .Model(Html.X().Model()
+                .Fields(
+                    new ModelField("Group_Id", ModelFieldType.Int),
+                    new ModelField("Group_Name", ModelFieldType.String),
+                    new ModelField("Group_Active", ModelFieldType.Boolean)
+                )
+            )
+            .PageSize(20)
+            .DataSource(Model)
+        )
+        .ColumnModel(
+            X.RowNumbererColumn().Width(40).Sortable(false),
+            X.Column()
+                .Text("Mã")
+                .DataIndex("Group_Id")
+                .Width(75)
+                .Hidden(true),
+            X.Column()
+                .Text("Tên Nhóm")
+                .DataIndex("Group_Name")
+                .Flex(1),
+            X.CheckColumn()
+                .Text("Trạng thái")
+                 .DataIndex("Group_Active")
+                .Width(100),
+             X.CommandColumn().Width(200).Text("Phân người dùng")
+                      .Commands(
+                            X.GridCommand()
+                            .CommandName("UserGroupList")
+                            .Icon(Icon.UserAdd)
+                            .Text("Thêm")
+                            )
+                            .Listeners(ls => ls.Command.Handler = "addTab(#{TabPanel1}, 'UserGrouptab', '/UserGroup/UserGroupList/?Group_Id='+record.data.Group_Id, this, record.data.Group_Name);")
+                            //.DirectEvents(de =>
+                            //    {
+                            //        de.Command.Url = Url.Action("UserGroupList");
+                            //        de.Command.ExtraParams.Add(new Parameter("Group_Id", "record.data.Group_Id", ParameterMode.Raw));
+                            //    })
+                )
+
+                        
+    )
+</div>
+
+
+

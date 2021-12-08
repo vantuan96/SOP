@@ -1,0 +1,53 @@
+﻿@model SOP.Models.OrganizationType
+
+@{
+    ViewBag.Title = "Edit";
+    //Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    var X = Html.X();
+}
+
+<script>
+    var onSuccess = function (grid, data) {
+        grid.show();
+        grid.getStore().loadData(data);
+        App.EditOrganizationTypeWindow.close();
+    };
+</script>
+
+
+
+@(X.Window()
+    .ID("EditOrganizationTypeWindow")
+    .Width(400)
+    //.Height(140)
+    .Flex(1)
+    .Icon(Icon.Add)
+    .Title("Sửa Thông tin loại tổ chức")
+    .Padding(5)
+    .CloseAction(CloseAction.Destroy)
+            .Items(
+                        X.FormPanel()
+                            .ID("EditOrganizationTypeFormPanel")
+                            .Frame(true)
+                            .DefaultAnchor("100%")
+                            .BodyPadding(5)
+                            .Items(
+                                X.NumberFieldFor(m => m.OrganizationType_Id).FieldLabel("Mã").LabelWidth(150).Value(Model.OrganizationType_Id).ReadOnly(true).Hidden(true),
+                                X.TextFieldFor(m => m.OrganizationType_Name).FieldLabel("Tên loại tổ chức").LabelWidth(150).Text(Model.OrganizationType_Name),
+                                X.CheckboxFor(m => m.OrganizationType_Active).FieldLabel("Trạng Thái").LabelWidth(150).BoxLabel("Kích hoạt")
+                            )
+                    )
+    .Buttons(
+         X.Button()
+         .Text("Lưu")
+         .Icon(Icon.Accept)
+                 .DirectEvents(de =>
+                 {
+                     de.Click.Url = Url.Action("/EditSave");
+                     de.Click.EventMask.ShowMask = true;
+                     de.Click.FormID = "EditOrganizationTypeFormPanel";
+                     de.Click.Success = "onSuccess(App.OrganizationTypeGridPanel, result.data);";
+                 }
+            )
+    )
+) 

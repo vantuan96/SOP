@@ -1,0 +1,131 @@
+﻿@model SOP.Models.Organization
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/_LayoutLogin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Organization</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Organization_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Organization_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Organization_Superior)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Organization_Superior)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Organization_Information)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Organization_Information)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Organization_Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Organization_Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Organization_PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Organization_PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Organization_Fax)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Organization_Fax)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Organization_Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Organization_Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Organization_Website)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Organization_Website)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Organization_Active)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Organization_Active)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Organization_CreatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Organization_CreatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Organization_FieldOperation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Organization_FieldOperation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Organization_DirectlyUnder)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Organization_DirectlyUnder)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Organization_Specialized)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Organization_Specialized)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrganizationType.OrganizationType_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrganizationType.OrganizationType_Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Organization_Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

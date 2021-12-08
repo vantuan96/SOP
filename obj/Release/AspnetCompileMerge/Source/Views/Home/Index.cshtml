@@ -1,0 +1,289 @@
+﻿
+@{
+    var X = Html.X();
+    Layout = "~/Views/_LayoutLogin.cshtml";
+}
+
+
+@(X.XScript().ScriptBlock(@"
+        <script>
+            var addTab = function (tabPanel, id, url, menuItem, title) {
+                var tab = tabPanel.getComponent(id);
+                if (!tab) {
+                    tab = tabPanel.add({
+                        id       : id,
+                        title    : title,
+                        closable : true,
+                        menuItem : menuItem,
+                        loader   : {
+                            url      : url,
+                            renderer : 'frame',
+                            loadMask : {
+                                showMask : true,
+                                msg      : 'Xin chờ, đang tải...'
+                            }
+                        }
+                    });
+                    tab.on('activate', function (tab) {
+                        //#{MenuPanel1}.setSelection(tab.menuItem);
+                    });
+                }
+                tabPanel.setActiveTab(tab);
+            }
+
+            var addPublicServiceTab = function (tabPanel, id, url, menuItem, title) {
+                var tab = tabPanel.getComponent(id);
+                tab = tabPanel.add({
+                    id       : id,
+                    title    : title,
+                    closable : true,
+                    menuItem : menuItem,
+                    loader   : {
+                        url      : url,
+                        renderer : 'frame',
+                        loadMask : {
+                            showMask : true,
+                            msg      : 'Xin chờ, đang tải...'
+                        }
+                    }
+                });
+                tab.on('activate', function (tab) {
+                    //#{MenuPanel1}.setSelection(tab.menuItem);
+                });
+
+                tabPanel.setActiveTab(tab);
+            }
+        </script>"
+                    ))
+@(X.Viewport()
+        .Layout(LayoutType.Border)
+        .Items(
+            X.Panel()
+              .Region(Region.North).BodyStyle(" background-color: #b0c4de;")
+              .TopBar(
+                                            Html.X().Toolbar().Padding(0).StyleSpec("background-color: #00baff;").Items(
+                                                X.Image().ImageUrl("~/image/logo.png").Height(51).Width(700),
+                                                X.ToolbarFill(),
+                                                X.LinkButton().Text("Đăng Xuất")
+                                                          .DirectEvents(de =>
+                                                                         {
+                                                                             de.Click.Url = Url.Action("Logout", "Login");
+                                                                         })
+                                                         .Cls("x-tree-node-text"),
+                                                X.ToolbarSeparator(),
+                                                X.LinkButton().ID("lbWellCome").Cls("x-tree-node-text").Width(180).Icon(Icon.Lock)
+                                                        .DirectEvents(de =>
+                                                            {
+                                                                de.Click.Url = Url.Action("ChangePassWord","Login");
+                                                            }).Text(@ViewBag.UserName)
+
+
+                )),
+
+    X.Panel()
+        .ID("Panel")
+        .Title("Chức năng")
+        .Region(Region.West)
+        .Layout(LayoutType.Accordion)
+        .Width(225)
+        .Split(true)
+        .Collapsible(true)
+        .Items(
+            X.Panel()
+                .ID("Panel1")
+                .Border(false)
+                .BodyPadding(6)
+                .Hidden(@ViewBag.ADMIN)
+                .Title("Quản trị hệ thống")
+                .Layout(LayoutType.Form)
+                .Icon(Icon.MonitorLightning).Items(
+                
+                                X.MenuPanel()
+                                        .ID("MenuPanel1")
+                                        .Region(Region.West)
+                                        .Menu(m =>
+                                            {
+                                                m.Add(X.MenuItem()
+                                                   .ID("MnuTitle")
+                                                   .Text("Chức danh")
+                                                   .Icon(Icon.BulletBlue)
+                                                   .OnClientClick("addTab(#{TabPanel1}, 'title', '/Title/Index', this, 'Chức danh');"));
+                                                m.Add(X.MenuItem()
+                                                    .ID("MnuEthnic")
+                                                    .Text("Dân tộc")
+                                                    .Icon(Icon.BulletBlue)
+                                                    .OnClientClick("addTab(#{TabPanel1}, 'ethnic', '/Ethnic/Index', this, 'Dân tộc');"));
+                                                m.Add(X.MenuItem()
+                                                    .ID("MnuFieldOperation")
+                                                    .Text("Lĩnh vực")
+                                                    .Icon(Icon.BulletBlue)
+                                                    .OnClientClick("addTab(#{TabPanel1}, 'linhvuc', '/FieldOperation/Index', this,'Lĩnh vực');"));
+                                                m.Add(X.MenuItem()
+                                                    .ID("MnuOrganizationtype")
+                                                    .Text("Loại tổ chức")
+                                                    .Icon(Icon.BulletBlue)
+                                                    .OnClientClick("addTab(#{TabPanel1}, 'Organizationtype', '/Organizationtype/Index', this, 'Loại tổ chức');"));
+                                                m.Add(X.MenuItem()
+                                                    .ID("MnuProvince")
+                                                    .Text("Tỉnh - Thành Phố")
+                                                    .Icon(Icon.BulletBlue)
+                                                    .OnClientClick("addTab(#{TabPanel1}, 'province', '/Province/Index', this, 'Tỉnh - Thành Phố');"));
+
+                                            }),
+                                  X.MenuPanel()
+                                            .ID("MenuPanel4")
+                                            .Region(Region.West)
+                                            .Menu(m =>
+                                                {
+                                                    m.Add(X.MenuItem()
+                                                      .ID("MnuOrganization")
+                                                      .Text("Cơ quan - tổ chức")
+                                                      .Icon(Icon.BulletGreen)
+                                                      .OnClientClick("addTab(#{TabPanel1}, 'Organization', '/Organization/Index', this, 'Cơ Quan - Tổ chức');"));
+                                                    m.Add(X.MenuItem()
+                                                      .ID("MnuDepartment")
+                                                      .Text("Phòng ban")
+                                                      .Icon(Icon.BulletGreen)
+                                                      .OnClientClick("addTab(#{TabPanel1}, 'department', '/Department/Index', this, 'Phòng ban');"));
+                                                    m.Add(X.MenuItem()
+                                                      .ID("MnuUser")
+                                                      .Text("Người dùng hệ thống")
+                                                      .Icon(Icon.BulletGreen)
+                                                      .OnClientClick("addTab(#{TabPanel1}, 'user', '/User/Index', this, 'Người dùng hệ thống');"));
+                                                }),
+                                 X.MenuPanel()
+                                            .ID("MenuPanel5")
+                                            .Region(Region.West)
+                                            .Menu(m =>
+                                                {
+                                                    m.Add(X.MenuItem()
+                                                      .ID("MnuUserGroup")
+                                                      .Text("Phân nhóm người dùng")
+                                                      .Icon(Icon.BulletOrange)
+                                                      .OnClientClick("addTab(#{TabPanel1}, 'UserGroup', '/UserGroup/Index', this, 'Phân nhóm người dùng');"));
+                                                    
+                                                })),
+                 X.Panel()
+                .ID("Panel2")
+                .Hidden(@ViewBag.CBSNV)
+                .Border(false)
+                .BodyPadding(6)
+                .Title("Báo cáo - Tổng hợp")
+                .Layout(LayoutType.Form)
+                .Icon(Icon.Report)
+                .Items(
+                                X.MenuPanel()
+                                        .ID("MenuPanel6")
+                                        .Region(Region.West)
+                                        .Menu(m =>
+                                        {
+                                            m.Add(X.MenuItem()
+                                                 .ID("MnuPersonalRating")
+                                                 .Text("Báo cáo kết quả cá nhân")
+                                                 .Icon(Icon.BulletOrange)
+                                                 .OnClientClick("addTab(#{TabPanel1}, 'PersonalRating', '/PersonalRating/Index', this, 'Báo cáo kết quả cá nhân');"));
+                                            m.Add(X.MenuItem()
+                                                .ID("MnuOrganizationRating")
+                                                .Text("Báo cáo kết quả cơ quan")
+                                                .Icon(Icon.BulletOrange)
+                                                .OnClientClick("addTab(#{TabPanel1}, 'OrganizationRating', '/OrganizationRating/Index', this, 'Báo cáo kết quả cơ quan');"));
+                                            m.Add(X.MenuItem()
+                                                .ID("MnuFieldOperationRating")
+                                                .Text("Báo cáo kết quả lĩnh vực")
+                                                .Icon(Icon.BulletOrange)
+                                                .OnClientClick("addTab(#{TabPanel1}, 'FieldOperationRating', '/FieldOperationRating/Index', this, 'Báo cáo kết quả lĩnh vực');"));                                             
+                                        }
+                                            )
+                                            ),
+                X.Panel()
+                    .ID("Panel3")
+                    .Hidden(@ViewBag.CBMC)
+                    .Border(false)
+                    .BodyPadding(6)
+                    .Title("Báo cáo kết quả")
+                    .Layout(LayoutType.Form)
+                    .Icon(Icon.ApplicationPut)
+                    .Items(
+                                X.MenuPanel()
+                                        .ID("MenuPanel7")
+                                        .Region(Region.West)
+                                        .Menu(m =>
+                                        {
+                                            m.Add(X.MenuItem()
+                                                 .ID("MnuRating")
+                                                 .Text("Xem báo cáo kết quả tháng")
+                                                 .Icon(Icon.BulletOrange)
+                                                 .OnClientClick("addTab(#{TabPanel1}, 'Rating', '/Rating/Index', this, 'Báo cáo kết quả tháng');"));
+                                            m.Add(X.MenuItem()
+                                                 .ID("MnuCompareRating")
+                                                 .Text("So sánh kết quả tháng")
+                                                 .Icon(Icon.BulletOrange)
+                                                 .OnClientClick("addTab(#{TabPanel1}, 'MCompareRating', '/Rating/MCompareRating', this, 'So sánh kết quả tháng');"));
+                                            m.Add(X.MenuItem()
+                                                     .ID("MnuCompareRatingYear")
+                                                     .Text("So sánh kết quả năm")
+                                                     .Icon(Icon.BulletOrange)
+                                                     .OnClientClick("addTab(#{TabPanel1}, 'YCompareRating', '/Rating/YCompareRating', this, 'So sánh kết quả năm');"));    
+                                        }
+                                            )
+                                            ),
+              X.Panel()
+                    .ID("Panel4")
+                    .Border(false)
+                    .BodyPadding(6)
+                    .Title("Ý kiến")
+                    .Layout(LayoutType.Form)
+                    .Icon(Icon.Comment)
+                    .Items(
+                                X.MenuPanel()
+                                        .ID("MenuPanel8")
+                                        .Region(Region.West)
+                                        .Menu(m =>
+                                        {
+                                            m.Add(X.MenuItem()
+                                                .ID("MnuOpinionNew")
+                                                .Text("Gửi ý kiến")
+                                                .Icon(Icon.BulletOrange)
+                                                .OnClientClick("addTab(#{TabPanel1}, 'Opinion_New', '/Opinion/Index', this, 'Gửi ý kiến');"));
+                                            m.Add(X.MenuItem()
+                                                 .ID("MnuOpinionReceived")
+                                                 .Text("Ý kiến đến")
+                                                 .Icon(Icon.BulletOrange)
+                                                 .OnClientClick("addTab(#{TabPanel1}, 'Opinion_Received', '/Opinion/Opinion_Received', this, 'Ý kiến đã nhận');"));
+                                            m.Add(X.MenuItem()
+                                                     .ID("MnuOpinionSent")
+                                                     .Text("Ý kiến đi")
+                                                     .Icon(Icon.BulletOrange)
+                                                     .OnClientClick("addTab(#{TabPanel1}, 'Opinion_Sent', '/Opinion/Opinion_Sent', this, 'Ý kiến đã gửi');"));                                             
+                                        }
+                                            )
+                                            )
+                    ),
+                              
+
+            X.TabPanel()
+                .Region(Region.Center)
+                .ID("TabPanel1")
+                .Items(
+                    X.Panel()
+                        .Title("Trang chủ")
+                        .Border(false)
+                        .BodyPadding(6)
+                        .Loader(X.ComponentLoader()
+                            .Url("/Home/DashBoard")
+                            .Mode(LoadMode.Frame)
+                            .LoadMask(lm => lm.ShowMask = true)
+                            )
+                ),
+                 X.Panel()
+                    .Region(Region.South)
+                    .ID("TabPanel11")
+                     .TopBar(
+                       Html.X().Toolbar().Items(
+                        X.ToolbarFill(),
+                        X.Label().Text("Phát triển bởi Phòng phát triển phần mềm - Trung tâm CNTT&TT tỉnh Lào Cai ").StyleSpec("font-size: 80%;color: #5f5f5f;")
+                    )
+                    )
+
+        )
+)

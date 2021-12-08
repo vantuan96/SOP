@@ -1,0 +1,100 @@
+﻿
+
+@{
+    var X = Html.X();
+}
+<script>
+    var onSuccess = function (grid, data) {
+        grid.show();
+        grid.getStore().loadData(data);
+    };
+
+</script>
+@(X.Window()
+    .Y(30)
+    .Width(700)
+    .Flex(1)
+    .Icon(Icon.Add)
+    .Title("Danh sách lĩnh vực")
+    .Padding(5)
+    .Modal(true)
+    .CloseAction(CloseAction.Destroy)
+    .Items(
+                         X.FormPanel()
+                             .ID("FormFieldOperation")
+                            .BodyPadding(5)
+                            .FieldDefaults(fd => fd.LabelWidth = 120)
+                            .DefaultAnchor("100%")
+                            .Items(
+                                X.NumberField().ID("User_Id").Value(ViewBag.User_Id).Hidden(true),
+                                X.ComboBox()
+                                            .ID("ComboFieldOperation")
+                                        .FieldLabel("Chọn lĩnh vực :")
+                                        .AnchorHorizontal("100%")
+                                        .DisplayField("FieldOperation_Name")
+                                        .ValueField("FieldOperation_Id")
+                                        .QueryMode(DataLoadMode.Local)
+                                            .Items(ViewBag.FieldOperationList)
+                                )
+                        .Buttons(
+                            X.Button()
+                                .ID("SaveFieldOperation")
+                                .Text("Thêm")
+                                .DirectEvents(de =>
+                                {
+                                    de.Click.Url = Url.Action("InsertUserFieldOperation");
+                                    de.Click.EventMask.ShowMask = true;
+                                    de.Click.ExtraParams.Add(new Parameter("User_Id", "App.User_Id.getValue()", ParameterMode.Raw));
+                                    de.Click.ExtraParams.Add(new Parameter("FieldOperation_Id", "App.ComboFieldOperation.getValue()", ParameterMode.Raw));
+                                    de.Click.Success = "onSuccess(App.GridPanel_FieldOperation, result.data);";
+                                })
+                            ,
+                        X.Button()
+                        .Text("Hủy")
+                        .OnClientClick("#{FormFieldOperation}.getForm().reset();")
+                    )
+                    ,
+        //--------------------------
+         X.GridPanel()
+                    .ID("GridPanel_FieldOperation")
+                    .Store(Html.X().Store().ID("Store_FieldOperation")
+                    .Model(Html.X().Model()
+                    .Fields(
+                                        new ModelField("FieldOperation_Id", ModelFieldType.Int),
+                                        new ModelField("FieldOperation_Name", ModelFieldType.String)
+
+                            )
+                    ).PageSize(5)
+                         .DataSource(ViewBag.UserFieldOperationList)
+                    )
+         .ColumnModel(
+            Html.X().Column()
+                .Text("Mã")
+                    .DataIndex("FieldOperation_Id")
+                .Hidden(true)
+                .Width(75)
+                ,
+                Html.X().Column()
+                    .Text("Lĩnh vực")
+                     .DataIndex("FieldOperation_Name")
+                    .Flex(1),
+            Html.X().CommandColumn()
+                .Width(70)
+                .Commands(
+                    Html.X().GridCommand()
+                         .CommandName("DeleteUserFieldOperation")
+                        .Icon(Icon.Delete)
+                        .Text("Xóa")
+                )
+                .DirectEvents(de =>
+                            {
+                                de.Command.Confirmation.ConfirmRequest = true;
+                                de.Command.Url = Url.Action("DeleteUserFieldOperation");
+                                de.Command.ExtraParams.Add(new Parameter("FieldOperation_Id", "record.data.FieldOperation_Id", ParameterMode.Raw));
+                                de.Command.ExtraParams.Add(new Parameter("User_Id", "App.User_Id.getValue()", ParameterMode.Raw));
+                                de.Command.Success = "onSuccess(App.GridPanel_FieldOperation, result.data);";
+                            })
+                )
+
+)
+)

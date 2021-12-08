@@ -1,0 +1,43 @@
+﻿@model SOP.Models.District
+
+   @{
+       string test = ViewBag.Province_Id;
+       }
+@{
+    ViewBag.Title = "Create";
+    var X = Html.X();
+}
+@(X.Window()
+    .ID("AddDistrict")
+    .Width(400)
+    //.Height(130)
+    .Flex(1)
+    .Icon(Icon.Add)
+    .Title("Thêm mới Huyện")
+    .Padding(5)
+    .CloseAction(CloseAction.Destroy)
+            .Items(
+                        X.FormPanel()
+                            .ID("CreateDistrictForm")
+                            .Frame(true)
+                            .DefaultAnchor("100%")
+                            .BodyPadding(5)
+                            .Items(
+                                    X.TextFieldFor(m => m.District_Name).FieldLabel("Tên Quận-Huyện").LabelWidth(150),
+                                    X.CheckboxFor(m => m.District_Active).FieldLabel("Trạng Thái").LabelWidth(150).BoxLabel("Kích hoạt").Checked(true),
+                                    X.NumberFieldFor(m => m.District_ProvinceId).FieldLabel("Mã Tỉnh-Thành Phố").LabelWidth(150).Hidden(true).Value(Model.District_ProvinceId)
+                            )
+                    )
+    .Buttons(
+         X.Button()
+         .Text("Lưu")
+         .Icon(Icon.Accept)
+                 .DirectEvents(de =>
+                 {
+                     de.Click.Url = Url.Action("/DistrictSave");
+                     de.Click.EventMask.ShowMask = true;
+                     de.Click.FormID = "CreateDistrictForm";
+                 }
+            )
+    )
+)

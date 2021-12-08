@@ -1,0 +1,80 @@
+﻿@{
+    var X = Html.X();
+    Layout = "~/Views/_LayoutLogin.cshtml";
+}
+
+<div style="width:650px; margin:auto; background-color:white; font-family:'Times New Roman';">
+    <div style="background-color: white; font-size: 15px; text-align: center; padding-bottom: 15px;">
+        CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM <br>
+        Độc lập - Tự do - Hạnh Phúc<br>
+        ----------------
+
+        <h3>
+            BÁO CÁO KẾT QUẢ @ViewBag.Time  <br>
+            ĐÁNH GIÁ SỰ HÀI LÒNG CỦA CÔNG DÂN TẠI BỘ PHẬN MỘT CỬA
+        </h3>
+    </div>
+    Lĩnh vực: @ViewBag.FieldOperation
+
+    @(  X.FormPanel()
+        .LayoutConfig(new HBoxLayoutConfig() { Align = HBoxAlign.Stretch })
+        .MinWidth(600)
+        .Height(480)
+        .Items(
+                X.Chart()
+                .Flex(1)
+                .MinWidth(600)
+                .ID("ChartPrint")
+                .Animate(true)
+                .Shadow(true)
+                .InsetPadding(20)
+                .Theme("Base:gradients")
+                .LegendConfig(X.ChartLegend().Position(LegendPosition.Bottom))
+                .StyleSpec("background:#fff;")
+                .Store(X.Store()
+                    .ID("StoreChart")
+                    .Data(Model)
+                    .Model(X.Model()
+                        .Fields(
+                                X.ModelField().Name("Rating_Name"),
+                                X.ModelField().Name("Rating_Total")
+                        )
+                    )
+                )
+                .Series(X.PieSeries()
+                    .AngleField("Rating_Total")
+                    .ShowInLegend(true)
+                    .Donut(0)
+                    .Highlight(true)
+                    .HighlightSegmentMargin(20)
+                    .Label(X.SeriesLabel()
+                        .Display(SeriesLabelDisplay.Rotate)
+                        .Field(new[] { "Rating_Name" })
+                        .Contrast(true)
+                        .Font("14px Arial")
+                        .Orientation(Orientation.Horizontal)
+                    )
+                )
+                ))
+
+    @(X.GridPanel()
+            .ID("Grid1")
+            .Flex(2)
+            .MinHeight(200)
+            .MinHeight(350)
+            .Padding(30)
+            .Store(Html.X().Store()
+                .Model(Html.X().Model()
+                    .Fields(
+                      new ModelField("Rating_Name", ModelFieldType.String),
+                      new ModelField("Rating_Total", ModelFieldType.Int)
+                    )
+                )
+                .DataSource(Model)
+            )
+            .ColumnModel(
+                    Html.X().Column().Text("Mức đánh giá").DataIndex("Rating_Name").Flex(1),
+                    Html.X().Column().Text("Điểm").DataIndex("Rating_Total")
+            )
+    )
+</div>

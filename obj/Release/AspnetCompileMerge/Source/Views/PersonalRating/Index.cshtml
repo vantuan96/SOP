@@ -1,0 +1,128 @@
+﻿
+@{
+    var X = Html.X();
+    Layout = "~/Views/_LayoutLogin.cshtml";
+}
+@(X.XScript().ScriptBlock(@"
+<script>
+    var addTab = function (tabPanel, id, url, menuItem, title) {
+        tabPanel = window.parent.App.TabPanel1;
+        var tab = tabPanel.getComponent(id);
+        if (!tab) {
+            tab = tabPanel.add({
+                id: id,
+                title: title,
+                closable: true,
+                menuItem: menuItem,
+                loader: {
+                    url: url,
+                    renderer: 'frame',
+                    loadMask: {
+                        showMask: true,
+                        msg: 'Xin chờ, đang tải...'
+                    }
+                }
+            });
+            tab.on('activate', function (tab) {
+                //#{MenuPanel1}.setSelection(tab.menuItem);
+            });
+        }
+        tabPanel.setActiveTab(tab);
+    }
+
+</script>"
+     ))
+
+@(X.GridPanel()
+        .Title("Danh sách cán bộ một cửa")
+        .Padding(10)
+            .ID("UserGridPanel")
+            .Store(Html.X().Store().ID("Store_User")
+            .Model(Html.X().Model()
+                .Fields(
+                            new ModelField("User_Id", ModelFieldType.Int),
+                            new ModelField("User_FullName", ModelFieldType.String),
+                            new ModelField("User_Email", ModelFieldType.String),
+                            new ModelField("User_UserName", ModelFieldType.String),
+                            new ModelField("User_CurrentOrganizationId", ModelFieldType.Int),
+                            new ModelField("Organization_Name", ModelFieldType.String)
+                          )
+            )
+           .DataSource(Model)
+        )
+        .ColumnModel(
+            Html.X().RowNumbererColumn()
+            .Text("STT")
+            .Width(40)
+            .Sortable(false),
+            Html.X().Column()
+                .Text("Mã")
+                .DataIndex("User_Id")
+                .Width(75)
+                .Hidden(true),
+            Html.X().Column()
+                .Text("Họ tên")
+                .DataIndex("User_FullName").Width(150),
+            Html.X().Column()
+                .Text("Tài Khoản")
+                .DataIndex("User_UserName"),
+            Html.X().Column()
+                .Text("Email")
+                .DataIndex("User_Email").Width(200),
+            Html.X().Column()
+                    .Text("Cơ Quan")
+                    .Width(220)
+                    .DataIndex("Organization_Name"),
+            Html.X().CommandColumn()
+                    .Width(120)
+                    .Commands(
+                    Html.X().GridCommand()
+                        .CommandName("MPersonalRating")
+                        .Icon(Icon.Accept)
+                        .Text("B/c tháng")
+                    )
+                    .Listeners(ls =>
+                    {
+                        ls.Command.Handler = "addTab(#{TabPanel1}, 'MPersonalRating', '/PersonalRating/MPersonalRatingdirect'+'/?UserId='+record.data.User_Id, this, 'Báo cáo kết quả tháng: '+record.data.User_FullName);";
+                    }),
+         Html.X().CommandColumn()
+                    .Width(110)
+                    .Commands(
+                    Html.X().GridCommand()
+                        .CommandName("YPersonalRating")
+                        .Icon(Icon.Accept)
+                        .Text("B/c năm")
+                    )
+                    .Listeners(ls =>
+                    {
+                        ls.Command.Handler = "addTab(#{TabPanel1}, 'YPersonalRating', '/PersonalRating/YPersonalRatingdirect'+'/?UserId='+record.data.User_Id, this, 'Báo cáo kết quả năm: '+record.data.User_FullName);";
+                    }),
+           Html.X().CommandColumn().Flex(1)
+                        .Commands(
+                        Html.X().GridCommand()
+                            .CommandName("YComparePersonalRating")
+                            .Icon(Icon.Accept)
+                            .Text("B/c so sánh năm")
+                        )
+                        .Listeners(ls =>
+                        {
+                            ls.Command.Handler = "addTab(#{TabPanel1}, 'YComparePersonalRating', '/PersonalRating/YComparePersonalRating'+'/?UserId='+record.data.User_Id, this, 'Báo cáo kết quả năm: '+record.data.User_FullName);";
+                        })
+                   )
+
+                .Plugins(
+                        X.FilterHeader()
+                )
+                .BottomBar(
+                     Html.X().PagingToolbar()
+                         .Items(
+                                Html.X().ToolbarSpacer(10)
+                                )
+                         .HideRefresh(true)
+                         .Plugins(Html.X().ProgressBarPager())
+                 )
+
+
+ )
+
+

@@ -1,0 +1,214 @@
+﻿@{
+    Layout = "~/Views/_LayoutLogin.cshtml";
+    var X = Html.X();
+}
+<script>
+    var template = '<span style="color:{0};">{1}</span>';
+    var pctChange = function (value) {
+        return Ext.String.format(template, (value == true) ? (value = "Kích hoạt") : (value = "Chưa kích hoạt"), value);
+    };
+    var prepare = function (grid, toolbar, rowIndex, record) {
+        var firstButton = toolbar.items.get(0);
+        if (record.data.price < 50) {
+            firstButton.setDisabled(true);
+            firstButton.setTooltip("Disabled");
+        }
+        //you can return false to cancel toolbar for this record
+    };
+
+    var organizationTypeRender = function (value) {
+        if (!Ext.isEmpty(value)) {
+            return value.OrganizationType_Name;
+        }
+        return value;
+    };
+
+    var onSuccess = function (grid, data) {
+        grid.show();
+        grid.getStore().loadData(data);
+
+    };
+</script>
+
+<div style="padding:10px">
+    @(X.GridPanel()
+        .Title("Danh sách Cơ Quan - Tổ chức")
+        .ID("OrganizationGridPanel")
+        .SelectionMemory(false)
+            .Store(Html.X().Store().ID("StoreOrganization")
+            .Model(Html.X().Model()
+                .Fields(
+                            new ModelField("Organization_Id", ModelFieldType.Int),
+                            new ModelField("Organization_Name", ModelFieldType.String),
+                            new ModelField("Organization_Superior", ModelFieldType.Int),
+                            new ModelField("Organization_Information", ModelFieldType.String),
+                            new ModelField("Organization_Address", ModelFieldType.String),
+                            new ModelField("Organization_PhoneNumber", ModelFieldType.Int),
+                            new ModelField("Organization_Fax", ModelFieldType.Int),
+                            new ModelField("Organization_Email", ModelFieldType.String),
+                            new ModelField("Organization_Website", ModelFieldType.String),
+                            new ModelField("Organization_CreatedOn", ModelFieldType.Date),
+                            new ModelField("Organization_OrganizationTypeId", ModelFieldType.Int),
+                            new ModelField()
+                                          {
+                                              Name = "OrganizationType",
+                                              Type = ModelFieldType.Object
+                                          },
+                            new ModelField("Organization_FieldOperation", ModelFieldType.String),
+                            new ModelField("Organization_DirectlyUnder", ModelFieldType.Int),
+                            new ModelField("Organization_Specialized", ModelFieldType.Int),
+                            new ModelField("Organization_Level", ModelFieldType.Int),
+                            new ModelField()
+                                {
+                                Name = "Organization_Active",
+                                Type = ModelFieldType.Boolean,
+                                Convert =
+                                    {
+                                    Handler = "return value === true;"
+                                    }
+                                }
+                )
+            )
+            .PageSize(20)
+            .DataSource(Model)
+        )
+        .ColumnModel(
+            Html.X().RowNumbererColumn().Width(40).Sortable(false),
+            Html.X().Column()
+                .Text("Mã")
+                .DataIndex("Organization_Id")
+                .Width(75)
+                .Hidden(true),
+            Html.X().Column()
+                .Text("Tên Cơ Quan - Tổ chức")
+                .DataIndex("Organization_Name")
+                .Flex(1),
+            Html.X().Column()
+                .Text("Siêu Tổ chức")
+                .DataIndex("Organization_Superior")
+                .Hidden(true)
+                .Flex(1)
+                ,
+            Html.X().Column()
+                .Text("Thông tin Tổ Chức")
+                .DataIndex("Organization_Information")
+                .Flex(1)
+                .Hidden(true),
+            Html.X().Column()
+                .Text("Địa chỉ")
+                .DataIndex("Organization_Address")
+                .Flex(1)
+                .Hidden(true),
+            Html.X().Column()
+                .Text("Số điện thoại")
+                .DataIndex("Organization_PhoneNumber")
+                .Hidden(true)
+                .Flex(1),
+            Html.X().Column()
+                .Text("Số Fax")
+                .Hidden(true)
+                .DataIndex("Organization_Fax")
+                .Flex(1),     
+            Html.X().Column()
+                .Text("Email Tổ chức")
+                .DataIndex("Organization_Email")
+                .Hidden(true)
+                .Flex(1),    
+            Html.X().Column()
+                .Text("Website")
+                .DataIndex("Organization_Website")
+                .Flex(1)
+                .Hidden(true),
+            Html.X().Column()
+                .Text("Ngày tạo")
+                .DataIndex("Organization_CreatedOn")
+                .Hidden(true)
+                .Flex(1),   
+            Html.X().Column()
+                .Text("Loại Tổ chức")
+                .DataIndex("Organization_OrganizationTypeId")
+                .Hidden(true)
+                .Flex(1),
+            Html.X().Column()
+                .Text("Loại Tổ chức")
+                .DataIndex("OrganizationType")
+                .Renderer("organizationTypeRender")
+                .Flex(1),     
+            Html.X().Column()
+                .Text("Lĩnh vực hoạt động")
+                .DataIndex("Organization_FieldOperation")
+                .Flex(1),
+            Html.X().Column()
+                .Text("Số đơn vị thuộc")
+                .DataIndex("Organization_DirectlyUnder")
+                .Flex(1)
+                .Hidden(true),
+            Html.X().Column()
+                .Text("Số lượng phòng chuyên môn")
+                .DataIndex("Organization_Specialized")
+                .Flex(1)
+                .Hidden(true),
+            Html.X().Column()
+                .Text("Cấp cơ quan")
+                .DataIndex("Organization_level")
+                .Flex(1)
+                .Hidden(true),
+            Html.X().CheckColumn()
+                .Width(80)
+                .Text("Kích hoạt")
+                .Align(Alignment.Center)
+                .DataIndex("Organization_Active")
+                .Hidden(false),   
+            Html.X().CommandColumn()
+                .Width(60)
+                .Commands(
+                    Html.X().GridCommand()
+                        .CommandName("Edit")
+                        .Icon(Icon.NoteEdit)
+                        .Text("Sửa")
+                )
+                .DirectEvents(de =>
+                            {
+                                de.Command.Url = Url.Action("Edit");
+                                de.Command.ExtraParams.Add(new Parameter("Organization_Id", "record.data.Organization_Id", ParameterMode.Raw));
+                            }),
+                Html.X().CommandColumn()
+                .Width(60)
+                .Commands(
+                    Html.X().GridCommand()
+                        .CommandName("Delete")
+                        .Icon(Icon.Delete)
+                        .Text("Xóa")
+                )
+                .DirectEvents(de =>
+                            {
+                                de.Command.Confirmation.ConfirmRequest = true;
+                                de.Command.Url = Url.Action("Delete");
+                                de.Command.ExtraParams.Add(new Parameter("Organization_Id", "record.data.Organization_Id", ParameterMode.Raw));
+                                de.Command.Success = "onSuccess(App.OrganizationGridPanel, result.data);";
+                            })
+                .PrepareToolbar("prepare")
+                )
+                .Plugins(
+                            X.FilterHeader()
+                        )
+                .BottomBar(
+                            Html.X().PagingToolbar()
+                                .HideRefresh(true)
+                        )
+                        .TopBar(
+                        Html.X().Toolbar()
+                            .Items(
+                                Html.X().Button()
+                                    .Text("Thêm mới")
+                                    .Icon(Icon.Add)
+                                    .DirectEvents(de =>
+                                    {
+                                        de.Click.Url = Url.Action("Create");
+                                    })
+             )
+        )
+    )
+</div>
+
+

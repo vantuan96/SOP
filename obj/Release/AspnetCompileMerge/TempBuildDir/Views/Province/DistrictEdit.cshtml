@@ -1,0 +1,42 @@
+﻿@model SOP.Models.District
+
+@{
+    ViewBag.Title = "Edit";
+    //Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    var X = Html.X();
+}
+
+@(X.Window()
+    .Width(400)
+    //.Height(140)
+    .Flex(1)
+    .Icon(Icon.Add)
+    .Title("Sửa Thông tin Huyện")
+    .Padding(5)
+    .CloseAction(CloseAction.Destroy)
+            .Items(
+                        X.FormPanel()
+                            .ID("FormPanelDistrictEdit")
+                            .Frame(true)
+                            .DefaultAnchor("100%")
+                            .BodyPadding(5)
+                            .Items(
+                                X.NumberFieldFor(m => m.District_Id).FieldLabel("Mã Quận-Huyện").LabelWidth(150).Value(Model.District_Id).ReadOnly(true).Hidden(true),
+                                    X.NumberFieldFor(m => m.District_ProvinceId).FieldLabel("Mã Tỉnh-Thành Phố").LabelWidth(150).Value(Model.District_ProvinceId).ReadOnly(true).Hidden(true),
+                                X.TextFieldFor(m => m.District_Name).FieldLabel("Tên Quận-Huyện").LabelWidth(150).Text(Model.District_Name),
+                                X.CheckboxFor(m => m.District_Active).FieldLabel("Trạng Thái").LabelWidth(150).BoxLabel("Kích hoạt")
+                            )
+                    )
+    .Buttons(
+         X.Button()
+         .Text("Lưu")
+         .Icon(Icon.Accept)
+                 .DirectEvents(de =>
+                 {
+                     de.Click.Url = Url.Action("/DistrictEditSave");
+                     de.Click.EventMask.ShowMask = true;
+                     de.Click.FormID = "FormPanelDistrictEdit";
+                 }
+            )
+    )
+) 

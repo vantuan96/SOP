@@ -1,0 +1,174 @@
+﻿@model IEnumerable<SOP.Models.Department>
+@{
+    ViewBag.Title = "Quản trị danh mục Phòng Ban";
+    Layout = "~/Views/_LayoutLogin.cshtml";
+    var X = Html.X();
+}
+<script>
+    var template = '<span style="color:{0};">{1}</span>';
+    var pctChange = function (value) {
+        return Ext.String.format(template, (value == true) ? (value = "Kích hoạt") : (value = "Chưa kích hoạt"), value);
+    };
+    var prepare = function (grid, toolbar, rowIndex, record) {
+        var firstButton = toolbar.items.get(0);
+        if (record.data.price < 50) {
+            firstButton.setDisabled(true);
+            firstButton.setTooltip("Disabled");
+        }
+        //you can return false to cancel toolbar for this record
+    };
+
+    var onSuccess = function (grid, data) {
+        grid.show();
+        grid.getStore().loadData(data);
+    };
+    //var prepareOrganization_Name = function (value, record) {
+    //    return record.get('Organization').Organization_Name;
+    //};
+
+    var organizationRender = function (value) {
+        if (!Ext.isEmpty(value)) {
+            return value.Organization_Name;
+        }
+        return value;
+    };
+</script>
+
+<div style="padding:10px">
+    @(X.GridPanel()
+        .Title("Danh sách Phòng Ban")
+        .ID("DepartmentGridPanel")
+        .SelectionMemory(false)
+            .Store(Html.X().Store().ID("StoreDepartmentType")
+            .Model(Html.X().Model()
+                .Fields(
+                    new ModelField("Department_Id", ModelFieldType.Int),
+                    new ModelField("Department_Name", ModelFieldType.String),
+                    new ModelField("Department_OrganizationId", ModelFieldType.Int),
+                    new ModelField()
+                        {
+                             Name = "Organization",
+                             Type = ModelFieldType.Object
+                        },    
+                    new ModelField("Department_Information", ModelFieldType.String),
+                    new ModelField("Department_PhoneNumber", ModelFieldType.Int),
+                    new ModelField("Department_Fax", ModelFieldType.Int),
+                    new ModelField("Department_Email", ModelFieldType.String),
+                    new ModelField("Department_CreatedOn", ModelFieldType.Date),    
+                    new ModelField()
+                    {
+                        Name = "Department_Active",
+                        Type = ModelFieldType.Boolean,
+                        Convert =
+                        {
+                            Handler = "return value === true;"
+                        }
+                    }
+                )
+            )
+            .PageSize(20)
+            .DataSource(Model)
+        )
+        .ColumnModel(
+            Html.X().RowNumbererColumn().Width(40).Sortable(false),
+            Html.X().Column()
+                .Text("Mã")
+                .DataIndex("Department_Id")
+                .Width(75)
+                .Hidden(true),
+            Html.X().Column()
+                .Text("Tên phòng ban")
+                .DataIndex("Department_Name")
+                .Flex(1),
+            Html.X().Column()
+                .Text("Cơ quan trực thuộc")
+                .DataIndex("Department_OrganizationId")
+                .Hidden(true)
+                .Flex(1),
+            Html.X().Column()
+                .Text("Cơ quan")
+                .DataIndex("Organization")
+                .Renderer("organizationRender")
+                .Flex(1),    
+            Html.X().Column()
+                .Text("Giới thiệu")
+                .DataIndex("Department_Information")
+                .Hidden(true)
+                .Flex(1),
+            Html.X().Column()
+                .Text("Số Điện thoại")
+                .DataIndex("Department_PhoneNumber")
+                        .Hidden(true)
+                .Flex(1),
+            Html.X().Column()
+                .Text("Số Fax")
+                .DataIndex("Department_Fax")
+                        .Hidden(true)
+                .Flex(1),
+            Html.X().Column()
+                .Text("Email")
+                .DataIndex("Department_Email")
+                        .Hidden(true)
+                .Flex(1),
+            Html.X().Column()
+                .Text("Ngày thành lập")
+                .DataIndex("Department_CreatedOn")
+                .Hidden(true)
+                .Flex(1),    
+            Html.X().CheckColumn()
+                .Width(95)
+                .Text("Kích Hoạt")
+                .Align(Alignment.Center)
+                .DataIndex("Department_Active")
+                ,
+            Html.X().CommandColumn()
+                .Width(60)
+                .Commands(
+            Html.X().GridCommand()
+                .CommandName("Edit")
+                .Icon(Icon.NoteEdit)
+                .Text("Sửa")
+                )
+                .DirectEvents(de =>
+                            {
+                                de.Command.Url = Url.Action("Edit");
+                                de.Command.ExtraParams.Add(new Parameter("Department_Id", "record.data.Department_Id", ParameterMode.Raw));
+                            }),
+                Html.X().CommandColumn()
+                .Width(60)
+                .Commands(
+                    Html.X().GridCommand()
+                        .CommandName("Delete")
+                        .Icon(Icon.Delete)
+                        .Text("Xóa")
+                )
+                .DirectEvents(de =>
+                            {
+                                de.Command.Confirmation.ConfirmRequest = true;
+                                de.Command.Url = Url.Action("Delete");
+                                de.Command.ExtraParams.Add(new Parameter("Department_Id", "record.data.Department_Id", ParameterMode.Raw));
+                                de.Command.Success = "onSuccess(App.DepartmentGridPanel, result.data);";
+                            })
+                .PrepareToolbar("prepare")
+                )
+                .Plugins(
+                            X.FilterHeader()
+                        )
+                .BottomBar(
+                            Html.X().PagingToolbar()
+                                .HideRefresh(true)
+                        )
+                .TopBar(
+                Html.X().Toolbar()
+                    .Items(
+                        Html.X().Button()
+                            .Text("Thêm mới")
+                            .Icon(Icon.Add)
+                            .DirectEvents(de =>
+                            {
+                                de.Click.Url = Url.Action("Create");
+                            })
+             )
+        )
+    )
+</div>

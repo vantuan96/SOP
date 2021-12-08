@@ -1,0 +1,33 @@
+﻿
+@{
+    var X = Html.X();
+    Layout = "~/Views/_LayoutLogin.cshtml";
+}
+
+
+        @(X.FormPanel()
+                 .ID("OpinionForm1")
+                 .Layout(LayoutType.Form)
+                 .Padding(20)
+                 .Items(
+                 X.TextField().ID("Email").Text(ViewBag.Username).FieldLabel("Email").AllowBlank(false),
+                 X.TextField().ID("Opinion_Title").FieldLabel("Tiêu đề").AllowBlank(false),
+                 X.TextArea().ID("Opinion_Content").FieldLabel("Nội dung").AllowBlank(false).Height(200)
+                 )
+                 .Buttons(
+                        X.Button()
+                        .Text("Gửi")
+                        .Icon(Icon.EmailGo)
+                        .DirectEvents(de =>
+                         {
+                             de.Click.Url = Url.Action("Opinion_Send");
+                             de.Click.EventMask.ShowMask = true;
+                             de.Click.FormID = "OpinionForm1";
+                         }
+
+                    )
+
+                 )
+    )
+    
+

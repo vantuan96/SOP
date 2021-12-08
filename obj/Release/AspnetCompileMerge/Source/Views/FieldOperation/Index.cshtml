@@ -1,0 +1,123 @@
+﻿@model IEnumerable<SOP.Models.FieldOperation>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/_LayoutLogin.cshtml";
+    var X = Html.X();
+}
+<script>
+    var template = '<span style="color:{0};">{1}</span>';
+    var pctChange = function (value) {
+        return Ext.String.format(template, (value == true) ? (value = "Kích hoạt") : (value = "Chưa kích hoạt"), value);
+    };
+    var prepare = function (grid, toolbar, rowIndex, record) {
+        var firstButton = toolbar.items.get(0);
+        if (record.data.price < 50) {
+            firstButton.setDisabled(true);
+            firstButton.setTooltip("Disabled");
+        }
+    };
+    var onSuccess = function (grid, data) {
+        grid.show();
+        grid.getStore().loadData(data);
+    };
+</script>
+<div style="padding:10px">
+    @(X.GridPanel()
+        .Title("Lĩnh vực")
+        .ID("GridPanel1")
+        .Store(Html.X().Store()
+        .RemotePaging(true)
+        .PageSize(10)
+        .DataSource(Model)
+        .Model(Html.X().Model()
+                .Fields(
+                       new ModelField("FieldOperation_Id", ModelFieldType.Int),
+                       new ModelField("FieldOperation_Name", ModelFieldType.String),
+                       new ModelField()
+                                    {
+                                        Name = "FieldOperation_Active",
+                                        Type = ModelFieldType.Boolean,
+                                        Convert =
+                                        {
+                                            Handler = "return value === true;"
+                                        }
+                                    }
+                )
+            )
+        )
+        .ColumnModel(
+            Html.X().RowNumbererColumn().Width(40)
+            .Sortable(false)
+            .Text("STT"),
+            Html.X().Column()
+                .Text("Mã")
+                        .DataIndex("FieldOperation_Id")
+                .Width(75)
+                .Hidden(true),
+            Html.X().Column()
+                .Text("Tên lĩnh vực")
+                        .DataIndex("FieldOperation_Name")
+                .Flex(1),
+            Html.X().CheckColumn()
+                .Text("Kích hoạt")
+                 .DataIndex("FieldOperation_Active")
+                 .Align(Alignment.Center)
+                .Width(80),
+            Html.X().CommandColumn()
+                .Width(60)
+                .Commands(
+                    Html.X().GridCommand()
+                        .CommandName("Edit")
+                        .Icon(Icon.NoteEdit)
+                        .Text("Sửa")
+                )
+                .DirectEvents(de =>
+                            {
+                                de.Command.Url = Url.Action("Edit");
+                                de.Command.ExtraParams.Add(new Parameter("FieldOperation_Id", "record.data.FieldOperation_Id", ParameterMode.Raw));
+                                de.Command.ExtraParams.Add(new Parameter("FieldOperation_Name", "record.data.FieldOperation_Name", ParameterMode.Raw));
+                                de.Command.ExtraParams.Add(new Parameter("FieldOperation_Active", "record.data.FieldOperation_Active", ParameterMode.Raw));
+                            }),
+                Html.X().CommandColumn()
+                .Width(60)
+                .Commands(
+                    Html.X().GridCommand()
+                        .CommandName("Delete")
+                        .Icon(Icon.Delete)
+                        .Text("Xóa")
+                )
+                .DirectEvents(de =>
+                            {
+                                de.Command.Confirmation.ConfirmRequest = true;
+                                de.Command.Url = Url.Action("Delete");
+                                de.Command.ExtraParams.Add(new Parameter("id", "record.data.FieldOperation_Id", ParameterMode.Raw));
+                            })
+                .PrepareToolbar("prepare")
+                )
+                .Plugins(
+                      X.FilterHeader()
+                )
+                .BottomBar(
+                        Html.X().PagingToolbar()
+                        .Items(
+                            Html.X().ToolbarSpacer(10)
+                        )
+                        .HideRefresh(true)
+                        .Plugins(Html.X().ProgressBarPager())
+                        )
+                .TopBar(
+                Html.X().Toolbar()
+                    .Items(
+                        Html.X().Button()
+                            .Text("Thêm mới")
+                            .Icon(Icon.Add)
+                            .DirectEvents(de =>
+                            {
+                                de.Click.Url = Url.Action("Create");
+                            }),
+                        Html.X().ToolbarFill()
+                            )
+                    )
+    )
+</div>

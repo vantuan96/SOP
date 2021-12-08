@@ -1,0 +1,47 @@
+﻿
+@{
+    Layout = null;
+}
+<style>
+    #unlicensed {
+        visibility: hidden !important;
+        display: none !important;
+    }
+</style>
+@Html.X().ResourceManager().Theme(Theme.Neptune).Locale("vi-vn")
+@model SOP.Models.User
+
+@(
+ Html.X().Window()
+            .Title("Đăng nhập hệ thống")
+            .Width(350)
+            .Height(200)
+            .Icon(Icon.Lock)
+            .Layout(LayoutType.Fit)
+            .Closable(false)
+            .Items(
+                Html.X().FormPanel()
+                    .ID("FormPanel1")
+                    .DefaultAnchor("100%")
+                    .BodyPadding(20)
+                    .FieldDefaults(def =>
+                    {
+                        def.MsgTarget = MessageTarget.Side;
+                    })
+                    .Items(
+                        Html.X().TextFieldFor(m => m.User_UserName).FieldLabel("Tài khoản").AllowBlank(false),
+                        Html.X().TextFieldFor(m => m.User_PassWord).FieldLabel("Mật khẩu").InputType(Ext.Net.InputType.Password).AllowBlank(false)
+                    )
+            )
+            .Buttons(
+                Html.X().Button()
+                    .Text("Đăng nhập")
+                     .DirectEvents(de =>
+                            {
+                                de.Click.Url = Url.Action("CheckLogin");
+                                de.Click.EventMask.ShowMask = true;
+                                de.Click.FormID = "FormPanel1";
+                            })
+                           
+                    )
+            )

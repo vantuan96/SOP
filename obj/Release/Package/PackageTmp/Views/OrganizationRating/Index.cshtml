@@ -1,0 +1,136 @@
+﻿@{
+    var X = Html.X();
+    Layout = "~/Views/_LayoutLogin.cshtml";
+}
+@(X.XScript().ScriptBlock(@"
+<script>
+    var addTab = function (tabPanel, id, url, menuItem, title) {
+        tabPanel = window.parent.App.TabPanel1;
+        var tab = tabPanel.getComponent(id);
+        if (!tab) {
+            tab = tabPanel.add({
+                id: id,
+                title: title,
+                closable: true,
+                menuItem: menuItem,
+                loader: {
+                    url: url,
+                    renderer: 'frame',
+                    loadMask: {
+                        showMask: true,
+                        msg: 'Xin chờ, đang tải...'
+                    }
+                }
+            });
+            tab.on('activate', function (tab) {
+                //#{MenuPanel1}.setSelection(tab.menuItem);
+            });
+        }
+        tabPanel.setActiveTab(tab);
+    }
+
+</script>"
+     ))
+
+@(X.GridPanel()
+        .Title("Danh sách cơ quan")
+        .Padding(10)
+            .ID("UserGridPanel")
+            .Store(Html.X().Store().ID("Store_User")
+            .Model(Html.X().Model()
+                .Fields(
+                            new ModelField("Organization_Id", ModelFieldType.Int),
+                            new ModelField("Organization_Name", ModelFieldType.String)
+                          )
+            )
+           .DataSource(Model)
+        )
+        .ColumnModel(
+            Html.X().RowNumbererColumn()
+            .Text("STT")
+            .Width(40)
+            .Sortable(false),
+            Html.X().Column()
+                .Text("Mã")
+                .DataIndex("Organization_Id")
+                .Width(75)
+                .Hidden(true),
+            Html.X().Column()
+                    .Text("Cơ Quan")
+                    .Flex(1)
+                    .DataIndex("Organization_Name"),
+            Html.X().CommandColumn()
+                    .Width(120)
+                    .Commands(
+                    Html.X().GridCommand()
+                        .CommandName("MOrganizationRating")
+                        .Icon(Icon.Accept)
+                        .Text("B/c tháng")
+                    )
+                    .Listeners(ls =>
+                    {
+                        ls.Command.Handler = "addTab(#{TabPanel1}, 'MOrganizationRating', '/OrganizationRating/MOrganizationRatingdirect'+'/?OrganizationId='+record.data.Organization_Id, this, 'Báo cáo kết quả tháng: '+record.data.Organization_Name);";
+                    }),
+         Html.X().CommandColumn()
+                    .Width(110)
+                    .Commands(
+                    Html.X().GridCommand()
+                        .CommandName("YOrganizationRating")
+                        .Icon(Icon.Accept)
+                        .Text("B/c năm")
+                    )
+                    .Listeners(ls =>
+                    {
+                        ls.Command.Handler = "addTab(#{TabPanel1}, 'YOrganizationRating', '/OrganizationRating/YOrganizationRatingdirect'+'/?OrganizationId='+record.data.Organization_Id, this, 'Báo cáo kết quả năm: '+record.data.Organization_Name);";
+                    }),
+           Html.X().CommandColumn().Width(140)
+                        .Commands(
+                        Html.X().GridCommand()
+                            .CommandName("YCompareOrganizationRating")
+                            .Icon(Icon.Accept)
+                            .Text("B/c so sánh năm")
+                        )
+                        .Listeners(ls =>
+                        {
+                            ls.Command.Handler = "addTab(#{TabPanel1}, 'YCompareOrganizationRating', '/OrganizationRating/YCompareOrganizationRating'+'/?OrganizationId='+record.data.Organization_Id, this, 'Báo cáo kết quả năm: '+record.data.Organization_Name);";
+                        }),
+            Html.X().CommandColumn().Width(140)
+                            .Commands(
+                            Html.X().GridCommand()
+                                .CommandName("DetailOrganizationRating")
+                                .Icon(Icon.ApplicationViewDetail)
+                                .Text("B/c chi tiết")
+                            )
+                            .Listeners(ls =>
+                            {
+                                ls.Command.Handler = "addTab(#{TabPanel1}, 'DetailOrganizationRating', '/OrganizationRating/DetailOrganizationRating'+'/?OrganizationId='+record.data.Organization_Id, this, 'Báo cáo chi tiết: '+record.data.Organization_Name);";
+                            })
+                   )
+                    .TopBar(X.Toolbar()
+                        .Items(
+                            X.Button()
+                                .Text("So sánh 2 cơ quan")
+                                .Icon(Icon.ArrowRefresh)
+                                .OnClientClick("addTab(#{TabPanel1},'CompareTwoOrganizationRating', '/OrganizationRating/CompareTwoOrganizationRating', this, 'So sánh kết quả 2 cơ quan');"),
+                            X.Button()
+                                .Text("Tổng hợp kết quả")
+                                .Icon(Icon.TableRow)
+                                .OnClientClick("addTab(#{TabPanel1},'ListOrganizationRating', '/OrganizationRating/ListOrganizationRating', this, 'Báo cáo kết quả tất cả cơ quan');")
+                        )
+                    )
+                .Plugins(
+                        X.FilterHeader()
+                )
+                .BottomBar(
+                     Html.X().PagingToolbar()
+                         .Items(
+                                Html.X().ToolbarSpacer(10)
+                                )
+                         .HideRefresh(true)
+                         .Plugins(Html.X().ProgressBarPager())
+                 )
+
+
+)
+
+

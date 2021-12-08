@@ -1,0 +1,302 @@
+﻿@model IEnumerable<SOP.Models.User>
+@{
+    ViewBag.Title = "Quản Lý Cán Bộ";
+    Layout = "~/Views/_LayoutLogin.cshtml";
+    var X = Html.X();
+}
+<script>
+    var template = '<span style="color:{0};">{1}</span>';
+    var pctChange = function (value) {
+        return Ext.String.format(template, (value == true) ? (value = "Kích hoạt") : (value = "Chưa kích hoạt"), value);
+    };
+    var pctChaneReligion = function (value) {
+        return Ext.String.format(template, (value == 1) ? (value = "Có") : (value = "Không"), value);
+    };
+    var prepare = function (grid, toolbar, rowIndex, record) {
+        var firstButton = toolbar.items.get(0);
+        if (record.data.price < 50) {
+            firstButton.setDisabled(true);
+            firstButton.setTooltip("Disabled");
+        }
+    };
+    var onSuccess = function (grid, data) {
+        grid.show();
+        grid.getStore().loadData(data);
+    };
+
+    var organizationRender = function (value) {
+        if (!Ext.isEmpty(value)) {
+            return value.Organization_Name;
+        }
+        return value;
+    };
+
+    var departmentRender = function (value) {
+        if (!Ext.isEmpty(value)) {
+            return value.Department_Name;
+        }
+        return value;
+    };
+</script>
+<div style="padding:10px">
+    @(X.GridPanel()
+        .Title("Danh sách người dùng hệ thống")
+            .ID("UserGridPanel")
+            .Store(Html.X().Store().ID("Store_User")
+            .Model(Html.X().Model()
+                .Fields(
+                            new ModelField("User_Id", ModelFieldType.Int),
+                            new ModelField("User_FullName", ModelFieldType.String),
+                            new ModelField("User_PassWord", ModelFieldType.String),
+                            new ModelField("User_Email", ModelFieldType.String),
+                            new ModelField("User_Birthday", ModelFieldType.Date),
+                            new ModelField("User_Gender", ModelFieldType.Int),
+                            new ModelField("User_IdentityNumber", ModelFieldType.String),
+                            new ModelField("User_IdentityCreatedOn", ModelFieldType.Date),
+                            new ModelField("User_IdentityCreatedBy", ModelFieldType.String),
+                            new ModelField("User_Religion", ModelFieldType.Boolean),
+                            new ModelField("User_ReligionDetail", ModelFieldType.String),
+                            new ModelField("User_Address", ModelFieldType.String),
+                            new ModelField("User_DistrictId", ModelFieldType.Int),
+                            new ModelField("User_ProvinceId", ModelFieldType.Int),
+                            new ModelField("User_CurrentResidence", ModelFieldType.String),
+                            new ModelField("User_EthnicId", ModelFieldType.Int),
+                            new ModelField("User_PhoneNumber", ModelFieldType.String),
+                            new ModelField("User_Mobile", ModelFieldType.String),
+                            new ModelField("User_CurrentOrganizationId", ModelFieldType.Int),
+                            new ModelField("User_CurrentDepartmentId", ModelFieldType.Int),
+                            new ModelField()
+                                        {
+                                            Name = "Organization_Name",
+                                            ServerMapping = "Department.Organization.Organization_Name",
+                                            Type = ModelFieldType.String
+                                        },             
+                            new ModelField()
+                                {
+                                    Name = "User_Active",
+                                    Type = ModelFieldType.Boolean,
+                                    Convert =
+                                        {
+                                     Handler = "return value === true;"
+                                        }
+                            },
+                            new ModelField("User_CurrentDepartmentId", ModelFieldType.Int),
+
+                                    new ModelField()
+                                        {
+                                            Name = "Department_Name",
+                                            ServerMapping = "Department.Department_Name",
+                                            Type = ModelFieldType.String
+                                        },
+                            new ModelField("User_UserName", ModelFieldType.String)
+                          )
+            )
+           .DataSource(ViewBag.ListUser)
+        )
+        .ColumnModel(
+            Html.X().RowNumbererColumn()
+            .Text("STT")
+            .Width(40)
+            .Sortable(false),
+            Html.X().Column()
+                .Text("Mã")
+                .DataIndex("User_Id")
+                .Width(75)
+                .Hidden(true),
+            Html.X().Column()
+                .Text("Họ tên")
+                .DataIndex("User_FullName")
+                .Flex(1),
+            Html.X().Column()
+                .Text("Mật khẩu")
+                .DataIndex("User_PassWord")
+                .Hidden(true)
+                .Flex(1),
+            Html.X().Column()
+                .Text("Tài Khoản")
+                .DataIndex("User_UserName")
+                .Flex(1),     
+            Html.X().Column()
+                .Text("Email")
+                .DataIndex("User_Email")
+                .Hidden(true)
+                .Flex(1),
+            Html.X().DateColumn()
+                .Format("dd/MM/yyyy")
+                .Text("Ngày sinh")
+                .DataIndex("User_Birthday")
+                .Hidden(true)
+                .Flex(1),
+            Html.X().Column()
+                .Text("Giới tính")
+                .Hidden(true)
+                .DataIndex("User_Gender")
+                .Flex(1),
+            Html.X().Column()
+                 .Text("Số CMT")
+                 .DataIndex("User_IdentityNumber")
+                 .Hidden(true)
+                 .Flex(1),
+            Html.X().DateColumn()
+                .Format("dd/MM/yyyy")
+                .Text("Ngày cấp")
+                .Hidden(true)
+                .DataIndex("User_IdentityCreatedOn")
+                .Flex(1)
+                .Hidden(true),
+            Html.X().Column()
+                .Text("Nơi cấp")
+                .DataIndex("User_IdentityCreatedBy")
+                .Flex(1)
+                .Hidden(true),
+            Html.X().Column()
+                .Text("Tôn giáo")
+                .DataIndex("User_Religion")
+                //.Renderer("pctChaneReligion")
+                .Hidden(true)
+                .Flex(1),
+            Html.X().Column()
+                .Text("Chi Tiết Tôn giáo")
+                .DataIndex("User_ReligionDetail")
+                .Flex(1)
+                .Hidden(true),
+            Html.X().Column()
+                .Text("Địa chỉ")
+                .DataIndex("User_Address")
+                .Hidden(true)
+                .Flex(1),
+            Html.X().Column()
+                .Text("Huyện")
+                .DataIndex("User_DistrictId")
+                .Flex(1)
+                .Hidden(true),
+            Html.X().Column()
+                .Text("Tỉnh")
+                .DataIndex("User_ProvinceId")
+                .Flex(1)
+                .Hidden(true),
+            Html.X().Column()
+                 .Text("Nơi ở")
+                 .DataIndex("User_CurrentResidence")
+                 .Flex(1)
+                 .Hidden(true),
+            Html.X().Column()
+                 .Text("Dân tộc")
+                 .DataIndex("User_EthnicId")
+                 .Flex(1)
+                 .Hidden(true),
+            Html.X().Column()
+                  .Text("Số máy bàn")
+                   .DataIndex("User_PhoneNumber")
+                  .Flex(1)
+                  .Hidden(true),
+            Html.X().Column()
+                   .Text("Số di động")
+                   .DataIndex("User_Mobile")
+                   .Flex(1)
+                   .Hidden(true),
+            Html.X().Column()
+                    .Text("Cơ Quan")
+                    .DataIndex("User_CurrentOrganizationId")
+                    .Flex(1)
+                    .Hidden(true),
+            Html.X().Column()
+                    .Text("Cơ Quan")
+                    .Width(260)
+                    .DataIndex("Organization_Name")
+                    ,           
+            Html.X().Column()
+                   .Text("Phòng Ban")
+                   .DataIndex("User_CurrentDepartmentId")
+                   .Flex(1)
+                   .Hidden(true),
+            Html.X().Column()
+                   .Text("Phòng Ban")
+                   .DataIndex("Department_Name")
+                   .Flex(1)
+                   ,       
+            Html.X().CheckColumn()
+                    .Flex(1)
+                    .Text("Trạng thái")
+                    .DataIndex("User_Active")
+                    .Align(Alignment.Center)
+                    .Width(98),
+            Html.X().CommandColumn()
+                .Width(100)
+                .Commands(
+                    Html.X().GridCommand()
+                        .CommandName("Acception")
+                        .Icon(Icon.Accept)
+                        .Text("Kích hoạt")
+                )
+                .DirectEvents(de =>
+                            {
+                                de.Command.Confirmation.ConfirmRequest = true;
+                                de.Command.Url = Url.Action("Acception");
+                                de.Command.ExtraParams.Add(new Parameter("id", "record.data.User_Id", ParameterMode.Raw));
+                                de.Command.Success = "onSuccess(App.UserGridPanel, result.data);";
+                            })           ,        
+                    
+            Html.X().CommandColumn()
+                .Width(60)
+                .Commands(
+                    Html.X().GridCommand()
+                        .CommandName("Edit")
+                        .Icon(Icon.NoteEdit)
+                        .Text("Sửa")
+                )
+                .DirectEvents(de =>
+                            {
+                                de.Command.Url = Url.Action("Edit");
+                                de.Command.ExtraParams.Add(new Parameter("User_Id", "record.data.User_Id", ParameterMode.Raw));
+                                de.Command.Success = "onSuccess(App.UserGridPanel, result.data);";
+                            }),
+                Html.X().CommandColumn()
+                .Width(60)
+                .Commands(
+                    Html.X().GridCommand()
+                        .CommandName("Delete")
+                        .Icon(Icon.Delete)
+                        .Text("Xóa")
+                )
+                .DirectEvents(de =>
+                            {
+                                de.Command.Confirmation.ConfirmRequest = true;
+                                de.Command.Url = Url.Action("Delete");
+                                de.Command.ExtraParams.Add(new Parameter("id", "record.data.User_Id", ParameterMode.Raw));
+                                de.Command.Success = "onSuccess(App.UserGridPanel, result.data);";
+                            })
+                .PrepareToolbar("prepare")
+                )
+                .Plugins(
+                        X.FilterHeader()
+                )
+                .BottomBar(
+                     Html.X().PagingToolbar()
+                         .Items(
+                                Html.X().ToolbarSpacer(10)
+                                )
+                         .HideRefresh(true)
+                         .Plugins(Html.X().ProgressBarPager())
+                 )
+                        .TopBar(
+                        Html.X().Toolbar()
+                            .Items(
+                                Html.X().Button()
+                                        .Text("Thêm mới")
+                                        .Icon(Icon.Add)
+                                        .DirectEvents(de =>
+                                        {
+                                            de.Click.Url = Url.Action("Create");
+                                        }),
+                                Html.X().Button()
+                                    .Text("Đồng bộ UserID")
+                                    .Icon(Icon.ArrowOutLonger)
+                                    .DirectEvents(de =>
+                                        {
+                                            de.Click.Url = Url.Action("Synchronize");
+                                        })
+                                    )
+                                    )
+)
+</div>

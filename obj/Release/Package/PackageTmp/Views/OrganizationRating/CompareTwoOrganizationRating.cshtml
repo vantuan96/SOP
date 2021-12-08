@@ -1,0 +1,110 @@
+﻿
+@{
+
+    Layout = "~/Views/_LayoutLogin.cshtml";
+    var X = Html.X();
+}
+
+
+    <script>
+        var saveChart = function (btn) {
+            Ext.MessageBox.confirm('Download', 'Bạn có muốn tải biểu đồ về máy không?', function (choice) {
+                if (choice == 'yes') {
+                    btn.up('panel').down('chart').save({
+                        type: 'image/png'
+                    });
+                }
+            });
+        }
+    </script>
+
+
+
+    @(X.Panel()
+        .Layout(LayoutType.Fit)
+        .MinHeight(480)
+        .StyleSpec("overflow:hidden;")
+        .TopBar(X.Toolbar()
+            .Items(
+                X.Button()
+                    .Text("Tải bản đồ")
+                    .Icon(Icon.Disk)
+                    .Handler("saveChart"),
+                X.DateField().ID("FromTime").FieldLabel("Từ ngày").LabelWidth(60).SelectedValue(ViewBag.FromTime),
+                X.DateField().ID("ToTime").FieldLabel("Đến ngày").LabelWidth(60).SelectedValue(ViewBag.ToTime),
+                X.ComboBox()
+                                        .ID("ComboOrganization1")
+                                        .AnchorHorizontal("100%")
+                                        .EmptyText("Chọn một cơ quan")
+                                        .DisplayField("Organization_Name")
+                                        .ValueField("Organization_Id")
+                                        .QueryMode(DataLoadMode.Local)
+                                        .SelectedItems(ViewBag.OrganizationId1)
+                                        .Items(ViewBag.OrganizationrList),
+                X.ComboBox()
+                                         .ID("ComboOrganization2")
+                                         .AnchorHorizontal("100%")
+                                         .EmptyText("Chọn một cơ quan")
+                                         .DisplayField("Organization_Name")
+                                         .ValueField("Organization_Id")
+                                         .QueryMode(DataLoadMode.Local)
+                                         .SelectedItems(ViewBag.OrganizationId2)
+                                        .Items(ViewBag.OrganizationrList),                                       
+                X.Button()
+                     .Text("Xem kết quả")
+                     .Icon(Icon.TableRefresh)
+                     .DirectEvents(de =>
+                     {
+
+                                   de.Click.Url = Url.Action("CompareTwoOrganizationRating");
+                                   de.Click.ExtraParams.Add(new Parameter("FromTime", "App.FromTime.getRawValue()", ParameterMode.Raw));
+                                   de.Click.ExtraParams.Add(new Parameter("ToTime", "App.ToTime.getRawValue()", ParameterMode.Raw));
+                                   de.Click.ExtraParams.Add(new Parameter("OrganizationId1", "App.ComboOrganization1.getValue()", ParameterMode.Raw));
+                                   de.Click.ExtraParams.Add(new Parameter("OrganizationId2", "App.ComboOrganization2.getValue()", ParameterMode.Raw));
+                                   de.Click.Failure = "alert('Chưa chọn thời gian để lọc dữ liệu');";
+                                   })
+                
+            )
+        )
+        
+        .Items(
+            X.Chart()
+                .ID("CompareTwoOrganizationRatingChart1")
+                .StyleSpec("background:#fff;")
+                .StandardTheme(StandardChartTheme.Category2)
+                .InsetPadding(20)
+                .Animate(true)
+                .LegendConfig(X.ChartLegend().Position(LegendPosition.Right))
+                .Store(X.Store()
+                    .Data(Model)
+                    .Model(X.Model()
+                        .Fields(
+                            X.ModelField().Name("Rating_Name"),
+                            X.ModelField().Name("OrganizationRating1"),
+                            X.ModelField().Name("OrganizationRating2")
+                        )
+                    )
+                )
+                .Axes(
+                    X.RadialAxis()
+                )
+                .Series(
+                    X.RadarSeries()
+                        .XField("Rating_Name")
+                        .YField("OrganizationRating1")
+                                .Title(ViewBag.OrganizationName1)
+                        .ShowInLegend(true)
+                        .ShowMarkers(true)
+                        .MarkerConfig(new SpriteAttributes { Radius = 5, Size = 5 })
+                        .Style(new SpriteAttributes { StrokeWidth = 2, Fill = "none" }),
+                    X.RadarSeries()
+                        .XField("Rating_Name")
+                        .YField("OrganizationRating2")
+                                .Title(ViewBag.OrganizationName2)
+                        .ShowInLegend(true)
+                        .ShowMarkers(true)
+                        .MarkerConfig(new SpriteAttributes { Radius = 5, Size = 5 })
+                        .Style(new SpriteAttributes { StrokeWidth = 2, Fill = "none" })
+                )
+        )
+    )

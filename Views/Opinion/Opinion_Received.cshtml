@@ -1,0 +1,45 @@
+﻿
+@{
+    var X = Html.X();
+    Layout = "~/Views/_LayoutLogin.cshtml";
+}
+@(X.GridPanel()
+        .Padding(10)
+        .Border(true)
+        .MinWidth(600)
+        .MinHeight(350)
+        .Store(Html.X().Store()
+            .Model(Html.X().Model()
+                .Fields(
+                        new ModelField("Opinion_Id", ModelFieldType.Int),
+                        new ModelField("Opinion_From", ModelFieldType.Int),
+                        new ModelField("Opinion_To", ModelFieldType.Int),
+                        new ModelField("Opinion_Date", ModelFieldType.Date),
+                        new ModelField("Opinion_Title", ModelFieldType.String),
+                        new ModelField("Opinion_Content", ModelFieldType.String),
+                        new ModelField("User_FullName", ModelFieldType.String),
+                        new ModelField("User_UserName", ModelFieldType.String)
+                )
+            )
+            .DataSource(Model)
+        )
+        .ColumnModel(
+            Html.X().RowNumbererColumn().Width(40).Sortable(false).Text("STT"),
+            Html.X().Column().Text("ID").DataIndex("Opinion_Id").Hidden(true),
+            Html.X().Column().Text("Người gửi").DataIndex("Opinion_From").Hidden(true),
+            Html.X().Column().Text("Tiêu đề").DataIndex("Opinion_Title").Flex(1),
+            Html.X().DateColumn().Text("Ngày gửi").DataIndex("Opinion_Date").Format("dd/M/Y")
+        )
+            .Plugins(
+                    Html.X().RowExpander()
+                        .SingleExpand(false)
+                            .TemplateHtml(@"
+                            <p><b>Nội dung:</b> {Opinion_Content}</p>
+							<p><b>Người gửi:</b> {User_FullName}</p>
+                            <p><b>Email:</b> {User_UserName}</p>
+                    ")
+                        
+                )
+                
+)
+

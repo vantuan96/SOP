@@ -1,0 +1,39 @@
+﻿@model SOP.Models.Province
+
+@{
+    ViewBag.Title = "Create";
+    var X = Html.X();
+}
+
+@(X.Window()
+    .Width(400)
+    //.Height(130)
+    .Flex(1)
+    .Icon(Icon.Add)
+    .Title("Thêm mới Tỉnh-Thành Phố")
+    .Padding(5)
+    .CloseAction(CloseAction.Destroy)
+            .Items(
+                        X.FormPanel()
+                            .ID("FormPanel1")
+                            .Frame(true)
+                            .DefaultAnchor("100%")
+                            .BodyPadding(5)
+                            .Items(
+                                    X.TextFieldFor(m => m.Province_Name).FieldLabel("Tên Tỉnh-Thành Phố").LabelWidth(150),
+                                    X.CheckboxFor(m => m.Province_Active).FieldLabel("Trạng Thái").LabelWidth(150).BoxLabel("Kích hoạt").Checked(true)
+                            )
+                    )
+    .Buttons(
+         X.Button()
+         .Text("Lưu")
+         .Icon(Icon.Accept)
+                 .DirectEvents(de =>
+                 {
+                     de.Click.Url = Url.Action("/Save");
+                     de.Click.EventMask.ShowMask = true;
+                     de.Click.FormID = "FormPanel1";
+                 }
+            )
+    )
+)

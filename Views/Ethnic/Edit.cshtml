@@ -1,0 +1,76 @@
+﻿@model SOP.Models.Ethnic
+@{
+    var X = Html.X();
+}
+<script>
+    var onSuccess = function (grid, data) {
+        grid.show();
+        grid.getStore().loadData(data);
+        App.EditEthnicWindow.close();
+    };
+</script>
+
+@*@(X.Window()
+        .Width(300)
+        .Height(150)
+        .Icon(Icon.Add)
+        .Title("Sửa dân tộc")
+        .Padding(5)
+        .CloseAction(CloseAction.Destroy)
+                .Items(
+                            X.FormPanel()
+                                .ID("FormPanel1")
+                                .Frame(true)
+                                .DefaultAnchor("100%")
+                                .BodyPadding(5)
+                                .Items(
+                                        X.TextFieldFor(m => m.Ethnic_Name).FieldLabel("Tên dân tộc").Text(Model.Ethnic_Name)
+                                )
+                        )
+        .Buttons(
+             X.Button()
+             .Text("Lưu")
+             .Icon(Icon.Accept)
+                     .DirectEvents(de =>
+                     {
+                         de.Click.Url = Url.Action("/EditSave");
+                         de.Click.EventMask.ShowMask = true;
+                         de.Click.FormID = "FormPanel1";
+                     }
+                )
+        )
+    )*@
+@(X.Window()
+    .ID("EditEthnicWindow")
+    .Width(400)
+    .Flex(1)
+    .Icon(Icon.Add)
+    .Title("Sửa Dân Tộc")
+    .Padding(5)
+    .CloseAction(CloseAction.Destroy)
+            .Items(
+                        X.FormPanel()
+                        .ID("EditEthnicFormPanel")
+                            .Frame(true)
+                            .DefaultAnchor("100%")
+                            .BodyPadding(5)
+                            .Items(
+                                X.NumberFieldFor(m => m.Ethnic_Id).FieldLabel("Mã").LabelWidth(150).ReadOnly(true).Hidden(true),
+                                X.TextFieldFor(m => m.Ethnic_Name).FieldLabel("Tên Dân Tộc").LabelWidth(150).AllowBlank(false),
+                                X.CheckboxFor(m => m.Ethnic_Active).FieldLabel("Trạng Thái").LabelWidth(150).BoxLabel("Kích hoạt")
+                            )
+                    )
+    .Buttons(
+         X.Button()
+         .Text("Lưu")
+         .Icon(Icon.Accept)
+                 .DirectEvents(de =>
+                 {
+                     de.Click.Url = Url.Action("/EditSave");
+                     de.Click.EventMask.ShowMask = true;
+                     de.Click.FormID = "EditEthnicFormPanel";
+                     de.Click.Success = "onSuccess(App.EthnicGridPanel, result.data);";
+                 }
+            )
+    )
+) 

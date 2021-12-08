@@ -1,0 +1,82 @@
+﻿@{
+
+    Layout = "~/Views/_LayoutLogin.cshtml";
+    var X = Html.X();
+}
+<style>
+    table {
+        border-collapse: collapse;
+        text-align: center;
+    }
+
+    table, td, th {
+        border: 1px solid black;
+    }
+    th {
+        background-color: gray;
+        color: white;
+    }
+</style>
+<div style="width:650px; margin:auto; background-color:white; font-family:'Times New Roman';">
+    <div style="background-color: white; font-size: 15px; text-align: center; padding-bottom: 15px;">
+        CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM <br>
+        Độc lập - Tự do - Hạnh Phúc<br>
+        ----------------
+
+        <h3>
+            BÁO CÁO KẾT QUẢ (@ViewBag.FromTime đến @ViewBag.ToTime)  <br>
+            ĐÁNH GIÁ SỰ HÀI LÒNG CỦA CÔNG DÂN TẠI BỘ PHẬN MỘT CỬA
+        </h3>
+    </div>
+    Cơ quan: @ViewBag.Organization    <br><br>
+    <table style="width:100%">
+        <tr>
+            <th>Họ tên</th>
+            <th>Tài khoản</th>
+            <th>Rất hài lòng</th>
+            <th>Hài lòng</th>
+            <th>Chờ lâu</th>
+            <th>Nghiệp vụ kém</th>
+            <th>Thái độ kém</th>
+            <th>Tổng</th>
+        </tr>
+        @{ 
+            int sumVERYHAPPY=0;
+            int sumHAPPY=0;
+            int sumWAITLONG = 0;
+            int sumLOWPROFESSIONAL = 0;
+            int sumBADBEHAVIOR = 0;
+             }
+        @foreach (var item in Model)
+        {
+            sumVERYHAPPY += item.VERYHAPPY;
+            sumHAPPY += item.HAPPY;
+            sumWAITLONG += item.WAITLONG;
+            sumLOWPROFESSIONAL += item.LOWPROFESSIONAL;
+            sumBADBEHAVIOR += item.BADBEHAVIOR;
+            <tr>
+                <td>@item.User_FullName</td>
+                <td>@item.User_UserName</td>
+                <td>@item.VERYHAPPY</td>
+                <td>@item.HAPPY</td>
+                <td>@item.WAITLONG</td>
+                <td>@item.LOWPROFESSIONAL</td>
+                <td>@item.BADBEHAVIOR</td>
+                <th>@item.Total</th>
+            </tr>
+        }
+        <tr>
+            <th></th>
+            <th></th>
+            <th>@sumVERYHAPPY</th>
+            <th>@sumHAPPY</th>
+            <th>@sumWAITLONG</th>
+            <th>@sumLOWPROFESSIONAL</th>
+            <th>@sumBADBEHAVIOR</th>
+            <th>@(sumVERYHAPPY + sumHAPPY + sumWAITLONG + sumLOWPROFESSIONAL + sumBADBEHAVIOR)</th>
+        </tr> 
+    </table>  
+</div>
+
+
+

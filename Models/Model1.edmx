@@ -1,0 +1,1896 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SOPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AccessHistory">
+          <Key>
+            <PropertyRef Name="AccessHistory_Id" />
+          </Key>
+          <Property Name="AccessHistory_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccessHistory_Type" Type="bit" />
+          <Property Name="AccessHistory_Time" Type="datetime" />
+          <Property Name="AccessHistory_ UserId" Type="int" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Department_Id" />
+          </Key>
+          <Property Name="Department_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Department_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Department_OrganizationId" Type="int" />
+          <Property Name="Department_Information" Type="ntext" />
+          <Property Name="Department_PhoneNumber" Type="int" />
+          <Property Name="Department_Fax" Type="int" />
+          <Property Name="Department_Email" Type="varchar" MaxLength="50" />
+          <Property Name="Department_Active" Type="bit" />
+          <Property Name="Department_CreatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DepartmentFieldOperation">
+          <Key>
+            <PropertyRef Name="DepartmentFieldOperation_Id" />
+          </Key>
+          <Property Name="DepartmentFieldOperation_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentFieldOperation_DepartmentId" Type="int" />
+          <Property Name="DepartmentFieldOperation_FieldOperationId" Type="int" />
+          <Property Name="DepartmentFieldOperation_Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="District_Id" />
+          </Key>
+          <Property Name="District_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="District_Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="District_Type" Type="nchar" MaxLength="10" />
+          <Property Name="District_Location" Type="nvarchar" MaxLength="50" />
+          <Property Name="District_ProvinceId" Type="int" />
+          <Property Name="District_Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="Ethnic">
+          <Key>
+            <PropertyRef Name="Ethnic_Id" />
+          </Key>
+          <Property Name="Ethnic_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ethnic_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ethnic_Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FieldOperation">
+          <Key>
+            <PropertyRef Name="FieldOperation_Id" />
+          </Key>
+          <Property Name="FieldOperation_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FieldOperation_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="FieldOperation_Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="Group_Id" />
+          </Key>
+          <Property Name="Group_Id" Type="int" Nullable="false" />
+          <Property Name="Group_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Group_Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="HistoricalWork">
+          <Key>
+            <PropertyRef Name="HistoricalWork_Id" />
+          </Key>
+          <Property Name="HistoricalWork_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HistoricalWork_OrganizationId" Type="int" />
+          <Property Name="HistoricalWork_DepartmentId" Type="int" />
+          <Property Name="HistoricalWork_UserId" Type="int" />
+          <Property Name="HistoricalWork_TitleId" Type="int" />
+          <Property Name="HistoricalWork_Type" Type="nvarchar" MaxLength="50" />
+          <Property Name="HistoricalWork_EffectFrom" Type="date" />
+          <Property Name="HistoricalWork_EffecttTo" Type="date" />
+          <Property Name="HistoricalWork_Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="Opinion">
+          <Key>
+            <PropertyRef Name="Opinion_Id" />
+          </Key>
+          <Property Name="Opinion_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Opinion_From" Type="int" />
+          <Property Name="Opinion_To" Type="int" />
+          <Property Name="Opinion_Date" Type="datetime" />
+          <Property Name="Opinion_Active" Type="bit" />
+          <Property Name="Opinion_Title" Type="ntext" />
+          <Property Name="Opinion_Content" Type="ntext" />
+        </EntityType>
+        <EntityType Name="Organization">
+          <Key>
+            <PropertyRef Name="Organization_Id" />
+          </Key>
+          <Property Name="Organization_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Organization_Name" Type="nvarchar" MaxLength="150" />
+          <Property Name="Organization_Superior" Type="int" />
+          <Property Name="Organization_Information" Type="nvarchar" MaxLength="250" />
+          <Property Name="Organization_Address" Type="nvarchar" MaxLength="250" />
+          <Property Name="Organization_PhoneNumber" Type="int" />
+          <Property Name="Organization_Fax" Type="int" />
+          <Property Name="Organization_Email" Type="varchar" MaxLength="50" />
+          <Property Name="Organization_Website" Type="varchar" MaxLength="50" />
+          <Property Name="Organization_Active" Type="bit" />
+          <Property Name="Organization_CreatedOn" Type="datetime" />
+          <Property Name="Organization_OrganizationTypeId" Type="int" />
+          <Property Name="Organization_FieldOperation" Type="nvarchar" MaxLength="250" />
+          <Property Name="Organization_DirectlyUnder" Type="int" />
+          <Property Name="Organization_Specialized" Type="int" />
+          <Property Name="Organization_Level" Type="int" />
+        </EntityType>
+        <EntityType Name="OrganizationType">
+          <Key>
+            <PropertyRef Name="OrganizationType_Id" />
+          </Key>
+          <Property Name="OrganizationType_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrganizationType_Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="OrganizationType_Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="Province">
+          <Key>
+            <PropertyRef Name="Province_Id" />
+          </Key>
+          <Property Name="Province_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Province_Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Province_Type" Type="nchar" MaxLength="10" />
+          <Property Name="Province_Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="Rating_Id" />
+          </Key>
+          <Property Name="Rating_Id" Type="int" Nullable="false" />
+          <Property Name="Rating_Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="Rating_Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="RatingResult">
+          <Key>
+            <PropertyRef Name="RatingResult_Id" />
+          </Key>
+          <Property Name="RatingResult_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RatingResult_ UserId" Type="int" />
+          <Property Name="RatingResult_CreatedOn" Type="datetime" />
+          <Property Name="RatingResult_RatingId" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Title">
+          <Key>
+            <PropertyRef Name="Title_Id" />
+          </Key>
+          <Property Name="Title_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title_Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Title_Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_Id" />
+          </Key>
+          <Property Name="User_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_FullName" Type="nvarchar" MaxLength="100" />
+          <Property Name="User_PassWord" Type="nvarchar" MaxLength="50" />
+          <Property Name="User_Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="User_Birthday" Type="date" />
+          <Property Name="User_Gender" Type="int" />
+          <Property Name="User_IdentityNumber" Type="char" MaxLength="15" />
+          <Property Name="User_IdentityCreatedOn" Type="datetime" />
+          <Property Name="User_IdentityCreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="User_Religion" Type="bit" />
+          <Property Name="User_ReligionDetail" Type="nvarchar" MaxLength="250" />
+          <Property Name="User_Address" Type="nvarchar" MaxLength="250" />
+          <Property Name="User_DistrictId" Type="int" />
+          <Property Name="User_ProvinceId" Type="int" />
+          <Property Name="User_CurrentResidence" Type="nvarchar" MaxLength="250" />
+          <Property Name="User_EthnicId" Type="int" />
+          <Property Name="User_PhoneNumber" Type="char" MaxLength="15" />
+          <Property Name="User_Mobile" Type="char" MaxLength="15" />
+          <Property Name="User_CurrentOrganizationId" Type="int" />
+          <Property Name="User_Active" Type="bit" />
+          <Property Name="User_CurrentDepartmentId" Type="int" />
+          <Property Name="User_UserName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserFieldOperation">
+          <Key>
+            <PropertyRef Name="UserFieldOperation_Id" />
+          </Key>
+          <Property Name="UserFieldOperation_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserFieldOperation_UserId" Type="int" />
+          <Property Name="UserFieldOperation_FieldOperationId" Type="int" />
+          <Property Name="UserFieldOperation_Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="UserGroup">
+          <Key>
+            <PropertyRef Name="UserGroup_Id" />
+          </Key>
+          <Property Name="UserGroup_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserGroup_UserId" Type="int" />
+          <Property Name="UserGroup_GroupId" Type="int" />
+          <Property Name="UserGroup_Status" Type="datetime" />
+          <Property Name="UserGroup_Active" Type="bit" />
+        </EntityType>
+        <Association Name="FK_AccessHistory_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="AccessHistory" Type="Self.AccessHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="AccessHistory">
+              <PropertyRef Name="AccessHistory_ UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Department_Organization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="0..1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Organization_Id" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="Department_OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartmentFieldOperation_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="DepartmentFieldOperation" Type="Self.DepartmentFieldOperation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Department_Id" />
+            </Principal>
+            <Dependent Role="DepartmentFieldOperation">
+              <PropertyRef Name="DepartmentFieldOperation_DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartmentFieldOperation_FieldOperation">
+          <End Role="FieldOperation" Type="Self.FieldOperation" Multiplicity="0..1" />
+          <End Role="DepartmentFieldOperation" Type="Self.DepartmentFieldOperation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FieldOperation">
+              <PropertyRef Name="FieldOperation_Id" />
+            </Principal>
+            <Dependent Role="DepartmentFieldOperation">
+              <PropertyRef Name="DepartmentFieldOperation_FieldOperationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_District_Province">
+          <End Role="Province" Type="Self.Province" Multiplicity="0..1" />
+          <End Role="District" Type="Self.District" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Province">
+              <PropertyRef Name="Province_Id" />
+            </Principal>
+            <Dependent Role="District">
+              <PropertyRef Name="District_ProvinceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoricalWork_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="HistoricalWork" Type="Self.HistoricalWork" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Department_Id" />
+            </Principal>
+            <Dependent Role="HistoricalWork">
+              <PropertyRef Name="HistoricalWork_DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoricalWork_Title">
+          <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
+          <End Role="HistoricalWork" Type="Self.HistoricalWork" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Title">
+              <PropertyRef Name="Title_Id" />
+            </Principal>
+            <Dependent Role="HistoricalWork">
+              <PropertyRef Name="HistoricalWork_TitleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoricalWork_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="HistoricalWork" Type="Self.HistoricalWork" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="HistoricalWork">
+              <PropertyRef Name="HistoricalWork_UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Opinion_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Opinion" Type="Self.Opinion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Opinion">
+              <PropertyRef Name="Opinion_To" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Opinion_User1">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Opinion" Type="Self.Opinion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Opinion">
+              <PropertyRef Name="Opinion_From" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Organization_OrganizationType">
+          <End Role="OrganizationType" Type="Self.OrganizationType" Multiplicity="0..1" />
+          <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrganizationType">
+              <PropertyRef Name="OrganizationType_Id" />
+            </Principal>
+            <Dependent Role="Organization">
+              <PropertyRef Name="Organization_OrganizationTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RatingResult_Rating">
+          <End Role="Rating" Type="Self.Rating" Multiplicity="0..1" />
+          <End Role="RatingResult" Type="Self.RatingResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rating">
+              <PropertyRef Name="Rating_Id" />
+            </Principal>
+            <Dependent Role="RatingResult">
+              <PropertyRef Name="RatingResult_RatingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RatingResult_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="RatingResult" Type="Self.RatingResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="RatingResult">
+              <PropertyRef Name="RatingResult_ UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Department_Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="User_CurrentDepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Ethnic">
+          <End Role="Ethnic" Type="Self.Ethnic" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ethnic">
+              <PropertyRef Name="Ethnic_Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="User_EthnicId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserFieldOperation_FieldOperation">
+          <End Role="FieldOperation" Type="Self.FieldOperation" Multiplicity="0..1" />
+          <End Role="UserFieldOperation" Type="Self.UserFieldOperation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FieldOperation">
+              <PropertyRef Name="FieldOperation_Id" />
+            </Principal>
+            <Dependent Role="UserFieldOperation">
+              <PropertyRef Name="UserFieldOperation_FieldOperationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserFieldOperation_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="UserFieldOperation" Type="Self.UserFieldOperation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="UserFieldOperation">
+              <PropertyRef Name="UserFieldOperation_UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserGroup_Group">
+          <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
+          <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="Group_Id" />
+            </Principal>
+            <Dependent Role="UserGroup">
+              <PropertyRef Name="UserGroup_GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserGroup_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="UserGroup">
+              <PropertyRef Name="UserGroup_UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="SOP_GetCompareTwoOrganizationRating" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FromTime" Type="datetime" Mode="In" />
+          <Parameter Name="ToTime" Type="datetime" Mode="In" />
+          <Parameter Name="OrganizationId1" Type="int" Mode="In" />
+          <Parameter Name="OrganizationId2" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SOP_GetDetailFieldOperationRating" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FromTime" Type="datetime" Mode="In" />
+          <Parameter Name="ToTime" Type="datetime" Mode="In" />
+          <Parameter Name="FieldOperationId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SOP_GetDetailOrganizationRating" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FromTime" Type="datetime" Mode="In" />
+          <Parameter Name="ToTime" Type="datetime" Mode="In" />
+          <Parameter Name="OrganizationId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SOP_GetListFieldOperationRating" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FromTime" Type="datetime" Mode="In" />
+          <Parameter Name="ToTime" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="SOP_GetListOrganizationRating" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FromTime" Type="datetime" Mode="In" />
+          <Parameter Name="ToTime" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="SOP_GetMCompareRating" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SOP_GetMCompareRating_ByYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Year" Type="int" Mode="In" />
+          <Parameter Name="UserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SOP_GetStatusUserCMMC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SOP_GetStatusUserCMMCByOrganization" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Organization_Id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SOP_GetYCompareFieldOperationRating" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FieldOperationId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SOP_GetYCompareOrganizationRating" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OrganizationId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SOP_GetYFieldOperationRating_ByYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Year" Type="int" Mode="In" />
+          <Parameter Name="FieldOperationId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SOP_GetYOrganizationRating_ByYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Year" Type="int" Mode="In" />
+          <Parameter Name="OrganizationId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SOP_UpdateStatusUserCMMC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_generate_inserts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="table_name" Type="varchar" Mode="In" />
+          <Parameter Name="target_table" Type="varchar" Mode="In" />
+          <Parameter Name="include_column_list" Type="bit" Mode="In" />
+          <Parameter Name="from" Type="varchar" Mode="In" />
+          <Parameter Name="include_timestamp" Type="bit" Mode="In" />
+          <Parameter Name="debug_mode" Type="bit" Mode="In" />
+          <Parameter Name="owner" Type="varchar" Mode="In" />
+          <Parameter Name="ommit_images" Type="bit" Mode="In" />
+          <Parameter Name="ommit_identity" Type="bit" Mode="In" />
+          <Parameter Name="top" Type="int" Mode="In" />
+          <Parameter Name="cols_to_include" Type="varchar" Mode="In" />
+          <Parameter Name="cols_to_exclude" Type="varchar" Mode="In" />
+          <Parameter Name="disable_constraints" Type="bit" Mode="In" />
+          <Parameter Name="ommit_computed_cols" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="SOPModelStoreContainer">
+          <EntitySet Name="AccessHistory" EntityType="Self.AccessHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DepartmentFieldOperation" EntityType="Self.DepartmentFieldOperation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="District" EntityType="Self.District" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ethnic" EntityType="Self.Ethnic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FieldOperation" EntityType="Self.FieldOperation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HistoricalWork" EntityType="Self.HistoricalWork" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Opinion" EntityType="Self.Opinion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrganizationType" EntityType="Self.OrganizationType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Province" EntityType="Self.Province" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rating" EntityType="Self.Rating" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RatingResult" EntityType="Self.RatingResult" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Title" EntityType="Self.Title" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserFieldOperation" EntityType="Self.UserFieldOperation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserGroup" EntityType="Self.UserGroup" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AccessHistory_User" Association="Self.FK_AccessHistory_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="AccessHistory" EntitySet="AccessHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Department_Organization" Association="Self.FK_Department_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentFieldOperation_Department" Association="Self.FK_DepartmentFieldOperation_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="DepartmentFieldOperation" EntitySet="DepartmentFieldOperation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentFieldOperation_FieldOperation" Association="Self.FK_DepartmentFieldOperation_FieldOperation">
+            <End Role="FieldOperation" EntitySet="FieldOperation" />
+            <End Role="DepartmentFieldOperation" EntitySet="DepartmentFieldOperation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_District_Province" Association="Self.FK_District_Province">
+            <End Role="Province" EntitySet="Province" />
+            <End Role="District" EntitySet="District" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoricalWork_Department" Association="Self.FK_HistoricalWork_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="HistoricalWork" EntitySet="HistoricalWork" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoricalWork_Title" Association="Self.FK_HistoricalWork_Title">
+            <End Role="Title" EntitySet="Title" />
+            <End Role="HistoricalWork" EntitySet="HistoricalWork" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoricalWork_User" Association="Self.FK_HistoricalWork_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="HistoricalWork" EntitySet="HistoricalWork" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Opinion_User" Association="Self.FK_Opinion_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Opinion" EntitySet="Opinion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Opinion_User1" Association="Self.FK_Opinion_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Opinion" EntitySet="Opinion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Organization_OrganizationType" Association="Self.FK_Organization_OrganizationType">
+            <End Role="OrganizationType" EntitySet="OrganizationType" />
+            <End Role="Organization" EntitySet="Organization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RatingResult_Rating" Association="Self.FK_RatingResult_Rating">
+            <End Role="Rating" EntitySet="Rating" />
+            <End Role="RatingResult" EntitySet="RatingResult" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RatingResult_User" Association="Self.FK_RatingResult_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="RatingResult" EntitySet="RatingResult" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Department" Association="Self.FK_User_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Ethnic" Association="Self.FK_User_Ethnic">
+            <End Role="Ethnic" EntitySet="Ethnic" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserFieldOperation_FieldOperation" Association="Self.FK_UserFieldOperation_FieldOperation">
+            <End Role="FieldOperation" EntitySet="FieldOperation" />
+            <End Role="UserFieldOperation" EntitySet="UserFieldOperation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserFieldOperation_User" Association="Self.FK_UserFieldOperation_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserFieldOperation" EntitySet="UserFieldOperation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserGroup_Group" Association="Self.FK_UserGroup_Group">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="UserGroup" EntitySet="UserGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserGroup_User" Association="Self.FK_UserGroup_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserGroup" EntitySet="UserGroup" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SOPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AccessHistory">
+          <Key>
+            <PropertyRef Name="AccessHistory_Id" />
+          </Key>
+          <Property Name="AccessHistory_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccessHistory_Type" Type="Boolean" />
+          <Property Name="AccessHistory_Time" Type="DateTime" Precision="3" />
+          <Property Name="AccessHistory__UserId" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="Self.FK_AccessHistory_User" FromRole="AccessHistory" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Department_Id" />
+          </Key>
+          <Property Name="Department_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Department_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Department_OrganizationId" Type="Int32" />
+          <Property Name="Department_Information" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Department_PhoneNumber" Type="Int32" />
+          <Property Name="Department_Fax" Type="Int32" />
+          <Property Name="Department_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Department_Active" Type="Boolean" />
+          <Property Name="Department_CreatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Organization" Relationship="Self.FK_Department_Organization" FromRole="Department" ToRole="Organization" />
+          <NavigationProperty Name="DepartmentFieldOperations" Relationship="Self.FK_DepartmentFieldOperation_Department" FromRole="Department" ToRole="DepartmentFieldOperation" />
+          <NavigationProperty Name="HistoricalWorks" Relationship="Self.FK_HistoricalWork_Department" FromRole="Department" ToRole="HistoricalWork" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_User_Department" FromRole="Department" ToRole="User" />
+        </EntityType>
+        <EntityType Name="DepartmentFieldOperation">
+          <Key>
+            <PropertyRef Name="DepartmentFieldOperation_Id" />
+          </Key>
+          <Property Name="DepartmentFieldOperation_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentFieldOperation_DepartmentId" Type="Int32" />
+          <Property Name="DepartmentFieldOperation_FieldOperationId" Type="Int32" />
+          <Property Name="DepartmentFieldOperation_Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Department" Relationship="Self.FK_DepartmentFieldOperation_Department" FromRole="DepartmentFieldOperation" ToRole="Department" />
+          <NavigationProperty Name="FieldOperation" Relationship="Self.FK_DepartmentFieldOperation_FieldOperation" FromRole="DepartmentFieldOperation" ToRole="FieldOperation" />
+        </EntityType>
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="District_Id" />
+          </Key>
+          <Property Name="District_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="District_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="District_Type" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="District_Location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="District_ProvinceId" Type="Int32" />
+          <Property Name="District_Active" Type="Boolean" />
+          <NavigationProperty Name="Province" Relationship="Self.FK_District_Province" FromRole="District" ToRole="Province" />
+        </EntityType>
+        <EntityType Name="Ethnic">
+          <Key>
+            <PropertyRef Name="Ethnic_Id" />
+          </Key>
+          <Property Name="Ethnic_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ethnic_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ethnic_Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_User_Ethnic" FromRole="Ethnic" ToRole="User" />
+        </EntityType>
+        <EntityType Name="FieldOperation">
+          <Key>
+            <PropertyRef Name="FieldOperation_Id" />
+          </Key>
+          <Property Name="FieldOperation_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FieldOperation_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FieldOperation_Active" Type="Boolean" />
+          <NavigationProperty Name="DepartmentFieldOperations" Relationship="Self.FK_DepartmentFieldOperation_FieldOperation" FromRole="FieldOperation" ToRole="DepartmentFieldOperation" />
+          <NavigationProperty Name="UserFieldOperations" Relationship="Self.FK_UserFieldOperation_FieldOperation" FromRole="FieldOperation" ToRole="UserFieldOperation" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="Group_Id" />
+          </Key>
+          <Property Name="Group_Id" Type="Int32" Nullable="false" />
+          <Property Name="Group_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Group_Active" Type="Boolean" />
+          <NavigationProperty Name="UserGroups" Relationship="Self.FK_UserGroup_Group" FromRole="Group" ToRole="UserGroup" />
+        </EntityType>
+        <EntityType Name="HistoricalWork">
+          <Key>
+            <PropertyRef Name="HistoricalWork_Id" />
+          </Key>
+          <Property Name="HistoricalWork_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HistoricalWork_OrganizationId" Type="Int32" />
+          <Property Name="HistoricalWork_DepartmentId" Type="Int32" />
+          <Property Name="HistoricalWork_UserId" Type="Int32" />
+          <Property Name="HistoricalWork_TitleId" Type="Int32" />
+          <Property Name="HistoricalWork_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HistoricalWork_EffectFrom" Type="DateTime" Precision="0" />
+          <Property Name="HistoricalWork_EffecttTo" Type="DateTime" Precision="0" />
+          <Property Name="HistoricalWork_Active" Type="Boolean" />
+          <NavigationProperty Name="Department" Relationship="Self.FK_HistoricalWork_Department" FromRole="HistoricalWork" ToRole="Department" />
+          <NavigationProperty Name="Title" Relationship="Self.FK_HistoricalWork_Title" FromRole="HistoricalWork" ToRole="Title" />
+          <NavigationProperty Name="User" Relationship="Self.FK_HistoricalWork_User" FromRole="HistoricalWork" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Opinion">
+          <Key>
+            <PropertyRef Name="Opinion_Id" />
+          </Key>
+          <Property Name="Opinion_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Opinion_From" Type="Int32" />
+          <Property Name="Opinion_To" Type="Int32" />
+          <Property Name="Opinion_Date" Type="DateTime" Precision="3" />
+          <Property Name="Opinion_Active" Type="Boolean" />
+          <Property Name="Opinion_Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Opinion_Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Opinion_User" FromRole="Opinion" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="Self.FK_Opinion_User1" FromRole="Opinion" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Organization">
+          <Key>
+            <PropertyRef Name="Organization_Id" />
+          </Key>
+          <Property Name="Organization_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Organization_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Organization_Superior" Type="Int32" />
+          <Property Name="Organization_Information" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Organization_Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Organization_PhoneNumber" Type="Int32" />
+          <Property Name="Organization_Fax" Type="Int32" />
+          <Property Name="Organization_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Organization_Website" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Organization_Active" Type="Boolean" />
+          <Property Name="Organization_CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="Organization_OrganizationTypeId" Type="Int32" />
+          <Property Name="Organization_FieldOperation" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Organization_DirectlyUnder" Type="Int32" />
+          <Property Name="Organization_Specialized" Type="Int32" />
+          <Property Name="Organization_Level" Type="Int32" />
+          <NavigationProperty Name="Departments" Relationship="Self.FK_Department_Organization" FromRole="Organization" ToRole="Department" />
+          <NavigationProperty Name="OrganizationType" Relationship="Self.FK_Organization_OrganizationType" FromRole="Organization" ToRole="OrganizationType" />
+        </EntityType>
+        <EntityType Name="OrganizationType">
+          <Key>
+            <PropertyRef Name="OrganizationType_Id" />
+          </Key>
+          <Property Name="OrganizationType_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrganizationType_Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="OrganizationType_Active" Type="Boolean" />
+          <NavigationProperty Name="Organizations" Relationship="Self.FK_Organization_OrganizationType" FromRole="OrganizationType" ToRole="Organization" />
+        </EntityType>
+        <EntityType Name="Province">
+          <Key>
+            <PropertyRef Name="Province_Id" />
+          </Key>
+          <Property Name="Province_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Province_Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Province_Type" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Province_Active" Type="Boolean" />
+          <NavigationProperty Name="Districts" Relationship="Self.FK_District_Province" FromRole="Province" ToRole="District" />
+        </EntityType>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="Rating_Id" />
+          </Key>
+          <Property Name="Rating_Id" Type="Int32" Nullable="false" />
+          <Property Name="Rating_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Rating_Active" Type="Boolean" />
+          <NavigationProperty Name="RatingResults" Relationship="Self.FK_RatingResult_Rating" FromRole="Rating" ToRole="RatingResult" />
+        </EntityType>
+        <EntityType Name="RatingResult">
+          <Key>
+            <PropertyRef Name="RatingResult_Id" />
+          </Key>
+          <Property Name="RatingResult_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RatingResult__UserId" Type="Int32" />
+          <Property Name="RatingResult_CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="RatingResult_RatingId" Type="Int32" />
+          <NavigationProperty Name="Rating" Relationship="Self.FK_RatingResult_Rating" FromRole="RatingResult" ToRole="Rating" />
+          <NavigationProperty Name="User" Relationship="Self.FK_RatingResult_User" FromRole="RatingResult" ToRole="User" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Title">
+          <Key>
+            <PropertyRef Name="Title_Id" />
+          </Key>
+          <Property Name="Title_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title_Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Title_Active" Type="Boolean" />
+          <NavigationProperty Name="HistoricalWorks" Relationship="Self.FK_HistoricalWork_Title" FromRole="Title" ToRole="HistoricalWork" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_Id" />
+          </Key>
+          <Property Name="User_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="User_PassWord" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="User_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="User_Birthday" Type="DateTime" Precision="0" />
+          <Property Name="User_Gender" Type="Int32" />
+          <Property Name="User_IdentityNumber" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="User_IdentityCreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="User_IdentityCreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="User_Religion" Type="Boolean" />
+          <Property Name="User_ReligionDetail" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="User_Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="User_DistrictId" Type="Int32" />
+          <Property Name="User_ProvinceId" Type="Int32" />
+          <Property Name="User_CurrentResidence" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="User_EthnicId" Type="Int32" />
+          <Property Name="User_PhoneNumber" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="User_Mobile" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="User_CurrentOrganizationId" Type="Int32" />
+          <Property Name="User_Active" Type="Boolean" />
+          <Property Name="User_CurrentDepartmentId" Type="Int32" />
+          <Property Name="User_UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AccessHistories" Relationship="Self.FK_AccessHistory_User" FromRole="User" ToRole="AccessHistory" />
+          <NavigationProperty Name="Department" Relationship="Self.FK_User_Department" FromRole="User" ToRole="Department" />
+          <NavigationProperty Name="Ethnic" Relationship="Self.FK_User_Ethnic" FromRole="User" ToRole="Ethnic" />
+          <NavigationProperty Name="HistoricalWorks" Relationship="Self.FK_HistoricalWork_User" FromRole="User" ToRole="HistoricalWork" />
+          <NavigationProperty Name="Opinions" Relationship="Self.FK_Opinion_User" FromRole="User" ToRole="Opinion" />
+          <NavigationProperty Name="Opinions1" Relationship="Self.FK_Opinion_User1" FromRole="User" ToRole="Opinion" />
+          <NavigationProperty Name="RatingResults" Relationship="Self.FK_RatingResult_User" FromRole="User" ToRole="RatingResult" />
+          <NavigationProperty Name="UserFieldOperations" Relationship="Self.FK_UserFieldOperation_User" FromRole="User" ToRole="UserFieldOperation" />
+          <NavigationProperty Name="UserGroups" Relationship="Self.FK_UserGroup_User" FromRole="User" ToRole="UserGroup" />
+        </EntityType>
+        <EntityType Name="UserFieldOperation">
+          <Key>
+            <PropertyRef Name="UserFieldOperation_Id" />
+          </Key>
+          <Property Name="UserFieldOperation_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserFieldOperation_UserId" Type="Int32" />
+          <Property Name="UserFieldOperation_FieldOperationId" Type="Int32" />
+          <Property Name="UserFieldOperation_Active" Type="Boolean" />
+          <NavigationProperty Name="FieldOperation" Relationship="Self.FK_UserFieldOperation_FieldOperation" FromRole="UserFieldOperation" ToRole="FieldOperation" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserFieldOperation_User" FromRole="UserFieldOperation" ToRole="User" />
+        </EntityType>
+        <EntityType Name="UserGroup">
+          <Key>
+            <PropertyRef Name="UserGroup_Id" />
+          </Key>
+          <Property Name="UserGroup_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserGroup_UserId" Type="Int32" />
+          <Property Name="UserGroup_GroupId" Type="Int32" />
+          <Property Name="UserGroup_Status" Type="DateTime" Precision="3" />
+          <Property Name="UserGroup_Active" Type="Boolean" />
+          <NavigationProperty Name="Group" Relationship="Self.FK_UserGroup_Group" FromRole="UserGroup" ToRole="Group" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserGroup_User" FromRole="UserGroup" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_AccessHistory_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="AccessHistory" Type="Self.AccessHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="AccessHistory">
+              <PropertyRef Name="AccessHistory__UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Department_Organization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="0..1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Organization_Id" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="Department_OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartmentFieldOperation_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="DepartmentFieldOperation" Type="Self.DepartmentFieldOperation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Department_Id" />
+            </Principal>
+            <Dependent Role="DepartmentFieldOperation">
+              <PropertyRef Name="DepartmentFieldOperation_DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoricalWork_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="HistoricalWork" Type="Self.HistoricalWork" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Department_Id" />
+            </Principal>
+            <Dependent Role="HistoricalWork">
+              <PropertyRef Name="HistoricalWork_DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Department_Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="User_CurrentDepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartmentFieldOperation_FieldOperation">
+          <End Role="FieldOperation" Type="Self.FieldOperation" Multiplicity="0..1" />
+          <End Role="DepartmentFieldOperation" Type="Self.DepartmentFieldOperation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FieldOperation">
+              <PropertyRef Name="FieldOperation_Id" />
+            </Principal>
+            <Dependent Role="DepartmentFieldOperation">
+              <PropertyRef Name="DepartmentFieldOperation_FieldOperationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_District_Province">
+          <End Role="Province" Type="Self.Province" Multiplicity="0..1" />
+          <End Role="District" Type="Self.District" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Province">
+              <PropertyRef Name="Province_Id" />
+            </Principal>
+            <Dependent Role="District">
+              <PropertyRef Name="District_ProvinceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Ethnic">
+          <End Role="Ethnic" Type="Self.Ethnic" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ethnic">
+              <PropertyRef Name="Ethnic_Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="User_EthnicId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserFieldOperation_FieldOperation">
+          <End Role="FieldOperation" Type="Self.FieldOperation" Multiplicity="0..1" />
+          <End Role="UserFieldOperation" Type="Self.UserFieldOperation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FieldOperation">
+              <PropertyRef Name="FieldOperation_Id" />
+            </Principal>
+            <Dependent Role="UserFieldOperation">
+              <PropertyRef Name="UserFieldOperation_FieldOperationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserGroup_Group">
+          <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
+          <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="Group_Id" />
+            </Principal>
+            <Dependent Role="UserGroup">
+              <PropertyRef Name="UserGroup_GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoricalWork_Title">
+          <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
+          <End Role="HistoricalWork" Type="Self.HistoricalWork" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Title">
+              <PropertyRef Name="Title_Id" />
+            </Principal>
+            <Dependent Role="HistoricalWork">
+              <PropertyRef Name="HistoricalWork_TitleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoricalWork_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="HistoricalWork" Type="Self.HistoricalWork" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="HistoricalWork">
+              <PropertyRef Name="HistoricalWork_UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Opinion_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Opinion" Type="Self.Opinion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Opinion">
+              <PropertyRef Name="Opinion_To" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Opinion_User1">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Opinion" Type="Self.Opinion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Opinion">
+              <PropertyRef Name="Opinion_From" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Organization_OrganizationType">
+          <End Role="OrganizationType" Type="Self.OrganizationType" Multiplicity="0..1" />
+          <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrganizationType">
+              <PropertyRef Name="OrganizationType_Id" />
+            </Principal>
+            <Dependent Role="Organization">
+              <PropertyRef Name="Organization_OrganizationTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RatingResult_Rating">
+          <End Role="Rating" Type="Self.Rating" Multiplicity="0..1" />
+          <End Role="RatingResult" Type="Self.RatingResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rating">
+              <PropertyRef Name="Rating_Id" />
+            </Principal>
+            <Dependent Role="RatingResult">
+              <PropertyRef Name="RatingResult_RatingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RatingResult_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="RatingResult" Type="Self.RatingResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="RatingResult">
+              <PropertyRef Name="RatingResult__UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserFieldOperation_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="UserFieldOperation" Type="Self.UserFieldOperation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="UserFieldOperation">
+              <PropertyRef Name="UserFieldOperation_UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserGroup_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="UserGroup">
+              <PropertyRef Name="UserGroup_UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SOPEntities" annotation:LazyLoadingEnabled="false">
+          <EntitySet Name="AccessHistories" EntityType="Self.AccessHistory" />
+          <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="DepartmentFieldOperations" EntityType="Self.DepartmentFieldOperation" />
+          <EntitySet Name="Districts" EntityType="Self.District" />
+          <EntitySet Name="Ethnics" EntityType="Self.Ethnic" />
+          <EntitySet Name="FieldOperations" EntityType="Self.FieldOperation" />
+          <EntitySet Name="Groups" EntityType="Self.Group" />
+          <EntitySet Name="HistoricalWorks" EntityType="Self.HistoricalWork" />
+          <EntitySet Name="Opinions" EntityType="Self.Opinion" />
+          <EntitySet Name="Organizations" EntityType="Self.Organization" />
+          <EntitySet Name="OrganizationTypes" EntityType="Self.OrganizationType" />
+          <EntitySet Name="Provinces" EntityType="Self.Province" />
+          <EntitySet Name="Ratings" EntityType="Self.Rating" />
+          <EntitySet Name="RatingResults" EntityType="Self.RatingResult" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Titles" EntityType="Self.Title" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UserFieldOperations" EntityType="Self.UserFieldOperation" />
+          <EntitySet Name="UserGroups" EntityType="Self.UserGroup" />
+          <AssociationSet Name="FK_AccessHistory_User" Association="Self.FK_AccessHistory_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="AccessHistory" EntitySet="AccessHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Department_Organization" Association="Self.FK_Department_Organization">
+            <End Role="Organization" EntitySet="Organizations" />
+            <End Role="Department" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentFieldOperation_Department" Association="Self.FK_DepartmentFieldOperation_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="DepartmentFieldOperation" EntitySet="DepartmentFieldOperations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoricalWork_Department" Association="Self.FK_HistoricalWork_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="HistoricalWork" EntitySet="HistoricalWorks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Department" Association="Self.FK_User_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentFieldOperation_FieldOperation" Association="Self.FK_DepartmentFieldOperation_FieldOperation">
+            <End Role="FieldOperation" EntitySet="FieldOperations" />
+            <End Role="DepartmentFieldOperation" EntitySet="DepartmentFieldOperations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_District_Province" Association="Self.FK_District_Province">
+            <End Role="Province" EntitySet="Provinces" />
+            <End Role="District" EntitySet="Districts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Ethnic" Association="Self.FK_User_Ethnic">
+            <End Role="Ethnic" EntitySet="Ethnics" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserFieldOperation_FieldOperation" Association="Self.FK_UserFieldOperation_FieldOperation">
+            <End Role="FieldOperation" EntitySet="FieldOperations" />
+            <End Role="UserFieldOperation" EntitySet="UserFieldOperations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserGroup_Group" Association="Self.FK_UserGroup_Group">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="UserGroup" EntitySet="UserGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoricalWork_Title" Association="Self.FK_HistoricalWork_Title">
+            <End Role="Title" EntitySet="Titles" />
+            <End Role="HistoricalWork" EntitySet="HistoricalWorks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoricalWork_User" Association="Self.FK_HistoricalWork_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="HistoricalWork" EntitySet="HistoricalWorks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Opinion_User" Association="Self.FK_Opinion_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Opinion" EntitySet="Opinions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Opinion_User1" Association="Self.FK_Opinion_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Opinion" EntitySet="Opinions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Organization_OrganizationType" Association="Self.FK_Organization_OrganizationType">
+            <End Role="OrganizationType" EntitySet="OrganizationTypes" />
+            <End Role="Organization" EntitySet="Organizations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RatingResult_Rating" Association="Self.FK_RatingResult_Rating">
+            <End Role="Rating" EntitySet="Ratings" />
+            <End Role="RatingResult" EntitySet="RatingResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RatingResult_User" Association="Self.FK_RatingResult_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="RatingResult" EntitySet="RatingResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserFieldOperation_User" Association="Self.FK_UserFieldOperation_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserFieldOperation" EntitySet="UserFieldOperations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserGroup_User" Association="Self.FK_UserGroup_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserGroup" EntitySet="UserGroups" />
+          </AssociationSet>
+          <FunctionImport Name="SOP_GetCompareTwoOrganizationRating" ReturnType="Collection(SOPModel.SOP_GetCompareTwoOrganizationRating_Result)">
+            <Parameter Name="FromTime" Mode="In" Type="DateTime" />
+            <Parameter Name="ToTime" Mode="In" Type="DateTime" />
+            <Parameter Name="OrganizationId1" Mode="In" Type="Int32" />
+            <Parameter Name="OrganizationId2" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SOP_GetDetailFieldOperationRating" ReturnType="Collection(SOPModel.SOP_GetDetailFieldOperationRating_Result)">
+            <Parameter Name="FromTime" Mode="In" Type="DateTime" />
+            <Parameter Name="ToTime" Mode="In" Type="DateTime" />
+            <Parameter Name="FieldOperationId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SOP_GetListFieldOperationRating" ReturnType="Collection(SOPModel.SOP_GetListFieldOperationRating_Result)">
+            <Parameter Name="FromTime" Mode="In" Type="DateTime" />
+            <Parameter Name="ToTime" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SOP_GetListOrganizationRating" ReturnType="Collection(SOPModel.SOP_GetListOrganizationRating_Result)">
+            <Parameter Name="FromTime" Mode="In" Type="DateTime" />
+            <Parameter Name="ToTime" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SOP_GetMCompareRating" ReturnType="Collection(SOPModel.SOP_GetMCompareRating_Result)">
+          <Parameter Name="UserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SOP_GetMCompareRating_ByYear" ReturnType="Collection(SOPModel.SOP_GetMCompareRating_ByYear_Result)">
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SOP_GetStatusUserCMMC" ReturnType="Collection(SOPModel.SOP_GetStatusUserCMMC_Result)" />
+          <FunctionImport Name="SOP_GetStatusUserCMMCByOrganization" ReturnType="Collection(SOPModel.SOP_GetStatusUserCMMCByOrganization_Result)">
+          <Parameter Name="Organization_Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SOP_GetYCompareFieldOperationRating" ReturnType="Collection(SOPModel.SOP_GetYCompareFieldOperationRating_Result)">
+          <Parameter Name="FieldOperationId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SOP_GetYCompareOrganizationRating" ReturnType="Collection(SOPModel.SOP_GetYCompareOrganizationRating_Result)">
+          <Parameter Name="OrganizationId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SOP_GetYFieldOperationRating_ByYear" ReturnType="Collection(SOPModel.SOP_GetYFieldOperationRating_ByYear_Result)">
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+            <Parameter Name="FieldOperationId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SOP_GetYOrganizationRating_ByYear" ReturnType="Collection(SOPModel.SOP_GetYOrganizationRating_ByYear_Result)">
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+            <Parameter Name="OrganizationId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_generate_inserts" ReturnType="Collection(String)">
+            <Parameter Name="table_name" Mode="In" Type="String" />
+            <Parameter Name="target_table" Mode="In" Type="String" />
+            <Parameter Name="include_column_list" Mode="In" Type="Boolean" />
+            <Parameter Name="from" Mode="In" Type="String" />
+            <Parameter Name="include_timestamp" Mode="In" Type="Boolean" />
+            <Parameter Name="debug_mode" Mode="In" Type="Boolean" />
+            <Parameter Name="owner" Mode="In" Type="String" />
+            <Parameter Name="ommit_images" Mode="In" Type="Boolean" />
+            <Parameter Name="ommit_identity" Mode="In" Type="Boolean" />
+            <Parameter Name="top" Mode="In" Type="Int32" />
+            <Parameter Name="cols_to_include" Mode="In" Type="String" />
+            <Parameter Name="cols_to_exclude" Mode="In" Type="String" />
+            <Parameter Name="disable_constraints" Mode="In" Type="Boolean" />
+            <Parameter Name="ommit_computed_cols" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(SOPModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(SOPModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="SOP_GetDetailOrganizationRating" ReturnType="Collection(SOPModel.SOP_GetDetailOrganizationRating_Result1)">
+            <Parameter Name="FromTime" Mode="In" Type="DateTime" />
+            <Parameter Name="ToTime" Mode="In" Type="DateTime" />
+            <Parameter Name="OrganizationId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SOP_UpdateStatusUserCMMC">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SOP_GetCompareTwoOrganizationRating_Result">
+          <Property Type="Int32" Name="Rating_Id" Nullable="true" />
+          <Property Type="String" Name="Rating_Name" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="OrganizationRating1" Nullable="true" />
+          <Property Type="Int32" Name="OrganizationRating2" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SOP_GetDetailFieldOperationRating_Result">
+          <Property Type="Int32" Name="User_Id" Nullable="true" />
+          <Property Type="String" Name="User_FullName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="User_UserName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="VERYHAPPY" Nullable="true" />
+          <Property Type="Int32" Name="HAPPY" Nullable="true" />
+          <Property Type="Int32" Name="WAITLONG" Nullable="true" />
+          <Property Type="Int32" Name="LOWPROFESSIONAL" Nullable="true" />
+          <Property Type="Int32" Name="BADBEHAVIOR" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SOP_GetDetailOrganizationRating_Result">
+          <Property Type="Int32" Name="User_Id" Nullable="true" />
+          <Property Type="String" Name="User_FullName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="User_UserName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="VERYHAPPY" Nullable="true" />
+          <Property Type="Int32" Name="HAPPY" Nullable="true" />
+          <Property Type="Int32" Name="WAITLONG" Nullable="true" />
+          <Property Type="Int32" Name="LOWPROFESSIONAL" Nullable="true" />
+          <Property Type="Int32" Name="BADBEHAVIOR" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SOP_GetListFieldOperationRating_Result">
+          <Property Type="Int32" Name="FieldOperation_Id" Nullable="true" />
+          <Property Type="String" Name="FieldOperation_Name" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="VERYHAPPY" Nullable="true" />
+          <Property Type="Int32" Name="HAPPY" Nullable="true" />
+          <Property Type="Int32" Name="WAITLONG" Nullable="true" />
+          <Property Type="Int32" Name="LOWPROFESSIONAL" Nullable="true" />
+          <Property Type="Int32" Name="BADBEHAVIOR" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SOP_GetListOrganizationRating_Result">
+          <Property Type="Int32" Name="Organization_Id" Nullable="true" />
+          <Property Type="String" Name="Organization_Name" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="VERYHAPPY" Nullable="true" />
+          <Property Type="Int32" Name="HAPPY" Nullable="true" />
+          <Property Type="Int32" Name="WAITLONG" Nullable="true" />
+          <Property Type="Int32" Name="LOWPROFESSIONAL" Nullable="true" />
+          <Property Type="Int32" Name="BADBEHAVIOR" Nullable="true" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SOP_GetMCompareRating_Result">
+          <Property Type="Int32" Name="YearC" Nullable="true" />
+          <Property Type="Int32" Name="VERYHAPPY" Nullable="true" />
+          <Property Type="Int32" Name="HAPPY" Nullable="true" />
+          <Property Type="Int32" Name="WAITLONG" Nullable="true" />
+          <Property Type="Int32" Name="LOWPROFESSIONAL" Nullable="true" />
+          <Property Type="Int32" Name="BADBEHAVIOR" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SOP_GetMCompareRating_ByYear_Result">
+          <Property Type="Int32" Name="MonthC" Nullable="true" />
+          <Property Type="Int32" Name="VERYHAPPY" Nullable="true" />
+          <Property Type="Int32" Name="HAPPY" Nullable="true" />
+          <Property Type="Int32" Name="WAITLONG" Nullable="true" />
+          <Property Type="Int32" Name="LOWPROFESSIONAL" Nullable="true" />
+          <Property Type="Int32" Name="BADBEHAVIOR" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SOP_GetStatusUserCMMC_Result">
+          <Property Type="Int32" Name="User_Id" Nullable="false" />
+          <Property Type="String" Name="User_FullName" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="Organization_Id" Nullable="false" />
+          <Property Type="String" Name="Organization_Name" Nullable="true" MaxLength="150" />
+          <Property Type="DateTime" Name="UserGroup_Status" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SOP_GetStatusUserCMMCByOrganization_Result">
+          <Property Type="Int32" Name="User_Id" Nullable="false" />
+          <Property Type="String" Name="User_FullName" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="Organization_Id" Nullable="false" />
+          <Property Type="String" Name="Organization_Name" Nullable="true" MaxLength="150" />
+          <Property Type="DateTime" Name="UserGroup_Status" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SOP_GetYCompareFieldOperationRating_Result">
+          <Property Type="Int32" Name="YearC" Nullable="true" />
+          <Property Type="Int32" Name="VERYHAPPY" Nullable="true" />
+          <Property Type="Int32" Name="HAPPY" Nullable="true" />
+          <Property Type="Int32" Name="WAITLONG" Nullable="true" />
+          <Property Type="Int32" Name="LOWPROFESSIONAL" Nullable="true" />
+          <Property Type="Int32" Name="BADBEHAVIOR" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SOP_GetYCompareOrganizationRating_Result">
+          <Property Type="Int32" Name="YearC" Nullable="true" />
+          <Property Type="Int32" Name="VERYHAPPY" Nullable="true" />
+          <Property Type="Int32" Name="HAPPY" Nullable="true" />
+          <Property Type="Int32" Name="WAITLONG" Nullable="true" />
+          <Property Type="Int32" Name="LOWPROFESSIONAL" Nullable="true" />
+          <Property Type="Int32" Name="BADBEHAVIOR" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SOP_GetYFieldOperationRating_ByYear_Result">
+          <Property Type="Int32" Name="MonthC" Nullable="true" />
+          <Property Type="Int32" Name="VERYHAPPY" Nullable="true" />
+          <Property Type="Int32" Name="HAPPY" Nullable="true" />
+          <Property Type="Int32" Name="WAITLONG" Nullable="true" />
+          <Property Type="Int32" Name="LOWPROFESSIONAL" Nullable="true" />
+          <Property Type="Int32" Name="BADBEHAVIOR" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SOP_GetYOrganizationRating_ByYear_Result">
+          <Property Type="Int32" Name="MonthC" Nullable="true" />
+          <Property Type="Int32" Name="VERYHAPPY" Nullable="true" />
+          <Property Type="Int32" Name="HAPPY" Nullable="true" />
+          <Property Type="Int32" Name="WAITLONG" Nullable="true" />
+          <Property Type="Int32" Name="LOWPROFESSIONAL" Nullable="true" />
+          <Property Type="Int32" Name="BADBEHAVIOR" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SOP_GetDetailOrganizationRating_Result1">
+          <Property Type="Int32" Name="User_Id" Nullable="true" />
+          <Property Type="String" Name="User_FullName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="User_UserName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="VERYHAPPY" Nullable="false" />
+          <Property Type="Int32" Name="HAPPY" Nullable="false" />
+          <Property Type="Int32" Name="WAITLONG" Nullable="false" />
+          <Property Type="Int32" Name="LOWPROFESSIONAL" Nullable="false" />
+          <Property Type="Int32" Name="BADBEHAVIOR" Nullable="false" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SOPModelStoreContainer" CdmEntityContainer="SOPEntities">
+          <EntitySetMapping Name="AccessHistories">
+            <EntityTypeMapping TypeName="SOPModel.AccessHistory">
+              <MappingFragment StoreEntitySet="AccessHistory">
+                <ScalarProperty Name="AccessHistory_Id" ColumnName="AccessHistory_Id" />
+                <ScalarProperty Name="AccessHistory_Type" ColumnName="AccessHistory_Type" />
+                <ScalarProperty Name="AccessHistory_Time" ColumnName="AccessHistory_Time" />
+                <ScalarProperty Name="AccessHistory__UserId" ColumnName="AccessHistory_ UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="SOPModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="Department_Id" ColumnName="Department_Id" />
+                <ScalarProperty Name="Department_Name" ColumnName="Department_Name" />
+                <ScalarProperty Name="Department_OrganizationId" ColumnName="Department_OrganizationId" />
+                <ScalarProperty Name="Department_Information" ColumnName="Department_Information" />
+                <ScalarProperty Name="Department_PhoneNumber" ColumnName="Department_PhoneNumber" />
+                <ScalarProperty Name="Department_Fax" ColumnName="Department_Fax" />
+                <ScalarProperty Name="Department_Email" ColumnName="Department_Email" />
+                <ScalarProperty Name="Department_Active" ColumnName="Department_Active" />
+                <ScalarProperty Name="Department_CreatedOn" ColumnName="Department_CreatedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DepartmentFieldOperations">
+            <EntityTypeMapping TypeName="SOPModel.DepartmentFieldOperation">
+              <MappingFragment StoreEntitySet="DepartmentFieldOperation">
+                <ScalarProperty Name="DepartmentFieldOperation_Id" ColumnName="DepartmentFieldOperation_Id" />
+                <ScalarProperty Name="DepartmentFieldOperation_DepartmentId" ColumnName="DepartmentFieldOperation_DepartmentId" />
+                <ScalarProperty Name="DepartmentFieldOperation_FieldOperationId" ColumnName="DepartmentFieldOperation_FieldOperationId" />
+                <ScalarProperty Name="DepartmentFieldOperation_Active" ColumnName="DepartmentFieldOperation_Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Districts">
+            <EntityTypeMapping TypeName="SOPModel.District">
+              <MappingFragment StoreEntitySet="District">
+                <ScalarProperty Name="District_Id" ColumnName="District_Id" />
+                <ScalarProperty Name="District_Name" ColumnName="District_Name" />
+                <ScalarProperty Name="District_Type" ColumnName="District_Type" />
+                <ScalarProperty Name="District_Location" ColumnName="District_Location" />
+                <ScalarProperty Name="District_ProvinceId" ColumnName="District_ProvinceId" />
+                <ScalarProperty Name="District_Active" ColumnName="District_Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ethnics">
+            <EntityTypeMapping TypeName="SOPModel.Ethnic">
+              <MappingFragment StoreEntitySet="Ethnic">
+                <ScalarProperty Name="Ethnic_Id" ColumnName="Ethnic_Id" />
+                <ScalarProperty Name="Ethnic_Name" ColumnName="Ethnic_Name" />
+                <ScalarProperty Name="Ethnic_Active" ColumnName="Ethnic_Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FieldOperations">
+            <EntityTypeMapping TypeName="SOPModel.FieldOperation">
+              <MappingFragment StoreEntitySet="FieldOperation">
+                <ScalarProperty Name="FieldOperation_Id" ColumnName="FieldOperation_Id" />
+                <ScalarProperty Name="FieldOperation_Name" ColumnName="FieldOperation_Name" />
+                <ScalarProperty Name="FieldOperation_Active" ColumnName="FieldOperation_Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Groups">
+            <EntityTypeMapping TypeName="SOPModel.Group">
+              <MappingFragment StoreEntitySet="Group">
+                <ScalarProperty Name="Group_Id" ColumnName="Group_Id" />
+                <ScalarProperty Name="Group_Name" ColumnName="Group_Name" />
+                <ScalarProperty Name="Group_Active" ColumnName="Group_Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HistoricalWorks">
+            <EntityTypeMapping TypeName="SOPModel.HistoricalWork">
+              <MappingFragment StoreEntitySet="HistoricalWork">
+                <ScalarProperty Name="HistoricalWork_Id" ColumnName="HistoricalWork_Id" />
+                <ScalarProperty Name="HistoricalWork_OrganizationId" ColumnName="HistoricalWork_OrganizationId" />
+                <ScalarProperty Name="HistoricalWork_DepartmentId" ColumnName="HistoricalWork_DepartmentId" />
+                <ScalarProperty Name="HistoricalWork_UserId" ColumnName="HistoricalWork_UserId" />
+                <ScalarProperty Name="HistoricalWork_TitleId" ColumnName="HistoricalWork_TitleId" />
+                <ScalarProperty Name="HistoricalWork_Type" ColumnName="HistoricalWork_Type" />
+                <ScalarProperty Name="HistoricalWork_EffectFrom" ColumnName="HistoricalWork_EffectFrom" />
+                <ScalarProperty Name="HistoricalWork_EffecttTo" ColumnName="HistoricalWork_EffecttTo" />
+                <ScalarProperty Name="HistoricalWork_Active" ColumnName="HistoricalWork_Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Opinions">
+            <EntityTypeMapping TypeName="SOPModel.Opinion">
+              <MappingFragment StoreEntitySet="Opinion">
+                <ScalarProperty Name="Opinion_Id" ColumnName="Opinion_Id" />
+                <ScalarProperty Name="Opinion_From" ColumnName="Opinion_From" />
+                <ScalarProperty Name="Opinion_To" ColumnName="Opinion_To" />
+                <ScalarProperty Name="Opinion_Date" ColumnName="Opinion_Date" />
+                <ScalarProperty Name="Opinion_Active" ColumnName="Opinion_Active" />
+                <ScalarProperty Name="Opinion_Title" ColumnName="Opinion_Title" />
+                <ScalarProperty Name="Opinion_Content" ColumnName="Opinion_Content" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Organizations">
+            <EntityTypeMapping TypeName="SOPModel.Organization">
+              <MappingFragment StoreEntitySet="Organization">
+                <ScalarProperty Name="Organization_Id" ColumnName="Organization_Id" />
+                <ScalarProperty Name="Organization_Name" ColumnName="Organization_Name" />
+                <ScalarProperty Name="Organization_Superior" ColumnName="Organization_Superior" />
+                <ScalarProperty Name="Organization_Information" ColumnName="Organization_Information" />
+                <ScalarProperty Name="Organization_Address" ColumnName="Organization_Address" />
+                <ScalarProperty Name="Organization_PhoneNumber" ColumnName="Organization_PhoneNumber" />
+                <ScalarProperty Name="Organization_Fax" ColumnName="Organization_Fax" />
+                <ScalarProperty Name="Organization_Email" ColumnName="Organization_Email" />
+                <ScalarProperty Name="Organization_Website" ColumnName="Organization_Website" />
+                <ScalarProperty Name="Organization_Active" ColumnName="Organization_Active" />
+                <ScalarProperty Name="Organization_CreatedOn" ColumnName="Organization_CreatedOn" />
+                <ScalarProperty Name="Organization_OrganizationTypeId" ColumnName="Organization_OrganizationTypeId" />
+                <ScalarProperty Name="Organization_FieldOperation" ColumnName="Organization_FieldOperation" />
+                <ScalarProperty Name="Organization_DirectlyUnder" ColumnName="Organization_DirectlyUnder" />
+                <ScalarProperty Name="Organization_Specialized" ColumnName="Organization_Specialized" />
+                <ScalarProperty Name="Organization_Level" ColumnName="Organization_Level" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrganizationTypes">
+            <EntityTypeMapping TypeName="SOPModel.OrganizationType">
+              <MappingFragment StoreEntitySet="OrganizationType">
+                <ScalarProperty Name="OrganizationType_Id" ColumnName="OrganizationType_Id" />
+                <ScalarProperty Name="OrganizationType_Name" ColumnName="OrganizationType_Name" />
+                <ScalarProperty Name="OrganizationType_Active" ColumnName="OrganizationType_Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Provinces">
+            <EntityTypeMapping TypeName="SOPModel.Province">
+              <MappingFragment StoreEntitySet="Province">
+                <ScalarProperty Name="Province_Id" ColumnName="Province_Id" />
+                <ScalarProperty Name="Province_Name" ColumnName="Province_Name" />
+                <ScalarProperty Name="Province_Type" ColumnName="Province_Type" />
+                <ScalarProperty Name="Province_Active" ColumnName="Province_Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ratings">
+            <EntityTypeMapping TypeName="SOPModel.Rating">
+              <MappingFragment StoreEntitySet="Rating">
+                <ScalarProperty Name="Rating_Id" ColumnName="Rating_Id" />
+                <ScalarProperty Name="Rating_Name" ColumnName="Rating_Name" />
+                <ScalarProperty Name="Rating_Active" ColumnName="Rating_Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RatingResults">
+            <EntityTypeMapping TypeName="SOPModel.RatingResult">
+              <MappingFragment StoreEntitySet="RatingResult">
+                <ScalarProperty Name="RatingResult_Id" ColumnName="RatingResult_Id" />
+                <ScalarProperty Name="RatingResult__UserId" ColumnName="RatingResult_ UserId" />
+                <ScalarProperty Name="RatingResult_CreatedOn" ColumnName="RatingResult_CreatedOn" />
+                <ScalarProperty Name="RatingResult_RatingId" ColumnName="RatingResult_RatingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="SOPModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Titles">
+            <EntityTypeMapping TypeName="SOPModel.Title">
+              <MappingFragment StoreEntitySet="Title">
+                <ScalarProperty Name="Title_Id" ColumnName="Title_Id" />
+                <ScalarProperty Name="Title_Name" ColumnName="Title_Name" />
+                <ScalarProperty Name="Title_Active" ColumnName="Title_Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="SOPModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="User_FullName" ColumnName="User_FullName" />
+                <ScalarProperty Name="User_PassWord" ColumnName="User_PassWord" />
+                <ScalarProperty Name="User_Email" ColumnName="User_Email" />
+                <ScalarProperty Name="User_Birthday" ColumnName="User_Birthday" />
+                <ScalarProperty Name="User_Gender" ColumnName="User_Gender" />
+                <ScalarProperty Name="User_IdentityNumber" ColumnName="User_IdentityNumber" />
+                <ScalarProperty Name="User_IdentityCreatedOn" ColumnName="User_IdentityCreatedOn" />
+                <ScalarProperty Name="User_IdentityCreatedBy" ColumnName="User_IdentityCreatedBy" />
+                <ScalarProperty Name="User_Religion" ColumnName="User_Religion" />
+                <ScalarProperty Name="User_ReligionDetail" ColumnName="User_ReligionDetail" />
+                <ScalarProperty Name="User_Address" ColumnName="User_Address" />
+                <ScalarProperty Name="User_DistrictId" ColumnName="User_DistrictId" />
+                <ScalarProperty Name="User_ProvinceId" ColumnName="User_ProvinceId" />
+                <ScalarProperty Name="User_CurrentResidence" ColumnName="User_CurrentResidence" />
+                <ScalarProperty Name="User_EthnicId" ColumnName="User_EthnicId" />
+                <ScalarProperty Name="User_PhoneNumber" ColumnName="User_PhoneNumber" />
+                <ScalarProperty Name="User_Mobile" ColumnName="User_Mobile" />
+                <ScalarProperty Name="User_CurrentOrganizationId" ColumnName="User_CurrentOrganizationId" />
+                <ScalarProperty Name="User_Active" ColumnName="User_Active" />
+                <ScalarProperty Name="User_CurrentDepartmentId" ColumnName="User_CurrentDepartmentId" />
+                <ScalarProperty Name="User_UserName" ColumnName="User_UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserFieldOperations">
+            <EntityTypeMapping TypeName="SOPModel.UserFieldOperation">
+              <MappingFragment StoreEntitySet="UserFieldOperation">
+                <ScalarProperty Name="UserFieldOperation_Id" ColumnName="UserFieldOperation_Id" />
+                <ScalarProperty Name="UserFieldOperation_UserId" ColumnName="UserFieldOperation_UserId" />
+                <ScalarProperty Name="UserFieldOperation_FieldOperationId" ColumnName="UserFieldOperation_FieldOperationId" />
+                <ScalarProperty Name="UserFieldOperation_Active" ColumnName="UserFieldOperation_Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserGroups">
+            <EntityTypeMapping TypeName="SOPModel.UserGroup">
+              <MappingFragment StoreEntitySet="UserGroup">
+                <ScalarProperty Name="UserGroup_Id" ColumnName="UserGroup_Id" />
+                <ScalarProperty Name="UserGroup_UserId" ColumnName="UserGroup_UserId" />
+                <ScalarProperty Name="UserGroup_GroupId" ColumnName="UserGroup_GroupId" />
+                <ScalarProperty Name="UserGroup_Status" ColumnName="UserGroup_Status" />
+                <ScalarProperty Name="UserGroup_Active" ColumnName="UserGroup_Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SOP_GetCompareTwoOrganizationRating" FunctionName="SOPModel.Store.SOP_GetCompareTwoOrganizationRating">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SOPModel.SOP_GetCompareTwoOrganizationRating_Result">
+                <ScalarProperty Name="Rating_Id" ColumnName="Rating_Id" />
+                <ScalarProperty Name="Rating_Name" ColumnName="Rating_Name" />
+                <ScalarProperty Name="OrganizationRating1" ColumnName="OrganizationRating1" />
+                <ScalarProperty Name="OrganizationRating2" ColumnName="OrganizationRating2" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SOP_GetDetailFieldOperationRating" FunctionName="SOPModel.Store.SOP_GetDetailFieldOperationRating">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SOPModel.SOP_GetDetailFieldOperationRating_Result">
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="User_FullName" ColumnName="User_FullName" />
+                <ScalarProperty Name="User_UserName" ColumnName="User_UserName" />
+                <ScalarProperty Name="VERYHAPPY" ColumnName="VERYHAPPY" />
+                <ScalarProperty Name="HAPPY" ColumnName="HAPPY" />
+                <ScalarProperty Name="WAITLONG" ColumnName="WAITLONG" />
+                <ScalarProperty Name="LOWPROFESSIONAL" ColumnName="LOWPROFESSIONAL" />
+                <ScalarProperty Name="BADBEHAVIOR" ColumnName="BADBEHAVIOR" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SOP_GetListFieldOperationRating" FunctionName="SOPModel.Store.SOP_GetListFieldOperationRating">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SOPModel.SOP_GetListFieldOperationRating_Result">
+                <ScalarProperty Name="FieldOperation_Id" ColumnName="FieldOperation_Id" />
+                <ScalarProperty Name="FieldOperation_Name" ColumnName="FieldOperation_Name" />
+                <ScalarProperty Name="VERYHAPPY" ColumnName="VERYHAPPY" />
+                <ScalarProperty Name="HAPPY" ColumnName="HAPPY" />
+                <ScalarProperty Name="WAITLONG" ColumnName="WAITLONG" />
+                <ScalarProperty Name="LOWPROFESSIONAL" ColumnName="LOWPROFESSIONAL" />
+                <ScalarProperty Name="BADBEHAVIOR" ColumnName="BADBEHAVIOR" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SOP_GetListOrganizationRating" FunctionName="SOPModel.Store.SOP_GetListOrganizationRating">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SOPModel.SOP_GetListOrganizationRating_Result">
+                <ScalarProperty Name="Organization_Id" ColumnName="Organization_Id" />
+                <ScalarProperty Name="Organization_Name" ColumnName="Organization_Name" />
+                <ScalarProperty Name="VERYHAPPY" ColumnName="VERYHAPPY" />
+                <ScalarProperty Name="HAPPY" ColumnName="HAPPY" />
+                <ScalarProperty Name="WAITLONG" ColumnName="WAITLONG" />
+                <ScalarProperty Name="LOWPROFESSIONAL" ColumnName="LOWPROFESSIONAL" />
+                <ScalarProperty Name="BADBEHAVIOR" ColumnName="BADBEHAVIOR" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SOP_GetMCompareRating" FunctionName="SOPModel.Store.SOP_GetMCompareRating">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SOPModel.SOP_GetMCompareRating_Result">
+                <ScalarProperty Name="YearC" ColumnName="YearC" />
+                <ScalarProperty Name="VERYHAPPY" ColumnName="VERYHAPPY" />
+                <ScalarProperty Name="HAPPY" ColumnName="HAPPY" />
+                <ScalarProperty Name="WAITLONG" ColumnName="WAITLONG" />
+                <ScalarProperty Name="LOWPROFESSIONAL" ColumnName="LOWPROFESSIONAL" />
+                <ScalarProperty Name="BADBEHAVIOR" ColumnName="BADBEHAVIOR" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SOP_GetMCompareRating_ByYear" FunctionName="SOPModel.Store.SOP_GetMCompareRating_ByYear">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SOPModel.SOP_GetMCompareRating_ByYear_Result">
+                <ScalarProperty Name="MonthC" ColumnName="MonthC" />
+                <ScalarProperty Name="VERYHAPPY" ColumnName="VERYHAPPY" />
+                <ScalarProperty Name="HAPPY" ColumnName="HAPPY" />
+                <ScalarProperty Name="WAITLONG" ColumnName="WAITLONG" />
+                <ScalarProperty Name="LOWPROFESSIONAL" ColumnName="LOWPROFESSIONAL" />
+                <ScalarProperty Name="BADBEHAVIOR" ColumnName="BADBEHAVIOR" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SOP_GetStatusUserCMMC" FunctionName="SOPModel.Store.SOP_GetStatusUserCMMC">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SOPModel.SOP_GetStatusUserCMMC_Result">
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="User_FullName" ColumnName="User_FullName" />
+                <ScalarProperty Name="Organization_Id" ColumnName="Organization_Id" />
+                <ScalarProperty Name="Organization_Name" ColumnName="Organization_Name" />
+                <ScalarProperty Name="UserGroup_Status" ColumnName="UserGroup_Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SOP_GetStatusUserCMMCByOrganization" FunctionName="SOPModel.Store.SOP_GetStatusUserCMMCByOrganization">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SOPModel.SOP_GetStatusUserCMMCByOrganization_Result">
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="User_FullName" ColumnName="User_FullName" />
+                <ScalarProperty Name="Organization_Id" ColumnName="Organization_Id" />
+                <ScalarProperty Name="Organization_Name" ColumnName="Organization_Name" />
+                <ScalarProperty Name="UserGroup_Status" ColumnName="UserGroup_Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SOP_GetYCompareFieldOperationRating" FunctionName="SOPModel.Store.SOP_GetYCompareFieldOperationRating">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SOPModel.SOP_GetYCompareFieldOperationRating_Result">
+                <ScalarProperty Name="YearC" ColumnName="YearC" />
+                <ScalarProperty Name="VERYHAPPY" ColumnName="VERYHAPPY" />
+                <ScalarProperty Name="HAPPY" ColumnName="HAPPY" />
+                <ScalarProperty Name="WAITLONG" ColumnName="WAITLONG" />
+                <ScalarProperty Name="LOWPROFESSIONAL" ColumnName="LOWPROFESSIONAL" />
+                <ScalarProperty Name="BADBEHAVIOR" ColumnName="BADBEHAVIOR" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SOP_GetYCompareOrganizationRating" FunctionName="SOPModel.Store.SOP_GetYCompareOrganizationRating">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SOPModel.SOP_GetYCompareOrganizationRating_Result">
+                <ScalarProperty Name="YearC" ColumnName="YearC" />
+                <ScalarProperty Name="VERYHAPPY" ColumnName="VERYHAPPY" />
+                <ScalarProperty Name="HAPPY" ColumnName="HAPPY" />
+                <ScalarProperty Name="WAITLONG" ColumnName="WAITLONG" />
+                <ScalarProperty Name="LOWPROFESSIONAL" ColumnName="LOWPROFESSIONAL" />
+                <ScalarProperty Name="BADBEHAVIOR" ColumnName="BADBEHAVIOR" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SOP_GetYFieldOperationRating_ByYear" FunctionName="SOPModel.Store.SOP_GetYFieldOperationRating_ByYear">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SOPModel.SOP_GetYFieldOperationRating_ByYear_Result">
+                <ScalarProperty Name="MonthC" ColumnName="MonthC" />
+                <ScalarProperty Name="VERYHAPPY" ColumnName="VERYHAPPY" />
+                <ScalarProperty Name="HAPPY" ColumnName="HAPPY" />
+                <ScalarProperty Name="WAITLONG" ColumnName="WAITLONG" />
+                <ScalarProperty Name="LOWPROFESSIONAL" ColumnName="LOWPROFESSIONAL" />
+                <ScalarProperty Name="BADBEHAVIOR" ColumnName="BADBEHAVIOR" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SOP_GetYOrganizationRating_ByYear" FunctionName="SOPModel.Store.SOP_GetYOrganizationRating_ByYear">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SOPModel.SOP_GetYOrganizationRating_ByYear_Result">
+                <ScalarProperty Name="MonthC" ColumnName="MonthC" />
+                <ScalarProperty Name="VERYHAPPY" ColumnName="VERYHAPPY" />
+                <ScalarProperty Name="HAPPY" ColumnName="HAPPY" />
+                <ScalarProperty Name="WAITLONG" ColumnName="WAITLONG" />
+                <ScalarProperty Name="LOWPROFESSIONAL" ColumnName="LOWPROFESSIONAL" />
+                <ScalarProperty Name="BADBEHAVIOR" ColumnName="BADBEHAVIOR" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="SOPModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="SOPModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="SOPModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_generate_inserts" FunctionName="SOPModel.Store.sp_generate_inserts" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="SOPModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SOPModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="SOPModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SOPModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="SOPModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="SOPModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="SOP_GetDetailOrganizationRating" FunctionName="SOPModel.Store.SOP_GetDetailOrganizationRating">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SOPModel.SOP_GetDetailOrganizationRating_Result1">
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="User_FullName" ColumnName="User_FullName" />
+                <ScalarProperty Name="User_UserName" ColumnName="User_UserName" />
+                <ScalarProperty Name="VERYHAPPY" ColumnName="VERYHAPPY" />
+                <ScalarProperty Name="HAPPY" ColumnName="HAPPY" />
+                <ScalarProperty Name="WAITLONG" ColumnName="WAITLONG" />
+                <ScalarProperty Name="LOWPROFESSIONAL" ColumnName="LOWPROFESSIONAL" />
+                <ScalarProperty Name="BADBEHAVIOR" ColumnName="BADBEHAVIOR" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SOP_UpdateStatusUserCMMC" FunctionName="SOPModel.Store.SOP_UpdateStatusUserCMMC" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

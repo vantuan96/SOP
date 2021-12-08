@@ -1,0 +1,484 @@
+﻿@model SOP.Models.User
+@{
+    var X = Html.X();
+}
+<script>
+    var onSuccess = function (grid, data) {
+        grid.show();
+        grid.getStore().loadData(data);
+        App.EditUserWindow.close();
+    };
+    var CloseClick = function () {
+        App.EditUserWindow.close();
+    }
+</script>
+@*@(X.Window()
+    .ID("EditUserWindow")
+    .AlignTo("center")
+    .Width(410)
+    .Flex(1)
+    .Icon(Icon.Add)
+    .Title("Sửa Thông tin Người dùng")
+    .Padding(5)
+    .Collapsible(true)
+    .CloseAction(CloseAction.Destroy)
+            .Items(
+                       X.FormPanel()
+                                .ID("EditUserFormPanel")
+                                .Frame(true)
+                                .DefaultAnchor("100%")
+                                .FieldDefaults(fd => fd.LabelWidth = 110)
+                                .StyleHtmlContent(true)
+                                .BodyPadding(5)
+                                .Items(
+                                    X.NumberFieldFor(m => m.User_Id).FieldLabel("Mã").LabelWidth(150).Value(Model.User_Id).ReadOnly(true).Hidden(true),
+                                    X.TextFieldFor(m => m.User_FullName).FieldLabel("Họ tên"),
+                                    X.TextFieldFor(m => m.User_UserName).FieldLabel("Tài khoản").AllowBlank(false),
+                                    X.TextFieldFor(m => m.User_Email).FieldLabel("Email").ReadOnly(true),
+                                    X.TextFieldFor(m => m.User_PassWord).FieldLabel("Mật khẩu").InputType(Ext.Net.InputType.Password),
+                                    X.DateFieldFor(m => m.User_Birthday).FieldLabel("Ngày sinh").Format("dd/MM/yyyy"),
+                                    X.ComboBoxFor(m => m.User_CurrentOrganizationId)
+                                            .ID("ComboUserCurrentOrganizationId")
+                                            .FieldLabel("Cơ quan - Tổ chức :")
+                                            .Editable(false)
+                                            .AnchorHorizontal("100%")
+                                            .EmptyText("Chọn cơ quan")
+                                            .DisplayField("Organization_Name")
+                                            .ValueField("Organization_Id")
+                                            .QueryMode(DataLoadMode.Local)
+                                            .Items(ViewBag.UserCurrentOrganizationId),  
+                                    X.ComboBoxFor(m => m.User_Gender).FieldLabel("Giới tính").ValueNotFoundText("Chọn giới tính").EmptyText("Chọn giới tính")  
+                                    .Items(
+                                    ls =>
+                                    {
+                                        ls.Add(
+                                            Html.X()
+                                            .ListItem()
+                                            .Text("Nam")
+                                            .Value("1")
+                                        );
+                                        ls.Add(
+                                            Html.X()
+                                            .ListItem()
+                                            .Text("Nữ")
+                                            .Value("0")
+                                        );
+                                    }
+                                    ).SelectedItems(Model.User_Gender.ToString()),
+                                    X.TextFieldFor(m => m.User_IdentityNumber).FieldLabel("Số Chứng minh thư"),
+                                    X.DateFieldFor(m => m.User_IdentityCreatedOn).FieldLabel("Ngày cấp").Format("dd/MM/yyyy"),
+                                    X.TextFieldFor(m => m.User_IdentityCreatedBy).FieldLabel("Nơi cấp"),
+                                    X.TextFieldFor(m => m.User_CurrentResidence).FieldLabel("Nơi cư trú hiện tại"),
+                                    X.ComboBoxFor(m => m.User_Religion).FieldLabel("Tôn giáo").EmptyText("Chọn tôn giáo")
+                                        .Items(
+                                    ls =>
+                                    {
+                                        ls.Add(
+                                            Html.X()
+                                            .ListItem()
+                                            .Text("Có")
+                                            .Value("True")
+                                        );
+                                        ls.Add(
+                                            Html.X()
+                                            .ListItem()
+                                            .Text("Không")
+                                            .Value("False")
+                                        );
+                                    }
+                                        ).SelectedItems(Model.User_Religion.ToString()),
+                                    X.TextFieldFor(m => m.User_ReligionDetail).FieldLabel("Chi tiết tôn giáo"),
+                                    X.TextFieldFor(m => m.User_Address).FieldLabel("Địa chỉ"),
+                                    X.ComboBoxFor(m => m.User_ProvinceId).FieldLabel("Tỉnh - Thành Phố :").AllowBlank(false)
+                                        .ID("ComboProvince").Editable(false)
+                                        .QueryMode(DataLoadMode.Local)
+                                        .TriggerAction(TriggerAction.All)
+                                        .ValueField("Province_Id")
+                                        .DisplayField("Province_Name")
+                                        .EmptyText("Chọn Tỉnh - Thành")
+                                        .Listeners(ls =>
+                                              ls.Select.Handler = "App.ComboDistrict.clearValue();App.ComboDistrict.getStore().load()"
+                                        )
+                                        .Store(
+                                            Html.X().Store()
+                                                .Model(Html.X().Model()
+                                                .IDProperty("Province_Id")
+                                                .Fields(
+                                                new ModelField("Province_Id", ModelFieldType.Int) { Mapping = "Province_Id" },
+                                                new ModelField("Province_Name", ModelFieldType.String) { Mapping = "Province_Name" }
+                                                ))
+                                                .Proxy(Html.X().AjaxProxy()
+                                                .Url(Url.Action("GetProvince"))
+                                                .Reader(Html.X().JsonReader().Root("data"))
+                                                        ).Listeners(
+                                                            ls => ls.Load.Handler = "App.ComboDistrict.clearValue();App.ComboDistrict.getStore().load()"
+                                                                )
+                                            )
+                                        ,
+                                       X.ComboBoxFor(m => m.User_DistrictId).AllowBlank(false)
+                                       .FieldLabel("Quận - Huyện :")
+                                       .ID("ComboDistrict")
+                                       .DisplayField("name")
+                                       .TypeAhead(true)
+                                       .QueryMode(DataLoadMode.Local)
+                                       .ForceSelection(true)
+                                       .ValueField("id")
+                                       .Store(
+                                                Html.X().Store()
+                                                .AutoLoad(false)
+                                                .Model(Html.X().Model()
+                                                .IDProperty("District_Id")
+                                                .Fields(
+                                                new ModelField("id", ModelFieldType.Int) { Mapping = "District_Id" },
+                                                new ModelField("name", ModelFieldType.String) { Mapping = "District_Name" }
+                                                ))
+                                                .Proxy(Html.X().AjaxProxy()
+                                                    .Url(Url.Action("GetListDistrict"))
+                                                .Reader(Html.X().JsonReader().Root("data"))
+                                                )
+                                        .Parameters(ps =>
+                                                ps.Add(new StoreParameter("provinceId", "App.ComboProvince.getValue()", ParameterMode.Raw))
+                                                     )
+                                            .Listeners(ls => ls.Load.Handler = @"var combo = App.ComboDistrict;combo.setValue(records[0].get(combo.valueField));")
+                                                ),
+                                         X.ComboBoxFor(m => m.User_EthnicId)
+                                            .FieldLabel("Dân tộc :")
+                                            .ID("ComboEthnic")
+                                            .ValueField("id")
+                                            .DisplayField("name")
+                                            .EmptyText("Chọn dân tộc")
+                                            .Store(
+                                             Html.X().Store()
+                                            .Model(Html.X().Model()
+                                                .IDProperty("Ethnic_Id")
+                                            .Fields(
+                                                new ModelField("id", ModelFieldType.Int) { Mapping = "Ethnic_Id" },
+                                                new ModelField("name", ModelFieldType.String) { Mapping = "Ethnic_Name" }
+                                            ))
+                                            .Proxy(Html.X().AjaxProxy()
+                                            .Url(Url.Action("GetEthnic"))
+                                            .Reader(Html.X().JsonReader().Root("data"))
+                                            )
+                                            ),
+                                        X.NumberFieldFor(m => m.User_PhoneNumber).FieldLabel("Số Đt bàn"),
+                                        X.NumberFieldFor(m => m.User_Mobile).FieldLabel("Số Đt Di động"),
+                                        X.ComboBoxFor(m => m.User_Active).FieldLabel("Trạng Thái").ValueNotFoundText("Chọn trạng thái1").EmptyText("Chọn trạng thái")
+                                        .Items(
+                                                    ls =>
+                                                    {
+                                                        ls.Add(
+                                                            Html.X()
+                                                            .ListItem()
+                                                            .Text("Kích hoạt")
+                                                            .Value("1")
+                                                            );
+                                                        ls.Add(
+                                                            Html.X()
+                                                            .ListItem()
+                                                            .Text("Khóa")
+                                                            .Value("0"));
+                                                    }
+                                                )
+                                   .SelectedItems(Model.User_Active.ToString())
+                                )
+                   )
+    .Buttons(
+         X.Button()
+         .Text("Lưu")
+         .Icon(Icon.Accept)
+                 .DirectEvents(de =>
+                 {
+                     de.Click.Url = Url.Action("/EditSave");
+                     de.Click.EventMask.ShowMask = true;
+                     de.Click.FormID = "EditUserFormPanel";
+                     de.Click.Success = "onSuccess(App.UserGridPanel, result.data);";
+                 }
+            )
+    )
+)*@
+@(X.Window()
+    .ID("EditUserWindow")
+    .AlignTo("center")
+    .Width(880)
+    .Collapsible(true)
+    .Modal(true)
+    .StyleSpec("background:white;border:1px solid gray;")
+    .Icon(Icon.Add)
+    .Title("Sửa Cán Bộ CC - VC")
+    .Padding(5)
+    .CloseAction(CloseAction.Destroy)
+    .Items(
+          X.FormPanel()
+              .ID("EditUserFormPanel")
+              .Frame(true)
+              .DefaultAnchor("100%")
+              .StyleHtmlContent(true)
+              .Flex(1)
+              .StyleSpec("background:white;border:1px solid gray;")
+              .Defaults(d =>
+                   {
+                       d.Add(new Parameter("Width", "250"));
+                       d.Add(new Parameter("LabelWidth", "100"));
+                       d.Add(new Parameter("Margin", "0 0 15 5"));
+                       d.Add(new Parameter("LabelStyle", "font-weight:bold"));
+                   })
+             .FieldDefaults(fd => fd.LabelWidth = 120)
+             .BodyPadding(5)
+        .Items(
+        X.Panel()
+                .Layout(LayoutType.HBox)
+                .MarginSpec("0 0 10")
+                .Items(
+            X.FieldSet()
+                .Flex(1)
+                .Border(false)
+                .Layout(LayoutType.Anchor)
+                .DefaultAnchor("100%")
+                .Items(
+                      X.TextFieldFor(m => m.User_FullName).FieldLabel("Họ tên").AllowBlank(false),
+                      X.TextFieldFor(m => m.User_Email).FieldLabel("Email").AllowBlank(false),
+                      X.TextFieldFor(m => m.User_UserName).FieldLabel("Tài khoản").AllowBlank(false),
+                      X.TextFieldFor(m=>m.User_PassWord).FieldLabel("Mật khẩu").InputType(Ext.Net.InputType.Password).AllowBlank(false).Text(ViewBag.User_PassWord),
+                      X.DateFieldFor(m => m.User_Birthday).FieldLabel("Ngày sinh").AllowBlank(false),
+                      X.ComboBoxFor(m => m.User_CurrentOrganizationId)
+                                                  .ID("ComboUserCurrentOrganizationId")
+                                                  .FieldLabel("Cơ quan - Tổ chức :")
+                                                  .Editable(false)
+                                                  .AnchorHorizontal("100%")
+                                                  .EmptyText("Chọn cơ quan")
+                                                  .DisplayField("Organization_Name")
+                                                  .ValueField("Organization_Id")
+                                                  .QueryMode(DataLoadMode.Local)
+                                                  .Items(ViewBag.UserCurrentOrganizationId)
+                                                  ,
+                      X.ComboBoxFor(m => m.User_CurrentDepartmentId)
+                                                  .ID("ComboDepartment")
+                                                  .FieldLabel("Phòng Ban :")
+                                                  .Editable(false)
+                                                  .AnchorHorizontal("100%")
+                                                  .EmptyText("Chọn phòng ban")
+                                                  .DisplayField("Department_Name")
+                                                  .ValueField("Department_Id")
+                                                  .QueryMode(DataLoadMode.Local)
+                                                  .Items(ViewBag.UserCurrentDepartmentId)
+                                                  ,
+        //X.ComboBoxFor(m => m.User_CurrentOrganizationId).FieldLabel("Cơ quan - Tổ chức :").AllowBlank(false)
+        //             .ID("ComboUserCurrentOrganization").Editable(false)
+        //             .QueryMode(DataLoadMode.Local)
+        //             .TriggerAction(TriggerAction.All)
+        //             .ValueField("Organization_Id")
+        //             .DisplayField("Organization_Name")
+        //             .EmptyText("Chọn Cơ quan - Tổ chức")
+        //             .Listeners(ls =>
+        //                            ls.Select.Handler = "App.ComboDepartment.clearValue(); App.ComboDepartment.getStore().load();App.ComboDistrict.setDisabled(false)"
+        //                        )
+        //             .Store(
+        //                        Html.X().Store()
+        //                            .Model(Html.X().Model()
+        //                            .IDProperty("Organization_Id")
+        //                            .Fields(
+        //                new ModelField("Organization_Id", ModelFieldType.Int) { Mapping = "Organization_Id" },
+        //                new ModelField("Organization_Name", ModelFieldType.String) { Mapping = "Organization_Name" }
+        //                                      ))
+        //                                      .Proxy(Html.X().AjaxProxy()
+        //                                      .Url(Url.Action("GetOrganization", "User"))
+        //                                      .Reader(Html.X().JsonReader().Root("data"))
+        //                                      )
+        //                                  ),
+                //X.ComboBoxFor(m => m.User_CurrentDepartmentId)
+                //            .FieldLabel("Phòng Ban :")
+                //            .ID("ComboDepartment")
+                //            .DisplayField("name")
+                //            .ValueField("id")
+                //            .EmptyText("Chọn Phòng Ban").Store(
+                //             Html.X().Store()
+                //                     .Model(Html.X().Model()
+                //                           .IDProperty("Department_Id")
+                //                           .Fields(
+                //                                      new ModelField("id", ModelFieldType.Int) { Mapping = "Department_Id" },
+                //                                      new ModelField("name", ModelFieldType.String) { Mapping = "Department_Name" }
+                //                                  ))
+                //                                  .Proxy(Html.X().AjaxProxy()
+                //                                  .Url(Url.Action("GetDepartment"))
+                //                                  .Reader(Html.X().JsonReader().Root("data"))
+                //                                  )
+                //                                  .Parameters(ps =>
+                //                                          {
+                //                                              ps.Add(new StoreParameter("organizationId", "App.ComboUserCurrentOrganization.getValue()", ParameterMode.Raw));
+                //                                              ps.Add(new StoreParameter("Organization_Id", Model.User_CurrentOrganizationId.ToString(), ParameterMode.Raw));
+                //                                          }
+                //                                      )
+                //                                  .Listeners(ls => ls.Load.Handler = @"var combo = App.ComboDepartment;combo.setValue(records[0].get(combo.valueField));")
+                //                                  ),                   
+                      X.ComboBoxFor(m => m.User_Gender).FieldLabel("Giới tính").ValueNotFoundText("Chọn giới tính").EmptyText("Chọn giới tính").AllowBlank(false).Editable(false)
+                                .Items(
+                                      ls =>
+                                      {
+                                          ls.Add(
+                                             Html.X()
+                                                 .ListItem()
+                                                 .Text("Nam")
+                                                 .Value("1")
+                                                 );
+                                          ls.Add(
+                                             Html.X()
+                                                 .ListItem()
+                                                 .Text("Nữ")
+                                                 .Value("0")
+                                                 );
+                                      }
+                                   ).SelectedItems(Model.User_Gender.ToString()).CausesValidation(true)
+                ),
+             X.FieldSet()
+                        .Flex(1)
+                        .Border(false)
+                        .Layout(LayoutType.Anchor)
+                        .DefaultAnchor("100%")
+                        .Items(
+                                            X.TextFieldFor(m => m.User_Id).FieldLabel("Mã User").Hidden(true),
+                                            X.TextFieldFor(m => m.User_IdentityNumber).FieldLabel("Số Chứng minh thư").AllowBlank(false),
+                                            X.DateFieldFor(m => m.User_IdentityCreatedOn).FieldLabel("Ngày cấp").AllowBlank(false),
+                                            X.TextFieldFor(m => m.User_IdentityCreatedBy).FieldLabel("Nơi cấp").AllowBlank(false),
+                                            X.TextFieldFor(m => m.User_CurrentResidence).FieldLabel("Nơi cư trú hiện tại"),
+                                            X.ComboBoxFor(m => m.User_Religion).FieldLabel("Tôn giáo").ValueNotFoundText("Chọn tôn giáo").EmptyText("Chọn tôn giáo").Editable(false).Value(Model.User_Religion)
+                                                .Items(
+                                            ls =>
+                                            {
+                                                ls.Add(
+                                                    Html.X()
+                                                    .ListItem()
+                                                    .Text("Có")
+                                                    .Value("True")
+                                                );
+                                                ls.Add(
+                                                    Html.X()
+                                                    .ListItem()
+                                                    .Text("Không")
+                                                    .Value("False")
+                                                );
+                                            }
+                                            ).SelectedItems(Model.User_Religion.ToString()),
+                                            X.TextFieldFor(m => m.User_ReligionDetail).FieldLabel("Chi tiết tôn giáo").AllowBlank(false),
+                                            X.TextFieldFor(m => m.User_Address).FieldLabel("Địa chỉ").AllowBlank(false),
+                                            X.ComboBoxFor(m => m.User_ProvinceId).FieldLabel("Tỉnh - Thành Phố :").AllowBlank(false)
+                                                    .ID("ComboProvince").Editable(false)
+                                                    .QueryMode(DataLoadMode.Local)
+                                                    .TriggerAction(TriggerAction.All)
+                                                    .ValueField("Province_Id")
+                                                    .DisplayField("Province_Name")
+                                                    .EmptyText("Chọn Tỉnh - Thành")
+                                                    .Listeners(ls =>
+                                                        ls.Select.Handler = "App.ComboDistrict.clearValue(); App.ComboDistrict.getStore().load()"
+                                                    )
+                                                    .Store(
+                                                        Html.X().Store()
+                                                        .Model(Html.X().Model()
+                                                        .IDProperty("Province_Id")
+                                                        .Fields(
+                                                        new ModelField("Province_Id", ModelFieldType.Int) { Mapping = "Province_Id" },
+                                                        new ModelField("Province_Name", ModelFieldType.String) { Mapping = "Province_Name" }
+                                                        ))
+                                                        .Proxy(Html.X().AjaxProxy()
+                                                        .Url(Url.Action("GetProvince"))
+                                                        .Reader(Html.X().JsonReader().Root("data"))
+                                                        )
+                                                    ),
+                         X.ComboBoxFor(m => m.User_DistrictId)
+                                             .ID("ComboDistrict")
+                                             .FieldLabel("Quận - Huyện :")
+                                             .Editable(false)
+                                             .AnchorHorizontal("100%")
+                                             .EmptyText("Chọn quận huyện")
+                                             .DisplayField("District_Name")
+                                             .ValueField("District_Id")
+                                             .QueryMode(DataLoadMode.Local)
+                                             .Items(ViewBag.UserDistrict)
+                                             ,                                      
+                                                    
+                                           //X.ComboBoxFor(m => m.User_DistrictId).AllowBlank(false)
+                                           //         .FieldLabel("Quận - Huyện :")
+                                           //         .ID("ComboDistrict")
+                                           //         .DisplayField("name")
+                                           //         .TypeAhead(true)
+                                           //         .QueryMode(DataLoadMode.Local)
+                                           //         .ForceSelection(true)
+                                           //         .ValueField("id")
+                                           //         .EmptyText("Chọn Huyện").Store(
+                                           //             Html.X().Store()
+                                           //             .AutoLoad(false)
+                                           //             .Model(Html.X().Model()
+                                           //             .IDProperty("District_Id")
+                                           //             .Fields(
+                                           //             new ModelField("id", ModelFieldType.Int) { Mapping = "District_Id" },
+                                           //             new ModelField("name", ModelFieldType.String) { Mapping = "District_Name" }
+                                           //             ))
+                                           //             .Proxy(Html.X().AjaxProxy()
+                                           //             .Url(Url.Action("GetDistrict"))
+                                           //             .Reader(Html.X().JsonReader().Root("data"))
+                                           //             )
+                                           //             .Parameters(ps =>
+                                           //                   ps.Add(new StoreParameter("provinceId", "App.ComboProvince.getValue()", ParameterMode.Raw))
+                                           //              )
+                                           //                  .Listeners(ls => ls.Load.Handler = @"var combo = App.ComboDistrict;combo.setValue(records[0].get(combo.valueField));")
+                                           //             ),
+                                         
+                              X.ComboBoxFor(m => m.User_EthnicId)
+                                                .ID("ComboEthnic")
+                                                .FieldLabel("Dân tộc :")
+                                                .Editable(false)
+                                                .AnchorHorizontal("100%")
+                                                .EmptyText("Chọn dân tộc")
+                                                .DisplayField("Ethnic_Name")
+                                                .ValueField("Ethnic_Id")
+                                                .QueryMode(DataLoadMode.Local)
+                                                .Items(ViewBag.UserEthnic)
+                                                ,                           
+                              //X.ComboBoxFor(m => m.User_EthnicId).AllowBlank(false)
+                              //                      .FieldLabel("Dân tộc :")
+                              //                      .ID("ComboEthnic")
+                              //                      .Editable(false)
+                              //                      .ValueField("id")
+                              //                      .DisplayField("name")
+                              //                      .EmptyText("Chọn dân tộc")
+                              //                      .Store(
+                              //                       Html.X().Store()
+                              //                      .Model(Html.X().Model()
+                              //                          .IDProperty("Ethnic_Id")
+                              //                      .Fields(
+                              //                          new ModelField("id", ModelFieldType.Int) { Mapping = "Ethnic_Id" },
+                              //                          new ModelField("name", ModelFieldType.String) { Mapping = "Ethnic_Name" }
+                              //                      ))
+                              //                      .Proxy(Html.X().AjaxProxy()
+                              //                      .Url(Url.Action("GetEthnic"))
+                              //                      .Reader(Html.X().JsonReader().Root("data"))
+                              //                      )
+                              //                      ),
+                                                X.TextFieldFor(m => m.User_PhoneNumber).FieldLabel("Số Đt bàn").AllowBlank(false),
+                                                X.TextFieldFor(m => m.User_Mobile).FieldLabel("Số Đt Di động").AllowBlank(false),
+                                                X.ComboBoxFor(m => m.User_Active).FieldLabel("Trạng Thái").EmptyText("Chọn trạng thái")
+                                                    .SelectedItems(Model.User_Active.ToString())
+                                                    .Items(
+                                                        X.ListItem().Text("Kích Hoạt").Value("True"),
+                                                        X.ListItem().Text("Khóa").Value("False")
+                                                    )
+                 )
+              )
+            )
+         )
+     .Buttons(
+          X.Button().Text("Lưu").FormBind(true).CausesValidation(true).Icon(Icon.Accept).Width(100)
+                    .FormBind(true)
+                    .CausesValidation(true)
+                    .DirectEvents(de =>
+                         {
+                             de.Click.Url = Url.Action("/EditSave");
+                             de.Click.EventMask.ShowMask = true;
+                             de.Click.FormID = "EditUserFormPanel";
+                             de.Click.Success = "onSuccess(App.UserGridPanel, result.data);";
+                         }),
+            X.Button()
+                 .Text("Thoát")
+                 .Icon(Icon.Accept)
+                 .OnClientClick("CloseClick()")
+                 )
+   )

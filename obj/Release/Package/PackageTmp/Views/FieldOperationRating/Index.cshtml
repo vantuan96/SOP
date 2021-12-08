@@ -1,0 +1,132 @@
+﻿@{
+    var X = Html.X();
+    Layout = "~/Views/_LayoutLogin.cshtml";
+}
+@(X.XScript().ScriptBlock(@"
+<script>
+    var addTab = function (tabPanel, id, url, menuItem, title) {
+        tabPanel = window.parent.App.TabPanel1;
+        var tab = tabPanel.getComponent(id);
+        if (!tab) {
+            tab = tabPanel.add({
+                id: id,
+                title: title,
+                closable: true,
+                menuItem: menuItem,
+                loader: {
+                    url: url,
+                    renderer: 'frame',
+                    loadMask: {
+                        showMask: true,
+                        msg: 'Xin chờ, đang tải...'
+                    }
+                }
+            });
+            tab.on('activate', function (tab) {
+                //#{MenuPanel1}.setSelection(tab.menuItem);
+            });
+        }
+        tabPanel.setActiveTab(tab);
+    }
+
+</script>"
+     ))
+
+@(X.GridPanel()
+        .Title("Danh sách lĩnh vực")
+        .Padding(10)
+            .ID("FieldOperationGridPanel")
+            .Store(Html.X().Store().ID("FieldOperationStore")
+            .Model(Html.X().Model()
+                .Fields(
+                                new ModelField("FieldOperation_Id", ModelFieldType.Int),
+                                new ModelField("FieldOperation_Name", ModelFieldType.String)
+                          )
+            )
+           .DataSource(Model)
+        )
+        .ColumnModel(
+            Html.X().RowNumbererColumn()
+            .Text("STT")
+            .Width(40)
+            .Sortable(false),
+            Html.X().Column()
+                .Text("Mã")
+                .DataIndex("FieldOperation_Id")
+                .Width(75)
+                .Hidden(true),
+            Html.X().Column()
+                    .Text("Lĩnh vực")
+                    .Flex(1)
+                    .DataIndex("FieldOperation_Name"),
+            Html.X().CommandColumn()
+                    .Width(120)
+                    .Commands(
+                    Html.X().GridCommand()
+                        .CommandName("MFieldOperationRating")
+                        .Icon(Icon.Accept)
+                        .Text("B/c tháng")
+                    )
+                    .Listeners(ls =>
+                    {
+                        ls.Command.Handler = "addTab(#{TabPanel1}, 'MFieldOperationRating', '/FieldOperationRating/MFieldOperationRatingdirect'+'/?FieldOperationId='+record.data.FieldOperation_Id, this, 'Báo cáo kết quả tháng: '+record.data.FieldOperation_Name);";
+                    }),
+         Html.X().CommandColumn()
+                    .Width(110)
+                    .Commands(
+                    Html.X().GridCommand()
+                            .CommandName("YFieldOperationRating")
+                        .Icon(Icon.Accept)
+                        .Text("B/c năm")
+                    )
+                    .Listeners(ls =>
+                    {
+                        ls.Command.Handler = "addTab(#{TabPanel1}, 'YFieldOperationRating', '/FieldOperationRating/YFieldOperationRatingdirect'+'/?FieldOperationId='+record.data.FieldOperation_Id, this, 'Báo cáo kết quả năm: '+record.data.FieldOperation_Name);";
+                    }),
+           Html.X().CommandColumn().Width(140)
+                        .Commands(
+                        Html.X().GridCommand()
+                                .CommandName("YCompareFieldOperationRating")
+                            .Icon(Icon.Accept)
+                            .Text("B/c so sánh năm")
+                        )
+                        .Listeners(ls =>
+                        {
+                            ls.Command.Handler = "addTab(#{TabPanel1}, 'YCompareFieldOperationRating', '/FieldOperationRating/YCompareFieldOperationRating'+'/?FieldOperationId='+record.data.FieldOperation_Id, this, 'Báo cáo kết quả năm: '+record.data.FieldOperation_Name);";
+                        }),
+            Html.X().CommandColumn().Width(140)
+                            .Commands(
+                            Html.X().GridCommand()
+                                .CommandName("DetailFieldOperationRating")
+                                .Icon(Icon.ApplicationViewDetail)
+                                .Text("B/c chi tiết")
+                            )
+                            .Listeners(ls =>
+                            {
+                                ls.Command.Handler = "addTab(#{TabPanel1}, 'DetailFieldOperationRating', '/FieldOperationRating/DetailFieldOperationRating'+'/?FieldOperationId='+record.data.FieldOperation_Id, this, 'Báo cáo chi tiết: '+record.data.FieldOperation_Name);";
+                            })
+                   )
+                    .TopBar(X.Toolbar()
+                        .Items(
+                            X.Button()
+                                .Text("Tổng hợp kết quả")
+                                .Icon(Icon.TableRow)
+                                .OnClientClick("addTab(#{TabPanel1},'ListFieldOperationRating', '/FieldOperationRating/ListFieldOperationRating', this, 'Báo cáo kết quả tất cả lĩnh vực');")
+                        )
+                    )
+                .Plugins(
+                        X.FilterHeader()
+                )
+                .BottomBar(
+                     Html.X().PagingToolbar()
+                         .Items(
+                                Html.X().ToolbarSpacer(10)
+                                )
+                         .HideRefresh(true)
+                         .Plugins(Html.X().ProgressBarPager())
+                 )
+
+
+)
+
+

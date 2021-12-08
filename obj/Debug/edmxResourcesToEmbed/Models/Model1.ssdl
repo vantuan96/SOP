@@ -1,0 +1,639 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SOPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AccessHistory">
+    <Key>
+      <PropertyRef Name="AccessHistory_Id" />
+    </Key>
+    <Property Name="AccessHistory_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AccessHistory_Type" Type="bit" />
+    <Property Name="AccessHistory_Time" Type="datetime" />
+    <Property Name="AccessHistory_ UserId" Type="int" />
+  </EntityType>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="Department_Id" />
+    </Key>
+    <Property Name="Department_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Department_Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Department_OrganizationId" Type="int" />
+    <Property Name="Department_Information" Type="ntext" />
+    <Property Name="Department_PhoneNumber" Type="int" />
+    <Property Name="Department_Fax" Type="int" />
+    <Property Name="Department_Email" Type="varchar" MaxLength="50" />
+    <Property Name="Department_Active" Type="bit" />
+    <Property Name="Department_CreatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="DepartmentFieldOperation">
+    <Key>
+      <PropertyRef Name="DepartmentFieldOperation_Id" />
+    </Key>
+    <Property Name="DepartmentFieldOperation_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DepartmentFieldOperation_DepartmentId" Type="int" />
+    <Property Name="DepartmentFieldOperation_FieldOperationId" Type="int" />
+    <Property Name="DepartmentFieldOperation_Active" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="District">
+    <Key>
+      <PropertyRef Name="District_Id" />
+    </Key>
+    <Property Name="District_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="District_Name" Type="nvarchar" MaxLength="100" />
+    <Property Name="District_Type" Type="nchar" MaxLength="10" />
+    <Property Name="District_Location" Type="nvarchar" MaxLength="50" />
+    <Property Name="District_ProvinceId" Type="int" />
+    <Property Name="District_Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="Ethnic">
+    <Key>
+      <PropertyRef Name="Ethnic_Id" />
+    </Key>
+    <Property Name="Ethnic_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Ethnic_Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Ethnic_Active" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FieldOperation">
+    <Key>
+      <PropertyRef Name="FieldOperation_Id" />
+    </Key>
+    <Property Name="FieldOperation_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FieldOperation_Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="FieldOperation_Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="Group">
+    <Key>
+      <PropertyRef Name="Group_Id" />
+    </Key>
+    <Property Name="Group_Id" Type="int" Nullable="false" />
+    <Property Name="Group_Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Group_Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="HistoricalWork">
+    <Key>
+      <PropertyRef Name="HistoricalWork_Id" />
+    </Key>
+    <Property Name="HistoricalWork_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HistoricalWork_OrganizationId" Type="int" />
+    <Property Name="HistoricalWork_DepartmentId" Type="int" />
+    <Property Name="HistoricalWork_UserId" Type="int" />
+    <Property Name="HistoricalWork_TitleId" Type="int" />
+    <Property Name="HistoricalWork_Type" Type="nvarchar" MaxLength="50" />
+    <Property Name="HistoricalWork_EffectFrom" Type="date" />
+    <Property Name="HistoricalWork_EffecttTo" Type="date" />
+    <Property Name="HistoricalWork_Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="Opinion">
+    <Key>
+      <PropertyRef Name="Opinion_Id" />
+    </Key>
+    <Property Name="Opinion_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Opinion_From" Type="int" />
+    <Property Name="Opinion_To" Type="int" />
+    <Property Name="Opinion_Date" Type="datetime" />
+    <Property Name="Opinion_Active" Type="bit" />
+    <Property Name="Opinion_Title" Type="ntext" />
+    <Property Name="Opinion_Content" Type="ntext" />
+  </EntityType>
+  <EntityType Name="Organization">
+    <Key>
+      <PropertyRef Name="Organization_Id" />
+    </Key>
+    <Property Name="Organization_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Organization_Name" Type="nvarchar" MaxLength="150" />
+    <Property Name="Organization_Superior" Type="int" />
+    <Property Name="Organization_Information" Type="nvarchar" MaxLength="250" />
+    <Property Name="Organization_Address" Type="nvarchar" MaxLength="250" />
+    <Property Name="Organization_PhoneNumber" Type="int" />
+    <Property Name="Organization_Fax" Type="int" />
+    <Property Name="Organization_Email" Type="varchar" MaxLength="50" />
+    <Property Name="Organization_Website" Type="varchar" MaxLength="50" />
+    <Property Name="Organization_Active" Type="bit" />
+    <Property Name="Organization_CreatedOn" Type="datetime" />
+    <Property Name="Organization_OrganizationTypeId" Type="int" />
+    <Property Name="Organization_FieldOperation" Type="nvarchar" MaxLength="250" />
+    <Property Name="Organization_DirectlyUnder" Type="int" />
+    <Property Name="Organization_Specialized" Type="int" />
+    <Property Name="Organization_Level" Type="int" />
+  </EntityType>
+  <EntityType Name="OrganizationType">
+    <Key>
+      <PropertyRef Name="OrganizationType_Id" />
+    </Key>
+    <Property Name="OrganizationType_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrganizationType_Name" Type="nvarchar" MaxLength="250" />
+    <Property Name="OrganizationType_Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="Province">
+    <Key>
+      <PropertyRef Name="Province_Id" />
+    </Key>
+    <Property Name="Province_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Province_Name" Type="nvarchar" MaxLength="250" />
+    <Property Name="Province_Type" Type="nchar" MaxLength="10" />
+    <Property Name="Province_Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="Rating">
+    <Key>
+      <PropertyRef Name="Rating_Id" />
+    </Key>
+    <Property Name="Rating_Id" Type="int" Nullable="false" />
+    <Property Name="Rating_Name" Type="nvarchar" MaxLength="200" />
+    <Property Name="Rating_Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="RatingResult">
+    <Key>
+      <PropertyRef Name="RatingResult_Id" />
+    </Key>
+    <Property Name="RatingResult_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RatingResult_ UserId" Type="int" />
+    <Property Name="RatingResult_CreatedOn" Type="datetime" />
+    <Property Name="RatingResult_RatingId" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Title">
+    <Key>
+      <PropertyRef Name="Title_Id" />
+    </Key>
+    <Property Name="Title_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title_Name" Type="nvarchar" MaxLength="250" />
+    <Property Name="Title_Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="User_Id" />
+    </Key>
+    <Property Name="User_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="User_FullName" Type="nvarchar" MaxLength="100" />
+    <Property Name="User_PassWord" Type="nvarchar" MaxLength="50" />
+    <Property Name="User_Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="User_Birthday" Type="date" />
+    <Property Name="User_Gender" Type="int" />
+    <Property Name="User_IdentityNumber" Type="char" MaxLength="15" />
+    <Property Name="User_IdentityCreatedOn" Type="datetime" />
+    <Property Name="User_IdentityCreatedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="User_Religion" Type="bit" />
+    <Property Name="User_ReligionDetail" Type="nvarchar" MaxLength="250" />
+    <Property Name="User_Address" Type="nvarchar" MaxLength="250" />
+    <Property Name="User_DistrictId" Type="int" />
+    <Property Name="User_ProvinceId" Type="int" />
+    <Property Name="User_CurrentResidence" Type="nvarchar" MaxLength="250" />
+    <Property Name="User_EthnicId" Type="int" />
+    <Property Name="User_PhoneNumber" Type="char" MaxLength="15" />
+    <Property Name="User_Mobile" Type="char" MaxLength="15" />
+    <Property Name="User_CurrentOrganizationId" Type="int" />
+    <Property Name="User_Active" Type="bit" />
+    <Property Name="User_CurrentDepartmentId" Type="int" />
+    <Property Name="User_UserName" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="UserFieldOperation">
+    <Key>
+      <PropertyRef Name="UserFieldOperation_Id" />
+    </Key>
+    <Property Name="UserFieldOperation_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserFieldOperation_UserId" Type="int" />
+    <Property Name="UserFieldOperation_FieldOperationId" Type="int" />
+    <Property Name="UserFieldOperation_Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="UserGroup">
+    <Key>
+      <PropertyRef Name="UserGroup_Id" />
+    </Key>
+    <Property Name="UserGroup_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserGroup_UserId" Type="int" />
+    <Property Name="UserGroup_GroupId" Type="int" />
+    <Property Name="UserGroup_Status" Type="datetime" />
+    <Property Name="UserGroup_Active" Type="bit" />
+  </EntityType>
+  <Association Name="FK_AccessHistory_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="AccessHistory" Type="Self.AccessHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="User_Id" />
+      </Principal>
+      <Dependent Role="AccessHistory">
+        <PropertyRef Name="AccessHistory_ UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Department_Organization">
+    <End Role="Organization" Type="Self.Organization" Multiplicity="0..1" />
+    <End Role="Department" Type="Self.Department" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="Organization_Id" />
+      </Principal>
+      <Dependent Role="Department">
+        <PropertyRef Name="Department_OrganizationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DepartmentFieldOperation_Department">
+    <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+    <End Role="DepartmentFieldOperation" Type="Self.DepartmentFieldOperation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="Department_Id" />
+      </Principal>
+      <Dependent Role="DepartmentFieldOperation">
+        <PropertyRef Name="DepartmentFieldOperation_DepartmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DepartmentFieldOperation_FieldOperation">
+    <End Role="FieldOperation" Type="Self.FieldOperation" Multiplicity="0..1" />
+    <End Role="DepartmentFieldOperation" Type="Self.DepartmentFieldOperation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FieldOperation">
+        <PropertyRef Name="FieldOperation_Id" />
+      </Principal>
+      <Dependent Role="DepartmentFieldOperation">
+        <PropertyRef Name="DepartmentFieldOperation_FieldOperationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_District_Province">
+    <End Role="Province" Type="Self.Province" Multiplicity="0..1" />
+    <End Role="District" Type="Self.District" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Province">
+        <PropertyRef Name="Province_Id" />
+      </Principal>
+      <Dependent Role="District">
+        <PropertyRef Name="District_ProvinceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HistoricalWork_Department">
+    <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+    <End Role="HistoricalWork" Type="Self.HistoricalWork" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="Department_Id" />
+      </Principal>
+      <Dependent Role="HistoricalWork">
+        <PropertyRef Name="HistoricalWork_DepartmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HistoricalWork_Title">
+    <End Role="Title" Type="Self.Title" Multiplicity="0..1" />
+    <End Role="HistoricalWork" Type="Self.HistoricalWork" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Title">
+        <PropertyRef Name="Title_Id" />
+      </Principal>
+      <Dependent Role="HistoricalWork">
+        <PropertyRef Name="HistoricalWork_TitleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HistoricalWork_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="HistoricalWork" Type="Self.HistoricalWork" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="User_Id" />
+      </Principal>
+      <Dependent Role="HistoricalWork">
+        <PropertyRef Name="HistoricalWork_UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Opinion_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Opinion" Type="Self.Opinion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="User_Id" />
+      </Principal>
+      <Dependent Role="Opinion">
+        <PropertyRef Name="Opinion_To" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Opinion_User1">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Opinion" Type="Self.Opinion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="User_Id" />
+      </Principal>
+      <Dependent Role="Opinion">
+        <PropertyRef Name="Opinion_From" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Organization_OrganizationType">
+    <End Role="OrganizationType" Type="Self.OrganizationType" Multiplicity="0..1" />
+    <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrganizationType">
+        <PropertyRef Name="OrganizationType_Id" />
+      </Principal>
+      <Dependent Role="Organization">
+        <PropertyRef Name="Organization_OrganizationTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RatingResult_Rating">
+    <End Role="Rating" Type="Self.Rating" Multiplicity="0..1" />
+    <End Role="RatingResult" Type="Self.RatingResult" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rating">
+        <PropertyRef Name="Rating_Id" />
+      </Principal>
+      <Dependent Role="RatingResult">
+        <PropertyRef Name="RatingResult_RatingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RatingResult_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="RatingResult" Type="Self.RatingResult" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="User_Id" />
+      </Principal>
+      <Dependent Role="RatingResult">
+        <PropertyRef Name="RatingResult_ UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Department">
+    <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="Department_Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="User_CurrentDepartmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Ethnic">
+    <End Role="Ethnic" Type="Self.Ethnic" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ethnic">
+        <PropertyRef Name="Ethnic_Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="User_EthnicId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserFieldOperation_FieldOperation">
+    <End Role="FieldOperation" Type="Self.FieldOperation" Multiplicity="0..1" />
+    <End Role="UserFieldOperation" Type="Self.UserFieldOperation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FieldOperation">
+        <PropertyRef Name="FieldOperation_Id" />
+      </Principal>
+      <Dependent Role="UserFieldOperation">
+        <PropertyRef Name="UserFieldOperation_FieldOperationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserFieldOperation_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="UserFieldOperation" Type="Self.UserFieldOperation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="User_Id" />
+      </Principal>
+      <Dependent Role="UserFieldOperation">
+        <PropertyRef Name="UserFieldOperation_UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserGroup_Group">
+    <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
+    <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="Group_Id" />
+      </Principal>
+      <Dependent Role="UserGroup">
+        <PropertyRef Name="UserGroup_GroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserGroup_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="User_Id" />
+      </Principal>
+      <Dependent Role="UserGroup">
+        <PropertyRef Name="UserGroup_UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="SOP_GetCompareTwoOrganizationRating" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FromTime" Type="datetime" Mode="In" />
+    <Parameter Name="ToTime" Type="datetime" Mode="In" />
+    <Parameter Name="OrganizationId1" Type="int" Mode="In" />
+    <Parameter Name="OrganizationId2" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SOP_GetDetailFieldOperationRating" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FromTime" Type="datetime" Mode="In" />
+    <Parameter Name="ToTime" Type="datetime" Mode="In" />
+    <Parameter Name="FieldOperationId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SOP_GetDetailOrganizationRating" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FromTime" Type="datetime" Mode="In" />
+    <Parameter Name="ToTime" Type="datetime" Mode="In" />
+    <Parameter Name="OrganizationId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SOP_GetListFieldOperationRating" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FromTime" Type="datetime" Mode="In" />
+    <Parameter Name="ToTime" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="SOP_GetListOrganizationRating" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FromTime" Type="datetime" Mode="In" />
+    <Parameter Name="ToTime" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="SOP_GetMCompareRating" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SOP_GetMCompareRating_ByYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Year" Type="int" Mode="In" />
+    <Parameter Name="UserId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SOP_GetStatusUserCMMC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SOP_GetStatusUserCMMCByOrganization" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Organization_Id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SOP_GetYCompareFieldOperationRating" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FieldOperationId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SOP_GetYCompareOrganizationRating" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="OrganizationId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SOP_GetYFieldOperationRating_ByYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Year" Type="int" Mode="In" />
+    <Parameter Name="FieldOperationId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SOP_GetYOrganizationRating_ByYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Year" Type="int" Mode="In" />
+    <Parameter Name="OrganizationId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SOP_UpdateStatusUserCMMC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_generate_inserts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="table_name" Type="varchar" Mode="In" />
+    <Parameter Name="target_table" Type="varchar" Mode="In" />
+    <Parameter Name="include_column_list" Type="bit" Mode="In" />
+    <Parameter Name="from" Type="varchar" Mode="In" />
+    <Parameter Name="include_timestamp" Type="bit" Mode="In" />
+    <Parameter Name="debug_mode" Type="bit" Mode="In" />
+    <Parameter Name="owner" Type="varchar" Mode="In" />
+    <Parameter Name="ommit_images" Type="bit" Mode="In" />
+    <Parameter Name="ommit_identity" Type="bit" Mode="In" />
+    <Parameter Name="top" Type="int" Mode="In" />
+    <Parameter Name="cols_to_include" Type="varchar" Mode="In" />
+    <Parameter Name="cols_to_exclude" Type="varchar" Mode="In" />
+    <Parameter Name="disable_constraints" Type="bit" Mode="In" />
+    <Parameter Name="ommit_computed_cols" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="SOPModelStoreContainer">
+    <EntitySet Name="AccessHistory" EntityType="Self.AccessHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DepartmentFieldOperation" EntityType="Self.DepartmentFieldOperation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="District" EntityType="Self.District" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Ethnic" EntityType="Self.Ethnic" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FieldOperation" EntityType="Self.FieldOperation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HistoricalWork" EntityType="Self.HistoricalWork" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Opinion" EntityType="Self.Opinion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrganizationType" EntityType="Self.OrganizationType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Province" EntityType="Self.Province" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rating" EntityType="Self.Rating" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RatingResult" EntityType="Self.RatingResult" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Title" EntityType="Self.Title" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserFieldOperation" EntityType="Self.UserFieldOperation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserGroup" EntityType="Self.UserGroup" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_AccessHistory_User" Association="Self.FK_AccessHistory_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="AccessHistory" EntitySet="AccessHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Department_Organization" Association="Self.FK_Department_Organization">
+      <End Role="Organization" EntitySet="Organization" />
+      <End Role="Department" EntitySet="Department" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DepartmentFieldOperation_Department" Association="Self.FK_DepartmentFieldOperation_Department">
+      <End Role="Department" EntitySet="Department" />
+      <End Role="DepartmentFieldOperation" EntitySet="DepartmentFieldOperation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DepartmentFieldOperation_FieldOperation" Association="Self.FK_DepartmentFieldOperation_FieldOperation">
+      <End Role="FieldOperation" EntitySet="FieldOperation" />
+      <End Role="DepartmentFieldOperation" EntitySet="DepartmentFieldOperation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_District_Province" Association="Self.FK_District_Province">
+      <End Role="Province" EntitySet="Province" />
+      <End Role="District" EntitySet="District" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HistoricalWork_Department" Association="Self.FK_HistoricalWork_Department">
+      <End Role="Department" EntitySet="Department" />
+      <End Role="HistoricalWork" EntitySet="HistoricalWork" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HistoricalWork_Title" Association="Self.FK_HistoricalWork_Title">
+      <End Role="Title" EntitySet="Title" />
+      <End Role="HistoricalWork" EntitySet="HistoricalWork" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HistoricalWork_User" Association="Self.FK_HistoricalWork_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="HistoricalWork" EntitySet="HistoricalWork" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Opinion_User" Association="Self.FK_Opinion_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Opinion" EntitySet="Opinion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Opinion_User1" Association="Self.FK_Opinion_User1">
+      <End Role="User" EntitySet="User" />
+      <End Role="Opinion" EntitySet="Opinion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Organization_OrganizationType" Association="Self.FK_Organization_OrganizationType">
+      <End Role="OrganizationType" EntitySet="OrganizationType" />
+      <End Role="Organization" EntitySet="Organization" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RatingResult_Rating" Association="Self.FK_RatingResult_Rating">
+      <End Role="Rating" EntitySet="Rating" />
+      <End Role="RatingResult" EntitySet="RatingResult" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RatingResult_User" Association="Self.FK_RatingResult_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="RatingResult" EntitySet="RatingResult" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Department" Association="Self.FK_User_Department">
+      <End Role="Department" EntitySet="Department" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Ethnic" Association="Self.FK_User_Ethnic">
+      <End Role="Ethnic" EntitySet="Ethnic" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserFieldOperation_FieldOperation" Association="Self.FK_UserFieldOperation_FieldOperation">
+      <End Role="FieldOperation" EntitySet="FieldOperation" />
+      <End Role="UserFieldOperation" EntitySet="UserFieldOperation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserFieldOperation_User" Association="Self.FK_UserFieldOperation_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="UserFieldOperation" EntitySet="UserFieldOperation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserGroup_Group" Association="Self.FK_UserGroup_Group">
+      <End Role="Group" EntitySet="Group" />
+      <End Role="UserGroup" EntitySet="UserGroup" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserGroup_User" Association="Self.FK_UserGroup_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="UserGroup" EntitySet="UserGroup" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

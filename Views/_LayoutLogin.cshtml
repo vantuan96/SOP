@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+@Html.X().ResourceManager().Theme(Theme.Neptune).Locale("vi-vn")
+<style>
+    #unlicensed {
+        visibility: hidden !important;
+        display: none !important;
+    }
+</style>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>

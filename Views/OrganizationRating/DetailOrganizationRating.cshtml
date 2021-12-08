@@ -1,0 +1,64 @@
+﻿
+@{
+    var X = Html.X();
+    Layout = "~/Views/_LayoutLogin.cshtml";
+}
+
+@(
+ X.GridPanel()
+                .ID("Grid1")
+                .Flex(2)
+                .Title("Kết quả đánh giá: ")
+                .Padding(20)
+                .Store(Html.X().Store()
+                    .Model(Html.X().Model()
+                        .Fields(
+                              new ModelField("User_Id", ModelFieldType.Int),
+                              new ModelField("User_FullName", ModelFieldType.String),
+                              new ModelField("User_UserName", ModelFieldType.String),
+                              new ModelField("VERYHAPPY", ModelFieldType.Int),
+                              new ModelField("HAPPY", ModelFieldType.Int),
+                              new ModelField("WAITLONG", ModelFieldType.Int),
+                              new ModelField("LOWPROFESSIONAL", ModelFieldType.Int),
+                              new ModelField("BADBEHAVIOR", ModelFieldType.Int)
+                        )
+                    )
+                    .DataSource(Model)
+                )
+                .ColumnModel(
+                        Html.X().Column().Text("Mã").DataIndex("User_Id").Hidden(true),
+                        Html.X().Column().Text("Họ tên").DataIndex("User_FullName").Flex(1),
+                        Html.X().Column().Text("Tài khoản").DataIndex("User_UserName").Width(150),
+                        Html.X().Column().Text("Rất hài lòng").DataIndex("VERYHAPPY").Width(150),
+                        Html.X().Column().Text("Hài lòng").DataIndex("HAPPY").Width(150),
+                        Html.X().Column().Text("Chờ lâu").DataIndex("WAITLONG").Width(150),
+                        Html.X().Column().Text("Nghiệp vụ kém").DataIndex("LOWPROFESSIONAL").Width(150),
+                        Html.X().Column().Text("Thái độ kém").DataIndex("BADBEHAVIOR").Width(150)
+                )
+
+
+                    .TopBar(X.Toolbar()
+                    .Items(
+                        X.DateField().ID("FromTime").FieldLabel("Từ ngày").LabelWidth(60).SelectedValue(ViewBag.FromTime),
+                        X.DateField().ID("ToTime").FieldLabel("Đến ngày").LabelWidth(60).SelectedValue(ViewBag.ToTime),  
+                        X.Button()
+                            .Text("Tải kết quả")
+                            .Icon(Icon.TableRefresh)
+                                .DirectEvents(de =>
+                                                            {
+
+                                                                de.Click.Url = Url.Action("DetailOrganizationRating");
+                                                                de.Click.ExtraParams.Add(new Parameter("FromTime", "App.FromTime.getRawValue()", ParameterMode.Raw));
+                                                                de.Click.ExtraParams.Add(new Parameter("ToTime", "App.ToTime.getRawValue()", ParameterMode.Raw));
+                                                                de.Click.ExtraParams.Add(new Parameter("OrganizationId", ViewBag.OrganizationId, ParameterMode.Raw));
+                                                                de.Click.Failure = "alert('Chưa chọn thời gian để lọc dữ liệu');";
+                                                            }),
+                            X.Hidden().ID("OrganizationId").Text(ViewBag.OrganizationId),
+                            X.Button()
+                            .Text("In kết quả")
+                            .Icon(Icon.Printer)
+                            .OnClientClick("window.open('/OrganizationRating/DetailOrganizationRatingPrint'+'/?OrganizationId='+ App.OrganizationId.getValue()+'&FromTime='+App.FromTime.getRawValue() + '&ToTime='+App.ToTime.getRawValue() )")
+
+                    )
+                )
+)

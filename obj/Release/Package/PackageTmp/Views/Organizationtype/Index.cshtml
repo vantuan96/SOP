@@ -1,0 +1,122 @@
+﻿@model IEnumerable<SOP.Models.OrganizationType>
+@{
+
+    Layout = "~/Views/_LayoutLogin.cshtml";
+    var X = Html.X();
+}
+<script>
+    var template = '<span style="color:{0};">{1}</span>';
+    var pctChange = function (value) {
+        return Ext.String.format(template, (value == true) ? (value = "Kích hoạt") : (value = "Chưa kích hoạt"), value);
+    };
+    var prepare = function (grid, toolbar, rowIndex, record) {
+        var firstButton = toolbar.items.get(0);
+        if (record.data.price < 50) {
+            firstButton.setDisabled(true);
+            firstButton.setTooltip("Disabled");
+        }
+        //you can return false to cancel toolbar for this record
+    };
+
+    var onSuccess = function (grid, data) {
+        grid.show();
+        grid.getStore().loadData(data);
+    };
+</script>
+
+<div style="padding:10px">
+    @(X.GridPanel()
+        .Title("Danh sách Loại tổ chức")
+        .ID("OrganizationTypeGridPanel")
+        .SelectionMemory(false)
+            .Store(Html.X().Store().ID("StoreOrganizationType")
+            .Model(Html.X().Model()
+                .Fields(
+                    new ModelField("OrganizationType_Id", ModelFieldType.Int),
+                    new ModelField("OrganizationType_Name", ModelFieldType.String),
+                    new ModelField()
+                    {
+                        Name = "OrganizationType_Active",
+                        Type = ModelFieldType.Boolean,
+                        Convert =
+                        {
+                            Handler = "return value === true;"
+                        }
+                    }
+                )
+            )
+            .PageSize(20)
+            .DataSource(Model)
+        )
+        .ColumnModel(
+            Html.X().RowNumbererColumn().Width(40).Sortable(false).Text("STT"),
+            Html.X().Column()
+                .Text("Mã")
+                .DataIndex("OrganizationType_Id")
+                .Width(75)
+                .Hidden(true),
+            Html.X().Column()
+                .Text("Tên Loại tổ chức")
+                .DataIndex("OrganizationType_Name")
+                .Flex(1),
+            Html.X().CheckColumn()
+                    .Width(75)
+                    .Text("Kích Hoạt")
+                    .Align(Alignment.Center)
+                    .DataIndex("OrganizationType_Active")
+                    .Hidden(false),
+            Html.X().CommandColumn()
+                .Width(60)
+                .Commands(
+                    Html.X().GridCommand()
+                        .CommandName("Edit")
+                        .Icon(Icon.NoteEdit)
+                        .Text("Sửa")
+
+                )
+                .DirectEvents(de =>
+                            {
+                                de.Command.Url = Url.Action("Edit");
+                                de.Command.ExtraParams.Add(new Parameter("OrganizationType_Id", "record.data.OrganizationType_Id", ParameterMode.Raw));
+                                de.Command.ExtraParams.Add(new Parameter("OrganizationType_Name", "record.data.OrganizationType_Name", ParameterMode.Raw));
+                                de.Command.ExtraParams.Add(new Parameter("OrganizationType_Active", "record.data.OrganizationType_Active", ParameterMode.Raw));
+                            }),
+                Html.X().CommandColumn()
+                .Width(60)
+                .Commands(
+                    Html.X().GridCommand()
+                        .CommandName("Delete")
+                        .Icon(Icon.Delete)
+                        .Text("Xóa")
+
+                )
+                .DirectEvents(de =>
+                            {
+                                de.Command.Confirmation.ConfirmRequest = true;
+                                de.Command.Url = Url.Action("Delete");
+                                de.Command.ExtraParams.Add(new Parameter("OrganizationType_Id", "record.data.OrganizationType_Id", ParameterMode.Raw));
+                                de.Command.Success = "onSuccess(App.OrganizationTypeGridPanel, result.data);";
+                            })
+                .PrepareToolbar("prepare")
+                )
+                .Plugins(
+                            X.FilterHeader()
+                        )
+                .BottomBar(
+                            Html.X().PagingToolbar()
+                                .HideRefresh(true)
+                        )
+                .TopBar(
+                Html.X().Toolbar()
+                    .Items(
+                        Html.X().Button()
+                            .Text("Thêm mới")
+                            .Icon(Icon.Add)
+                            .DirectEvents(de =>
+                            {
+                                de.Click.Url = Url.Action("Create");
+                            })
+             )
+        )
+    )
+</div>

@@ -1,0 +1,138 @@
+﻿@{
+
+    Layout = "~/Views/_LayoutLogin.cshtml";
+    var X = Html.X();
+}
+
+<div style="width:650px; margin:auto; background-color:white; font-family:'Times New Roman';">
+    <div style="background-color: white; font-size: 15px; text-align: center; padding-bottom: 15px;">
+        CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM <br>
+        Độc lập - Tự do - Hạnh Phúc<br>
+        ----------------
+
+        <h3>
+            BÁO CÁO KẾT QUẢ QUA CÁC NĂM <br>
+            ĐÁNH GIÁ SỰ HÀI LÒNG CỦA CÔNG DÂN TẠI BỘ PHẬN MỘT CỬA
+        </h3>
+    </div>
+    Họ tên: @ViewBag.User.User_FullName <br>
+    Cơ quan: @ViewBag.Organizations
+
+    @(  X.FormPanel()
+        .LayoutConfig(new HBoxLayoutConfig() { Align = HBoxAlign.Stretch })
+        .MinWidth(600)
+        .Height(400)
+        .Items(
+                        X.Chart()
+                        .ID("YCompareRatingChart")
+                        .StyleSpec("background:#fff;")
+                        .MinWidth(650)
+                        .Shadow(true)
+                        .StandardTheme(StandardChartTheme.Category1)
+                        .Animate(true)
+                        .LegendConfig(X.ChartLegend().Position(LegendPosition.Bottom))
+                        .Store(X.Store()
+                            .Data(Model)
+                            .Model(X.Model()
+                                .Fields(
+                                    X.ModelField().Name("YearC"),
+                                    X.ModelField().Name("VERYHAPPY"),
+                                    X.ModelField().Name("HAPPY"),
+                                    X.ModelField().Name("WAITLONG"),
+                                    X.ModelField().Name("LOWPROFESSIONAL"),
+                                    X.ModelField().Name("BADBEHAVIOR")
+                                )
+                            )
+                        )
+                        .Axes(
+                            X.NumericAxis()
+                                .Fields(new[] { "VERYHAPPY", "HAPPY", "WAITLONG", "LOWPROFESSIONAL", "BADBEHAVIOR" })
+                                .Title("Tổng số lượt đánh giá")
+                                .MinorTickSteps(1)
+                                .Minimum(0)
+                                .GridConfig(X.AxisGrid()
+                                    .Odd(new SpriteAttributes { Opacity = 1, Fill = "#ddd", Stroke = "#bbb", StrokeWidth = 0.5 })
+                                ),
+                            X.CategoryAxis()
+                                .Position(Position.Bottom)
+                                    .Fields("YearC")
+                                    .Title("So sánh kết quả giữa các năm")
+                        )
+                        .Series(
+                            X.LineSeries()
+                                .Axis(Position.Left)
+                                .Title("Rất hài lòng")
+                                    .XField("YearC")
+                                .YField("VERYHAPPY")
+                                .HighlightConfig(new SpriteAttributes { Size = 7, Radius = 7 })
+                                    .MarkerConfig(new SpriteAttributes { Type = SpriteType.Circle, Size = 4, Radius = 4, StrokeWidth = 0 }),
+
+                            X.LineSeries()
+                                .Axis(Position.Left)
+                                .Smooth(3)
+                                .Title("Hài lòng")
+                                    .XField("YearC")
+                                .YField("HAPPY")
+                                .HighlightConfig(new SpriteAttributes { Size = 7, Radius = 7 })
+                                    .MarkerConfig(new SpriteAttributes { Type = SpriteType.Circle, Size = 4, Radius = 4, StrokeWidth = 0 }),
+
+                            X.LineSeries()
+                                .Axis(Position.Left)
+                                .Smooth(3)
+                                .Title("Chờ lâu")
+                                    .XField("YearC")
+                                .YField("WAITLONG")
+                                .HighlightConfig(new SpriteAttributes { Size = 7, Radius = 7 })
+                                .MarkerConfig(new SpriteAttributes { Type = SpriteType.Circle, Size = 4, Radius = 4, StrokeWidth = 0 }),
+                          X.LineSeries()
+                                 .Axis(Position.Left)
+                                 .Smooth(3)
+                                     .XField("YearC")
+                                 .Title("Nghiệp vụ kém")
+                                 .YField("LOWPROFESSIONAL")
+                                 .HighlightConfig(new SpriteAttributes { Size = 7, Radius = 7 })
+                                 .MarkerConfig(new SpriteAttributes { Type = SpriteType.Circle, Size = 4, Radius = 4, StrokeWidth = 0 }),
+                          X.LineSeries()
+                                 .Axis(Position.Left)
+                                 .Smooth(3)
+                                     .XField("YearC")
+                                 .Title("Thái độ kém")
+                                 .YField("BADBEHAVIOR")
+                                 .HighlightConfig(new SpriteAttributes { Size = 7, Radius = 7 })
+                                     .MarkerConfig(new SpriteAttributes { Type = SpriteType.Circle, Size = 4, Radius = 4, StrokeWidth = 0 })
+                        )
+                ))
+
+    @(X.GridPanel()
+                .ID("Grid1")
+                .Flex(2)
+                .Border(true)
+                .MinHeight(200)
+                .MinHeight(350)
+                .Padding(30)
+                .Store(Html.X().Store()
+                    .Model(Html.X().Model()
+                        .Fields(
+                          new ModelField("YearC", ModelFieldType.Int),
+                          new ModelField("VERYHAPPY", ModelFieldType.Int),
+                          new ModelField("HAPPY", ModelFieldType.Int),
+                          new ModelField("WAITLONG", ModelFieldType.Int),
+                          new ModelField("LOWPROFESSIONAL", ModelFieldType.Int),
+                          new ModelField("BADBEHAVIOR", ModelFieldType.Int)
+                        )
+                    )
+                    .DataSource(Model)
+                )
+                .ColumnModel(
+                        Html.X().Column().Text("Tháng").DataIndex("YearC").Width(60),
+                        Html.X().Column().Text("Rất hài lòng").DataIndex("VERYHAPPY"),
+                        Html.X().Column().Text("Hài lòng").DataIndex("HAPPY"),
+                        Html.X().Column().Text("Chờ lâu").DataIndex("WAITLONG"),
+                        Html.X().Column().Text("Nghiệp vụ kém").DataIndex("LOWPROFESSIONAL").Flex(1),
+                        Html.X().Column().Text("Thái độ kém").DataIndex("BADBEHAVIOR").Flex(1)
+                )
+    )
+</div>
+
+
+

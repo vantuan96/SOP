@@ -1,0 +1,111 @@
+﻿@model SOP.Models.Organization
+@{
+    var X = Html.X();
+}
+<script>
+    var onSuccess = function (grid, data) {
+        grid.show();
+        grid.getStore().loadData(data);
+        App.AddOrganizationWindow.close();
+    };
+</script>
+@(X.Window()
+    .ID("AddOrganizationWindow")
+    .Width(460)
+    .StyleSpec("background:white;border:1px solid gray;")
+    .Flex(1)
+    .Y(30)
+    .Icon(Icon.Add)
+    .Title("Thêm Cơ Quan - Tổ chức")
+    .Padding(5)
+    .CloseAction(CloseAction.Destroy)
+            .Items(
+                        X.FormPanel()
+                            .ID("AddOrganizationFormPanel")
+                            .Frame(true)
+                            .StyleSpec("background:white;border:1px solid gray;")
+                            .DefaultAnchor("100%")
+                            .BodyPadding(5)
+                            .Items(
+                                X.TextFieldFor(m => m.Organization_Name).FieldLabel("Tên cơ quan - tổ chức").LabelWidth(150),
+                                X.ComboBoxFor(m => m.Organization_Superior).LabelWidth(150)
+                                              .ID("ComboOrganizationSuperior")
+                                              .FieldLabel("Cơ quan - Tổ chức cấp trên :")
+                                              .Editable(false)
+                                              .AnchorHorizontal("100%")
+                                              .EmptyText("Chọn cơ quan")
+                                              .DisplayField("Organization_Name")
+                                              .ValueField("Organization_Id")
+                                              .QueryMode(DataLoadMode.Local)
+                                              .Items(ViewBag.Organization)
+                                              ,
+                                X.TextAreaFor(m => m.Organization_Information).FieldLabel("Thông tin chung").LabelWidth(150),
+                                X.TextFieldFor(m => m.Organization_Address).FieldLabel("Địa chỉ").LabelWidth(150),
+                                X.TextFieldFor(m => m.Organization_PhoneNumber).FieldLabel("Điện Thoại").LabelWidth(150),
+                                X.TextFieldFor(m => m.Organization_Fax).FieldLabel("Số Fax").LabelWidth(150),
+                                X.TextFieldFor(m => m.Organization_Email).FieldLabel("Email").LabelWidth(150),
+                                X.TextFieldFor(m => m.Organization_Website).FieldLabel("Website").LabelWidth(150),
+                                X.DateFieldFor(m => m.Organization_CreatedOn).FieldLabel("Ngày thành lập").LabelWidth(150),
+                                //X.TextFieldFor(m => m.Organization_OrganizationTypeId).FieldLabel("Loại Cơ quan").LabelWidth(150),
+                                X.ComboBoxFor(m => m.Organization_OrganizationTypeId).LabelWidth(150)
+                                                  .ID("ComboOrganizationType")
+                                                  .FieldLabel("Loại Cơ quan :")
+                                                  .Editable(false)
+                                                  .AnchorHorizontal("100%")
+                                                  .EmptyText("Chọn loại cơ quan")
+                                                  .DisplayField("OrganizationType_Name")
+                                                  .ValueField("OrganizationType_Id")
+                                                  .QueryMode(DataLoadMode.Local)
+                                                  .Items(ViewBag.OrganizationOrganizationType)
+                                                  ,
+                                //X.TextFieldFor(m => m.Organization_FieldOperation).FieldLabel("Lĩnh vực hoạt động").LabelWidth(150),
+                                X.ComboBoxFor(m => m.Organization_FieldOperation)
+                                                      .ID("ComboOrganizationFieldOperation").LabelWidth(150)
+                                                      .FieldLabel("Lĩnh vực hoạt động :")
+                                                      .Editable(false)
+                                                      .AnchorHorizontal("100%")
+                                                      .EmptyText("Chọn loại cơ quan")
+                                                      .DisplayField("FieldOperation_Name")
+                                                      .ValueField("FieldOperation_Name")
+                                                      .QueryMode(DataLoadMode.Local)
+                                                      .Items(ViewBag.OrganizationFieldOperation)
+                                                      ,
+                                X.TextFieldFor(m => m.Organization_DirectlyUnder).FieldLabel("Số đơn vị trực thuộc").LabelWidth(150), 
+                                X.TextFieldFor(m => m.Organization_Specialized).FieldLabel("Số lượng phòng ban Chuyên Môn").LabelWidth(150), 
+                                X.TextFieldFor(m => m.Organization_Level).FieldLabel("Cấp Cơ Quan").LabelWidth(150),
+                                X.ComboBoxFor(m => m.Organization_Active).FieldLabel("Trạng Thái").LabelWidth(150)
+                                    .ValueNotFoundText("Chọn trạng thái").EmptyText("Chọn trạng thái")
+                                    .AllowBlank(false).Editable(false)
+                                                    .Items(
+                                                        ls =>
+                                                        {
+                                                            ls.Add(
+                                                                Html.X()
+                                                                .ListItem()
+                                                                .Text("Kích hoạt")
+                                                                .Value("True")
+                                                                );
+                                                            ls.Add(
+                                                                Html.X()
+                                                                .ListItem()
+                                                                .Text("Khóa")
+                                                                .Value("False")
+                                                            );
+                                                        }
+                                                ).SelectedItems(X.ListItem().Text("Chọn trạng thái")) 
+                            )
+                    )
+    .Buttons(
+         X.Button()
+         .Text("Lưu")
+         .Icon(Icon.Accept)
+                 .DirectEvents(de =>
+                 {
+                     de.Click.Url = Url.Action("/Save");
+                     de.Click.EventMask.ShowMask = true;
+                     de.Click.FormID = "AddOrganizationFormPanel";
+                     de.Click.Success = "onSuccess(App.OrganizationGridPanel, result.data);";
+                 }
+            )
+    )
+)

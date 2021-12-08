@@ -1,0 +1,281 @@
+﻿@{
+    ViewBag.Title = "Quản trị danh mục Tỉnh-Thành Phố";
+    Layout = "~/Views/_LayoutLogin.cshtml";
+    var X = Html.X();
+}
+<script>
+    var template = '<span style="color:{0};">{1}</span>';
+    var pctChange = function (value) {
+        return Ext.String.format(template, (value == true) ? (value = "Kích hoạt") : (value = "Chưa kích hoạt"), value);
+    };
+    var prepare = function (grid, toolbar, rowIndex, record) {
+        var firstButton = toolbar.items.get(0);
+
+        if (record.data.price < 50) {
+            firstButton.setDisabled(true);
+            firstButton.setTooltip("Disabled");
+        }
+        //you can return false to cancel toolbar for this record
+
+    };
+    var onSuccess = function (grid, data) {
+        grid.show();
+        grid.getStore().loadData(data);
+    };
+    var test = function () {
+        alert('1');
+    };
+
+    var openCreateDistrict = function (provinceGrid) {
+        selectionModel = provinceGrid.getSelectionModel();        
+        if(!selectionModel.getSelection().length){
+            selectionModel.select(0);
+        } else {
+            //alert(selectionModel.getLastSelected().getData("Province_Id").Province_Id);
+        }
+    };
+    var getSelecteProvinceId = function (provinceGrid) {
+        selectionModel = provinceGrid.getSelectionModel();
+        if (!selectionModel.getSelection().length) {
+            selectionModel.select(0);
+        }
+        return selectionModel.getLastSelected().getData("Province_Id").Province_Id;
+    };
+</script>
+
+<div style="padding:10px">
+    
+    @(X.Model()
+        .Name("District")
+        .IDProperty("District_Id")
+        .Fields(
+            X.ModelField()
+            .Name("District_Id")
+                .Type(ModelFieldType.Int),
+            X.ModelField()
+            .Name("District_ProvinceId")
+                    .Type(ModelFieldType.Int),
+            X.ModelField()
+                .Name("District_Name")
+                .Type(ModelFieldType.String),
+            new ModelField()
+                    {
+                        Name = "District_Active",
+                        Type = ModelFieldType.Boolean,
+                        Convert =
+                        {
+                            Handler = "return value === true;"
+                        }
+                    }
+        )
+    )
+
+    @(X.Store()
+        .ID("StoreProvince")
+        .Data(Model)
+        .Model(
+            X.Model()
+            .Name("Province")
+            .IDProperty("Province_Id")
+            .Fields(
+                X.ModelField()
+                    .Name("Province_Id")
+                    .Type(ModelFieldType.Int),
+                X.ModelField()
+                    .Name("Province_Name")
+                    .Type(ModelFieldType.String),
+                new ModelField()
+                    {
+                        Name = "Province_Active",
+                        Type = ModelFieldType.Boolean,
+                        Convert =
+                        {
+                            Handler = "return value === true;"
+                        }
+                    }
+            )
+            .Associations(a => a.Add(X.HasManyAssociation()
+                .Model("District")
+                .Name("districts")
+                .AssociationKey("Districts")
+            ))
+        )
+    )
+
+    @(X.Panel()
+        .Border(false)
+        .LayoutConfig(l => l.Add(new HBoxLayoutConfig { Align = HBoxAlign.Stretch, DefaultMargins = "5" }))
+        .Items(
+            X.GridPanel()
+                .ID("ProvinceGrid")
+                .StoreID("StoreProvince")
+                .Title("Tỉnh-Thành Phố (Chọn Tỉnh-Thành phố để xem các Quận-Huyện)")
+                .Height(550)
+                .Flex(1)
+                .ColumnModel(
+                    X.RowNumbererColumn().Width(40).Sortable(false).Text("STT"),
+                    X.Column()
+                    .Text("Mã")
+                    .DataIndex("Province_Id")
+                    .Width(75)
+                    .Hidden(true),
+                    X.Column()
+                    .Width(350)
+                    .Text("Tên")
+                    .DataIndex("Province_Name")
+                    .Flex(1),
+                    X.CheckColumn()
+                    .Width(80)
+                    .Text("Kích Hoạt")
+                    .Align(Alignment.Center)
+                    .DataIndex("Province_Active")
+                    .Hidden(false),
+                    X.CommandColumn()
+                        .Width(60)
+                        .Commands(
+                            Html.X().GridCommand()
+                                .CommandName("Edit")
+                                .Icon(Icon.NoteEdit)
+                                .Text("Sửa")
+
+                        )
+                        .DirectEvents(de =>
+                                    {
+                                        de.Command.EventMask.ShowMask = true;
+                                        de.Command.Url = Url.Action("Edit");
+                                        de.Command.ExtraParams.Add(new Parameter("Province_Id", "record.data.Province_Id", ParameterMode.Raw));
+                                        de.Command.ExtraParams.Add(new Parameter("Province_Name", "record.data.Province_Name", ParameterMode.Raw));
+                                        de.Command.ExtraParams.Add(new Parameter("Province_Active", "record.data.Province_Active", ParameterMode.Raw));
+                                    }),
+                    X.CommandColumn()
+                        .Width(60)
+                        .Commands(
+                            Html.X().GridCommand()
+                                .CommandName("Delete")
+                                .Icon(Icon.Delete)
+                                .Text("Xóa")
+
+                        )
+                        .DirectEvents(de =>
+                                    {
+                                        de.Command.EventMask.ShowMask = true;
+                                        de.Command.Confirmation.ConfirmRequest = true;
+                                        de.Command.Url = Url.Action("Delete");
+                                        de.Command.ExtraParams.Add(new Parameter("Province_Id", "record.data.Province_Id", ParameterMode.Raw));
+
+                                    })
+                   .PrepareToolbar("prepare")
+                )
+                .Plugins(
+                            X.FilterHeader()
+                        )
+                .BottomBar(
+                            Html.X().PagingToolbar()
+                                .HideRefresh(true)
+                        )
+                .TopBar(
+                        Html.X().Toolbar()
+                            .Items(
+                                Html.X().Button()
+                                    .Text("Thêm mới")
+                                    .Icon(Icon.Add)
+                                    .DirectEvents(de =>
+                                    {
+                                        de.Click.EventMask.ShowMask = true;
+                                        de.Click.Url = Url.Action("Create");
+                            })
+                        )
+                    )
+                .Listeners(l => l.SelectionChange.Handler = "selected.length && #{DistrictsGrid}.bindStore(selected[0].districts());"),
+
+            X.GridPanel()
+                .ID("DistrictsGrid")
+                .Title("Huyện")
+                .Flex(1)
+                .Store(X.Store().ModelName("District"))
+                .ColumnModel(
+                    X.RowNumbererColumn().Width(40).Sortable(false).Text("STT"),
+                    X.Column()
+                    .Text("Mã Quận-Huyện")
+                    .DataIndex("District_Id")
+                    .Width(75)
+                    .Hidden(true),
+                    X.Column()
+                    .Text("Mã Tỉnh-Thành Phố")
+                    .DataIndex("Province_Id")
+                    .Width(75)
+                    .Hidden(true),
+                    X.Column()
+                    .Text("Tên")
+                    .DataIndex("District_Name")
+                    .Flex(1),
+                    X.CheckColumn()
+                    .Width(80)
+                    .Text("Kích Hoạt")
+                    .Align(Alignment.Center)
+                    .DataIndex("District_Active")
+                    .Hidden(false),
+                    X.CommandColumn()
+                        .Width(60)
+                        .Commands(
+                            Html.X().GridCommand()
+                                .CommandName("Edit")
+                                .Icon(Icon.NoteEdit)
+                                .Text("Sửa")
+
+                        )
+                        .DirectEvents(de =>
+                                    {
+                                        de.Command.EventMask.ShowMask = true;
+                                        de.Command.Url = Url.Action("DistrictEdit");
+                                        de.Command.ExtraParams.Add(new Parameter("District_Id", "record.data.District_Id", ParameterMode.Raw));
+                                        de.Command.ExtraParams.Add(new Parameter("Province_Id", "record.data.Province_Id", ParameterMode.Raw));
+                                        de.Command.ExtraParams.Add(new Parameter("District_Name", "record.data.District_Name", ParameterMode.Raw));
+                                        de.Command.ExtraParams.Add(new Parameter("District_Active", "record.data.District_Active", ParameterMode.Raw));
+                                    }),
+                    X.CommandColumn()
+                        .Width(60)
+                        .Commands(
+                            Html.X().GridCommand()
+                                .CommandName("Delete")
+                                .Icon(Icon.Delete)
+                                .Text("Xóa")
+
+                        )
+                        .DirectEvents(de =>
+                                    {
+                                        de.Command.EventMask.ShowMask = true;
+                                        de.Command.Confirmation.ConfirmRequest = true;
+                                        de.Command.Url = Url.Action("DistrictDelete");
+                                        de.Command.ExtraParams.Add(new Parameter("District_Id", "record.data.District_Id", ParameterMode.Raw));
+
+                                    })
+                   .PrepareToolbar("prepare")
+                )
+                .Plugins(
+                            X.FilterHeader()
+                        )
+                .BottomBar(
+                            Html.X().PagingToolbar()
+                                .HideRefresh(true)
+                        )
+                .TopBar(
+                        Html.X().Toolbar()
+                            .Items(
+                                Html.X().Button()
+                                    .Text("Thêm mới")
+                                    .Icon(Icon.Add)
+                                    .DirectEvents(de =>
+                                    {
+                                       // de.Click.Before = "openCreateDistrict(App.ProvinceGrid);";
+                                        de.Click.EventMask.ShowMask = true;
+                                        de.Click.Url = Url.Action("DistrictCreate");
+                                        //de.Click.ExtraParams.Add(new Parameter("Province_Id", "App.ProvinceGrid.getSelectionModel().getLastSelected().getData('Province_Id').Province_Id", ParameterMode.Raw));
+                                        de.Click.ExtraParams.Add(new Parameter("Province_Id", "getSelecteProvinceId(App.ProvinceGrid)", ParameterMode.Raw));
+                                    })
+                        )
+                    )
+        )
+    )
+
+</div>

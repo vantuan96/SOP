@@ -1,0 +1,83 @@
+﻿@model SOP.Models.Department
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Department</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Department_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Department_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Department_Information)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Department_Information)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Department_PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Department_PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Department_Fax)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Department_Fax)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Department_Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Department_Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Department_Active)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Department_Active)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Department_CreatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Department_CreatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Organization.Organization_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Organization.Organization_Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Department_Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

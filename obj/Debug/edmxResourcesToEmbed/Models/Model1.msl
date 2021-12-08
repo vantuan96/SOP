@@ -1,0 +1,422 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SOPModelStoreContainer" CdmEntityContainer="SOPEntities">
+    <EntitySetMapping Name="AccessHistories">
+      <EntityTypeMapping TypeName="SOPModel.AccessHistory">
+        <MappingFragment StoreEntitySet="AccessHistory">
+          <ScalarProperty Name="AccessHistory_Id" ColumnName="AccessHistory_Id" />
+          <ScalarProperty Name="AccessHistory_Type" ColumnName="AccessHistory_Type" />
+          <ScalarProperty Name="AccessHistory_Time" ColumnName="AccessHistory_Time" />
+          <ScalarProperty Name="AccessHistory__UserId" ColumnName="AccessHistory_ UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Departments">
+      <EntityTypeMapping TypeName="SOPModel.Department">
+        <MappingFragment StoreEntitySet="Department">
+          <ScalarProperty Name="Department_Id" ColumnName="Department_Id" />
+          <ScalarProperty Name="Department_Name" ColumnName="Department_Name" />
+          <ScalarProperty Name="Department_OrganizationId" ColumnName="Department_OrganizationId" />
+          <ScalarProperty Name="Department_Information" ColumnName="Department_Information" />
+          <ScalarProperty Name="Department_PhoneNumber" ColumnName="Department_PhoneNumber" />
+          <ScalarProperty Name="Department_Fax" ColumnName="Department_Fax" />
+          <ScalarProperty Name="Department_Email" ColumnName="Department_Email" />
+          <ScalarProperty Name="Department_Active" ColumnName="Department_Active" />
+          <ScalarProperty Name="Department_CreatedOn" ColumnName="Department_CreatedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DepartmentFieldOperations">
+      <EntityTypeMapping TypeName="SOPModel.DepartmentFieldOperation">
+        <MappingFragment StoreEntitySet="DepartmentFieldOperation">
+          <ScalarProperty Name="DepartmentFieldOperation_Id" ColumnName="DepartmentFieldOperation_Id" />
+          <ScalarProperty Name="DepartmentFieldOperation_DepartmentId" ColumnName="DepartmentFieldOperation_DepartmentId" />
+          <ScalarProperty Name="DepartmentFieldOperation_FieldOperationId" ColumnName="DepartmentFieldOperation_FieldOperationId" />
+          <ScalarProperty Name="DepartmentFieldOperation_Active" ColumnName="DepartmentFieldOperation_Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Districts">
+      <EntityTypeMapping TypeName="SOPModel.District">
+        <MappingFragment StoreEntitySet="District">
+          <ScalarProperty Name="District_Id" ColumnName="District_Id" />
+          <ScalarProperty Name="District_Name" ColumnName="District_Name" />
+          <ScalarProperty Name="District_Type" ColumnName="District_Type" />
+          <ScalarProperty Name="District_Location" ColumnName="District_Location" />
+          <ScalarProperty Name="District_ProvinceId" ColumnName="District_ProvinceId" />
+          <ScalarProperty Name="District_Active" ColumnName="District_Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ethnics">
+      <EntityTypeMapping TypeName="SOPModel.Ethnic">
+        <MappingFragment StoreEntitySet="Ethnic">
+          <ScalarProperty Name="Ethnic_Id" ColumnName="Ethnic_Id" />
+          <ScalarProperty Name="Ethnic_Name" ColumnName="Ethnic_Name" />
+          <ScalarProperty Name="Ethnic_Active" ColumnName="Ethnic_Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FieldOperations">
+      <EntityTypeMapping TypeName="SOPModel.FieldOperation">
+        <MappingFragment StoreEntitySet="FieldOperation">
+          <ScalarProperty Name="FieldOperation_Id" ColumnName="FieldOperation_Id" />
+          <ScalarProperty Name="FieldOperation_Name" ColumnName="FieldOperation_Name" />
+          <ScalarProperty Name="FieldOperation_Active" ColumnName="FieldOperation_Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Groups">
+      <EntityTypeMapping TypeName="SOPModel.Group">
+        <MappingFragment StoreEntitySet="Group">
+          <ScalarProperty Name="Group_Id" ColumnName="Group_Id" />
+          <ScalarProperty Name="Group_Name" ColumnName="Group_Name" />
+          <ScalarProperty Name="Group_Active" ColumnName="Group_Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HistoricalWorks">
+      <EntityTypeMapping TypeName="SOPModel.HistoricalWork">
+        <MappingFragment StoreEntitySet="HistoricalWork">
+          <ScalarProperty Name="HistoricalWork_Id" ColumnName="HistoricalWork_Id" />
+          <ScalarProperty Name="HistoricalWork_OrganizationId" ColumnName="HistoricalWork_OrganizationId" />
+          <ScalarProperty Name="HistoricalWork_DepartmentId" ColumnName="HistoricalWork_DepartmentId" />
+          <ScalarProperty Name="HistoricalWork_UserId" ColumnName="HistoricalWork_UserId" />
+          <ScalarProperty Name="HistoricalWork_TitleId" ColumnName="HistoricalWork_TitleId" />
+          <ScalarProperty Name="HistoricalWork_Type" ColumnName="HistoricalWork_Type" />
+          <ScalarProperty Name="HistoricalWork_EffectFrom" ColumnName="HistoricalWork_EffectFrom" />
+          <ScalarProperty Name="HistoricalWork_EffecttTo" ColumnName="HistoricalWork_EffecttTo" />
+          <ScalarProperty Name="HistoricalWork_Active" ColumnName="HistoricalWork_Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Opinions">
+      <EntityTypeMapping TypeName="SOPModel.Opinion">
+        <MappingFragment StoreEntitySet="Opinion">
+          <ScalarProperty Name="Opinion_Id" ColumnName="Opinion_Id" />
+          <ScalarProperty Name="Opinion_From" ColumnName="Opinion_From" />
+          <ScalarProperty Name="Opinion_To" ColumnName="Opinion_To" />
+          <ScalarProperty Name="Opinion_Date" ColumnName="Opinion_Date" />
+          <ScalarProperty Name="Opinion_Active" ColumnName="Opinion_Active" />
+          <ScalarProperty Name="Opinion_Title" ColumnName="Opinion_Title" />
+          <ScalarProperty Name="Opinion_Content" ColumnName="Opinion_Content" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Organizations">
+      <EntityTypeMapping TypeName="SOPModel.Organization">
+        <MappingFragment StoreEntitySet="Organization">
+          <ScalarProperty Name="Organization_Id" ColumnName="Organization_Id" />
+          <ScalarProperty Name="Organization_Name" ColumnName="Organization_Name" />
+          <ScalarProperty Name="Organization_Superior" ColumnName="Organization_Superior" />
+          <ScalarProperty Name="Organization_Information" ColumnName="Organization_Information" />
+          <ScalarProperty Name="Organization_Address" ColumnName="Organization_Address" />
+          <ScalarProperty Name="Organization_PhoneNumber" ColumnName="Organization_PhoneNumber" />
+          <ScalarProperty Name="Organization_Fax" ColumnName="Organization_Fax" />
+          <ScalarProperty Name="Organization_Email" ColumnName="Organization_Email" />
+          <ScalarProperty Name="Organization_Website" ColumnName="Organization_Website" />
+          <ScalarProperty Name="Organization_Active" ColumnName="Organization_Active" />
+          <ScalarProperty Name="Organization_CreatedOn" ColumnName="Organization_CreatedOn" />
+          <ScalarProperty Name="Organization_OrganizationTypeId" ColumnName="Organization_OrganizationTypeId" />
+          <ScalarProperty Name="Organization_FieldOperation" ColumnName="Organization_FieldOperation" />
+          <ScalarProperty Name="Organization_DirectlyUnder" ColumnName="Organization_DirectlyUnder" />
+          <ScalarProperty Name="Organization_Specialized" ColumnName="Organization_Specialized" />
+          <ScalarProperty Name="Organization_Level" ColumnName="Organization_Level" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrganizationTypes">
+      <EntityTypeMapping TypeName="SOPModel.OrganizationType">
+        <MappingFragment StoreEntitySet="OrganizationType">
+          <ScalarProperty Name="OrganizationType_Id" ColumnName="OrganizationType_Id" />
+          <ScalarProperty Name="OrganizationType_Name" ColumnName="OrganizationType_Name" />
+          <ScalarProperty Name="OrganizationType_Active" ColumnName="OrganizationType_Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Provinces">
+      <EntityTypeMapping TypeName="SOPModel.Province">
+        <MappingFragment StoreEntitySet="Province">
+          <ScalarProperty Name="Province_Id" ColumnName="Province_Id" />
+          <ScalarProperty Name="Province_Name" ColumnName="Province_Name" />
+          <ScalarProperty Name="Province_Type" ColumnName="Province_Type" />
+          <ScalarProperty Name="Province_Active" ColumnName="Province_Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ratings">
+      <EntityTypeMapping TypeName="SOPModel.Rating">
+        <MappingFragment StoreEntitySet="Rating">
+          <ScalarProperty Name="Rating_Id" ColumnName="Rating_Id" />
+          <ScalarProperty Name="Rating_Name" ColumnName="Rating_Name" />
+          <ScalarProperty Name="Rating_Active" ColumnName="Rating_Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RatingResults">
+      <EntityTypeMapping TypeName="SOPModel.RatingResult">
+        <MappingFragment StoreEntitySet="RatingResult">
+          <ScalarProperty Name="RatingResult_Id" ColumnName="RatingResult_Id" />
+          <ScalarProperty Name="RatingResult__UserId" ColumnName="RatingResult_ UserId" />
+          <ScalarProperty Name="RatingResult_CreatedOn" ColumnName="RatingResult_CreatedOn" />
+          <ScalarProperty Name="RatingResult_RatingId" ColumnName="RatingResult_RatingId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="SOPModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Titles">
+      <EntityTypeMapping TypeName="SOPModel.Title">
+        <MappingFragment StoreEntitySet="Title">
+          <ScalarProperty Name="Title_Id" ColumnName="Title_Id" />
+          <ScalarProperty Name="Title_Name" ColumnName="Title_Name" />
+          <ScalarProperty Name="Title_Active" ColumnName="Title_Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="SOPModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+          <ScalarProperty Name="User_FullName" ColumnName="User_FullName" />
+          <ScalarProperty Name="User_PassWord" ColumnName="User_PassWord" />
+          <ScalarProperty Name="User_Email" ColumnName="User_Email" />
+          <ScalarProperty Name="User_Birthday" ColumnName="User_Birthday" />
+          <ScalarProperty Name="User_Gender" ColumnName="User_Gender" />
+          <ScalarProperty Name="User_IdentityNumber" ColumnName="User_IdentityNumber" />
+          <ScalarProperty Name="User_IdentityCreatedOn" ColumnName="User_IdentityCreatedOn" />
+          <ScalarProperty Name="User_IdentityCreatedBy" ColumnName="User_IdentityCreatedBy" />
+          <ScalarProperty Name="User_Religion" ColumnName="User_Religion" />
+          <ScalarProperty Name="User_ReligionDetail" ColumnName="User_ReligionDetail" />
+          <ScalarProperty Name="User_Address" ColumnName="User_Address" />
+          <ScalarProperty Name="User_DistrictId" ColumnName="User_DistrictId" />
+          <ScalarProperty Name="User_ProvinceId" ColumnName="User_ProvinceId" />
+          <ScalarProperty Name="User_CurrentResidence" ColumnName="User_CurrentResidence" />
+          <ScalarProperty Name="User_EthnicId" ColumnName="User_EthnicId" />
+          <ScalarProperty Name="User_PhoneNumber" ColumnName="User_PhoneNumber" />
+          <ScalarProperty Name="User_Mobile" ColumnName="User_Mobile" />
+          <ScalarProperty Name="User_CurrentOrganizationId" ColumnName="User_CurrentOrganizationId" />
+          <ScalarProperty Name="User_Active" ColumnName="User_Active" />
+          <ScalarProperty Name="User_CurrentDepartmentId" ColumnName="User_CurrentDepartmentId" />
+          <ScalarProperty Name="User_UserName" ColumnName="User_UserName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserFieldOperations">
+      <EntityTypeMapping TypeName="SOPModel.UserFieldOperation">
+        <MappingFragment StoreEntitySet="UserFieldOperation">
+          <ScalarProperty Name="UserFieldOperation_Id" ColumnName="UserFieldOperation_Id" />
+          <ScalarProperty Name="UserFieldOperation_UserId" ColumnName="UserFieldOperation_UserId" />
+          <ScalarProperty Name="UserFieldOperation_FieldOperationId" ColumnName="UserFieldOperation_FieldOperationId" />
+          <ScalarProperty Name="UserFieldOperation_Active" ColumnName="UserFieldOperation_Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserGroups">
+      <EntityTypeMapping TypeName="SOPModel.UserGroup">
+        <MappingFragment StoreEntitySet="UserGroup">
+          <ScalarProperty Name="UserGroup_Id" ColumnName="UserGroup_Id" />
+          <ScalarProperty Name="UserGroup_UserId" ColumnName="UserGroup_UserId" />
+          <ScalarProperty Name="UserGroup_GroupId" ColumnName="UserGroup_GroupId" />
+          <ScalarProperty Name="UserGroup_Status" ColumnName="UserGroup_Status" />
+          <ScalarProperty Name="UserGroup_Active" ColumnName="UserGroup_Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="SOP_GetCompareTwoOrganizationRating" FunctionName="SOPModel.Store.SOP_GetCompareTwoOrganizationRating">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SOPModel.SOP_GetCompareTwoOrganizationRating_Result">
+          <ScalarProperty Name="Rating_Id" ColumnName="Rating_Id" />
+          <ScalarProperty Name="Rating_Name" ColumnName="Rating_Name" />
+          <ScalarProperty Name="OrganizationRating1" ColumnName="OrganizationRating1" />
+          <ScalarProperty Name="OrganizationRating2" ColumnName="OrganizationRating2" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SOP_GetDetailFieldOperationRating" FunctionName="SOPModel.Store.SOP_GetDetailFieldOperationRating">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SOPModel.SOP_GetDetailFieldOperationRating_Result">
+          <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+          <ScalarProperty Name="User_FullName" ColumnName="User_FullName" />
+          <ScalarProperty Name="User_UserName" ColumnName="User_UserName" />
+          <ScalarProperty Name="VERYHAPPY" ColumnName="VERYHAPPY" />
+          <ScalarProperty Name="HAPPY" ColumnName="HAPPY" />
+          <ScalarProperty Name="WAITLONG" ColumnName="WAITLONG" />
+          <ScalarProperty Name="LOWPROFESSIONAL" ColumnName="LOWPROFESSIONAL" />
+          <ScalarProperty Name="BADBEHAVIOR" ColumnName="BADBEHAVIOR" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SOP_GetListFieldOperationRating" FunctionName="SOPModel.Store.SOP_GetListFieldOperationRating">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SOPModel.SOP_GetListFieldOperationRating_Result">
+          <ScalarProperty Name="FieldOperation_Id" ColumnName="FieldOperation_Id" />
+          <ScalarProperty Name="FieldOperation_Name" ColumnName="FieldOperation_Name" />
+          <ScalarProperty Name="VERYHAPPY" ColumnName="VERYHAPPY" />
+          <ScalarProperty Name="HAPPY" ColumnName="HAPPY" />
+          <ScalarProperty Name="WAITLONG" ColumnName="WAITLONG" />
+          <ScalarProperty Name="LOWPROFESSIONAL" ColumnName="LOWPROFESSIONAL" />
+          <ScalarProperty Name="BADBEHAVIOR" ColumnName="BADBEHAVIOR" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SOP_GetListOrganizationRating" FunctionName="SOPModel.Store.SOP_GetListOrganizationRating">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SOPModel.SOP_GetListOrganizationRating_Result">
+          <ScalarProperty Name="Organization_Id" ColumnName="Organization_Id" />
+          <ScalarProperty Name="Organization_Name" ColumnName="Organization_Name" />
+          <ScalarProperty Name="VERYHAPPY" ColumnName="VERYHAPPY" />
+          <ScalarProperty Name="HAPPY" ColumnName="HAPPY" />
+          <ScalarProperty Name="WAITLONG" ColumnName="WAITLONG" />
+          <ScalarProperty Name="LOWPROFESSIONAL" ColumnName="LOWPROFESSIONAL" />
+          <ScalarProperty Name="BADBEHAVIOR" ColumnName="BADBEHAVIOR" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SOP_GetMCompareRating" FunctionName="SOPModel.Store.SOP_GetMCompareRating">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SOPModel.SOP_GetMCompareRating_Result">
+          <ScalarProperty Name="YearC" ColumnName="YearC" />
+          <ScalarProperty Name="VERYHAPPY" ColumnName="VERYHAPPY" />
+          <ScalarProperty Name="HAPPY" ColumnName="HAPPY" />
+          <ScalarProperty Name="WAITLONG" ColumnName="WAITLONG" />
+          <ScalarProperty Name="LOWPROFESSIONAL" ColumnName="LOWPROFESSIONAL" />
+          <ScalarProperty Name="BADBEHAVIOR" ColumnName="BADBEHAVIOR" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SOP_GetMCompareRating_ByYear" FunctionName="SOPModel.Store.SOP_GetMCompareRating_ByYear">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SOPModel.SOP_GetMCompareRating_ByYear_Result">
+          <ScalarProperty Name="MonthC" ColumnName="MonthC" />
+          <ScalarProperty Name="VERYHAPPY" ColumnName="VERYHAPPY" />
+          <ScalarProperty Name="HAPPY" ColumnName="HAPPY" />
+          <ScalarProperty Name="WAITLONG" ColumnName="WAITLONG" />
+          <ScalarProperty Name="LOWPROFESSIONAL" ColumnName="LOWPROFESSIONAL" />
+          <ScalarProperty Name="BADBEHAVIOR" ColumnName="BADBEHAVIOR" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SOP_GetStatusUserCMMC" FunctionName="SOPModel.Store.SOP_GetStatusUserCMMC">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SOPModel.SOP_GetStatusUserCMMC_Result">
+          <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+          <ScalarProperty Name="User_FullName" ColumnName="User_FullName" />
+          <ScalarProperty Name="Organization_Id" ColumnName="Organization_Id" />
+          <ScalarProperty Name="Organization_Name" ColumnName="Organization_Name" />
+          <ScalarProperty Name="UserGroup_Status" ColumnName="UserGroup_Status" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SOP_GetStatusUserCMMCByOrganization" FunctionName="SOPModel.Store.SOP_GetStatusUserCMMCByOrganization">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SOPModel.SOP_GetStatusUserCMMCByOrganization_Result">
+          <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+          <ScalarProperty Name="User_FullName" ColumnName="User_FullName" />
+          <ScalarProperty Name="Organization_Id" ColumnName="Organization_Id" />
+          <ScalarProperty Name="Organization_Name" ColumnName="Organization_Name" />
+          <ScalarProperty Name="UserGroup_Status" ColumnName="UserGroup_Status" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SOP_GetYCompareFieldOperationRating" FunctionName="SOPModel.Store.SOP_GetYCompareFieldOperationRating">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SOPModel.SOP_GetYCompareFieldOperationRating_Result">
+          <ScalarProperty Name="YearC" ColumnName="YearC" />
+          <ScalarProperty Name="VERYHAPPY" ColumnName="VERYHAPPY" />
+          <ScalarProperty Name="HAPPY" ColumnName="HAPPY" />
+          <ScalarProperty Name="WAITLONG" ColumnName="WAITLONG" />
+          <ScalarProperty Name="LOWPROFESSIONAL" ColumnName="LOWPROFESSIONAL" />
+          <ScalarProperty Name="BADBEHAVIOR" ColumnName="BADBEHAVIOR" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SOP_GetYCompareOrganizationRating" FunctionName="SOPModel.Store.SOP_GetYCompareOrganizationRating">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SOPModel.SOP_GetYCompareOrganizationRating_Result">
+          <ScalarProperty Name="YearC" ColumnName="YearC" />
+          <ScalarProperty Name="VERYHAPPY" ColumnName="VERYHAPPY" />
+          <ScalarProperty Name="HAPPY" ColumnName="HAPPY" />
+          <ScalarProperty Name="WAITLONG" ColumnName="WAITLONG" />
+          <ScalarProperty Name="LOWPROFESSIONAL" ColumnName="LOWPROFESSIONAL" />
+          <ScalarProperty Name="BADBEHAVIOR" ColumnName="BADBEHAVIOR" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SOP_GetYFieldOperationRating_ByYear" FunctionName="SOPModel.Store.SOP_GetYFieldOperationRating_ByYear">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SOPModel.SOP_GetYFieldOperationRating_ByYear_Result">
+          <ScalarProperty Name="MonthC" ColumnName="MonthC" />
+          <ScalarProperty Name="VERYHAPPY" ColumnName="VERYHAPPY" />
+          <ScalarProperty Name="HAPPY" ColumnName="HAPPY" />
+          <ScalarProperty Name="WAITLONG" ColumnName="WAITLONG" />
+          <ScalarProperty Name="LOWPROFESSIONAL" ColumnName="LOWPROFESSIONAL" />
+          <ScalarProperty Name="BADBEHAVIOR" ColumnName="BADBEHAVIOR" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SOP_GetYOrganizationRating_ByYear" FunctionName="SOPModel.Store.SOP_GetYOrganizationRating_ByYear">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SOPModel.SOP_GetYOrganizationRating_ByYear_Result">
+          <ScalarProperty Name="MonthC" ColumnName="MonthC" />
+          <ScalarProperty Name="VERYHAPPY" ColumnName="VERYHAPPY" />
+          <ScalarProperty Name="HAPPY" ColumnName="HAPPY" />
+          <ScalarProperty Name="WAITLONG" ColumnName="WAITLONG" />
+          <ScalarProperty Name="LOWPROFESSIONAL" ColumnName="LOWPROFESSIONAL" />
+          <ScalarProperty Name="BADBEHAVIOR" ColumnName="BADBEHAVIOR" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="SOPModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="SOPModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="SOPModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_generate_inserts" FunctionName="SOPModel.Store.sp_generate_inserts" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="SOPModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SOPModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="SOPModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SOPModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="SOPModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="SOPModel.Store.sp_upgraddiagrams" />
+    <FunctionImportMapping FunctionImportName="SOP_GetDetailOrganizationRating" FunctionName="SOPModel.Store.SOP_GetDetailOrganizationRating">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SOPModel.SOP_GetDetailOrganizationRating_Result1">
+          <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+          <ScalarProperty Name="User_FullName" ColumnName="User_FullName" />
+          <ScalarProperty Name="User_UserName" ColumnName="User_UserName" />
+          <ScalarProperty Name="VERYHAPPY" ColumnName="VERYHAPPY" />
+          <ScalarProperty Name="HAPPY" ColumnName="HAPPY" />
+          <ScalarProperty Name="WAITLONG" ColumnName="WAITLONG" />
+          <ScalarProperty Name="LOWPROFESSIONAL" ColumnName="LOWPROFESSIONAL" />
+          <ScalarProperty Name="BADBEHAVIOR" ColumnName="BADBEHAVIOR" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SOP_UpdateStatusUserCMMC" FunctionName="SOPModel.Store.SOP_UpdateStatusUserCMMC" />
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,148 @@
+﻿@{
+    var X = Html.X();
+}
+<script>
+    var template = '<span style="color:{0};">{1}</span>';
+    var pctChange = function (value) {
+        return Ext.String.format(template, (value == 1) ? (value = "Kích hoạt") : (value = "Chưa kích hoạt"), value);
+    };
+    var pctChaneReligion = function (value) {
+        return Ext.String.format(template, (value == 1) ? (value = "Có") : (value = "Không"), value);
+    };
+    var prepare = function (grid, toolbar, rowIndex, record) {
+        var firstButton = toolbar.items.get(0);
+        if (record.data.price < 50) {
+            firstButton.setDisabled(true);
+            firstButton.setTooltip("Disabled");
+        }
+    };
+    var onSuccess = function (grid, data) {
+        grid.show();
+        grid.getStore().loadData(data);
+    };
+
+    var CloseClick = function () {
+        App.SynchronizeWindow.close();
+    }
+</script>
+@(X.Window()
+    .ID("SynchronizeWindow")
+    .Y(50)
+    .Width(700)
+    .Flex(1)
+    .Icon(Icon.Add)
+    .Title("Danh sách ID")
+    .Padding(5)
+    .Modal(true)
+    .Closable(false)
+    .CloseAction(CloseAction.Destroy)
+        .Items(
+              X.FormPanel()
+                        .ID("FormUserId")
+                        .Frame(true)
+                        .BodyPadding(5)
+                        .Title("Chọn Cơ quan - Tổ chức")
+                        .FieldDefaults(fd => fd.LabelWidth = 120)
+                        .DefaultAnchor("100%")
+                        .Items(
+                            X.ComboBox()
+                                    .ID("ComboOrganization")
+                                    .FieldLabel("Chọn Cơ quan :")
+                                    .Editable(false)
+                                    .AnchorHorizontal("100%")
+                                    .EmptyText("Chọn Cơ quan")
+                                    .DisplayField("Name")
+                                    .ValueField("Name")
+                                    .QueryMode(DataLoadMode.Local)
+                                    .Items(ViewBag.listUser)
+                            )
+                    .Buttons(
+                        X.Button()
+                            .ID("FinterOrganizationButton")
+                            .Text("Lọc Dữ Liệu")
+                            .DirectEvents(de =>
+                            {
+                                de.Click.Url = Url.Action("SearchUserAccountByOrganization");
+                                de.Click.EventMask.ShowMask = true;
+                                de.Click.ExtraParams.Add(new Parameter("Organization_OrganizationName", "App.ComboOrganization.getValue()", ParameterMode.Raw));
+                                de.Click.Success = "onSuccess(App.GridPanel_UserID, result.data);";
+                            })
+                ),
+        //--------------------------
+              X.GridPanel()
+                        .Title("Danh sách UserID")
+                        .ID("GridPanel_UserID")
+                        .Store(Html.X().Store().ID("Store_UserID")
+                        .Model(Html.X().Model()
+                        .Fields(
+                                        new ModelField("User_Email", ModelFieldType.String),
+                                        new ModelField("User_FullName", ModelFieldType.String),
+                                        new ModelField("User_Name", ModelFieldType.String),
+                                        new ModelField("User_ReligionDetail", ModelFieldType.String),
+                                        new ModelField("User_PassWord", ModelFieldType.String)        
+                                            
+                            )
+                        ).PageSize(10)
+                        )
+             .ColumnModel(
+                Html.X().Column()
+                        .Text("Họ Tên ")
+                        .DataIndex("User_FullName")
+                        .Width(265)
+                        ,
+                Html.X().Column()
+                        .Text("Tài Khoản")
+                        .DataIndex("User_Email")
+                        .Width(285)
+                    ,
+                Html.X().Column()
+                        .Text("Email")
+                        .DataIndex("User_Name")
+                        .Hidden(true)
+                        .Width(125)
+                    ,
+                Html.X().Column()
+                        .Text("User_ReligionDetail")
+                        .DataIndex("User_ReligionDetail")
+                        .Hidden(true)
+                        .Width(125)
+                        ,
+                Html.X().Column()
+                        .Text("User_PassWord")
+                        .DataIndex("User_PassWord")
+                        .Hidden(true)
+                        .Width(125)
+                        ,              
+                Html.X().CommandColumn()
+                        .Width(100)
+                        .Commands(
+                            Html.X().GridCommand()
+                                .CommandName("SynchronizeUserId")
+                                .Icon(Icon.ArrowNsew)
+                                .Text("Đồng Bộ")
+                        )
+                        .DirectEvents(de =>
+                        {
+                                    de.Command.Url = Url.Action("SynchronizeUserId");
+                                    de.Command.ExtraParams.Add(new Parameter("User_Email", "record.data.User_Email", ParameterMode.Raw));
+                                    de.Command.Success = "onSuccess(App.GridPanel_UserID, result.data);";
+                                    })
+                        )
+                        .BottomBar(
+                                       Html.X().PagingToolbar()
+                                       .HideRefresh(true)
+                                  )
+        //----------------------
+                    )
+            .Buttons(
+                X.Button()
+                .Text("Thoát")
+                .Icon(Icon.Accept)
+                    //.OnClientClick("CloseClick();")
+                    .DirectEvents(de =>
+                                 {
+                                     de.Click.Url = Url.Action("CloseClick");
+                                 }
+                            )
+                   )
+        )

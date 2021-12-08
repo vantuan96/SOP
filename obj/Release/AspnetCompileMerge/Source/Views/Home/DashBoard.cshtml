@@ -1,0 +1,86 @@
+﻿
+@{
+    Layout = "~/Views/_LayoutLogin.cshtml";
+    var X = Html.X();
+}
+<style>
+    .panel
+    {
+        padding-bottom:7px;
+    }
+
+    .ntth {
+
+        overflow: hidden;
+    }
+
+    .ntth-child {
+        float: left;
+        line-height: 15px;
+        min-width: 240px;
+        padding: 5px 0;
+
+    }
+
+        .ntth-child label {
+            display: block;
+        }
+
+    .icon {
+        text-align: left;
+        float: left;
+        vertical-align: middle;
+        padding: 5px;
+    }
+    .name
+    {
+        color:#3b3b3b;
+    }
+    .link {
+        font-size: 14px;
+        text-decoration: none;
+        font-weight:bold;
+    }
+    .organization {
+        font-size: 11px;
+        color:#626262;
+    }
+</style>
+<script src="@Url.Content("~/Scripts/jquery-1.10.2.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(function () {
+        setInterval(function () { $('#panel').load('/Home/DashBoard'); }, 15000); // every 3 sec
+    });
+
+</script>
+
+<div class="panel" id="panel">
+    <div class="ntth">
+        @foreach (var item in Model)
+        {
+            if (item.UserGroup_Status == null || DateTime.Compare(item.UserGroup_Status.AddSeconds(10), DateTime.Now) < 0)
+        { 
+        <div class="ntth-child">
+            <img class="icon" src="~/Image/icon-off.png" />
+            <label >
+                <a class="link" href="@Url.Action("Index2", "Opinion", new { UserId = @item.User_Id })">@item.User_FullName</a>
+             </label>
+                @*<label class="name"><strong>@item.User_FullName</strong></label>*@
+             <em class="organization">@item.Organization_Name</em>
+</div>
+        }
+         else
+        { 
+        <div class="ntth-child">
+            <img class="icon" src="~/Image/icon.png" />
+            <label class="name">
+                <a class="link" href="@Url.Action("Index2", "Opinion", new { UserId = @item.User_Id })">@item.User_FullName</a>
+            </label>
+            <em class="organization">@item.Organization_Name</em>
+        </div>
+        }
+        
+        }          
+    </div>
+</div>
